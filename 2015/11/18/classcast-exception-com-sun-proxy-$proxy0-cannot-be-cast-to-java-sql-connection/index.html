@@ -1,0 +1,17 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 类型转换异常com.sun.proxy.$Proxy0 cannot be cast to java.sql.Connection · JackRo 的个人博客</title><meta name="description" content="类型转换异常com.sun.proxy.$Proxy0 cannot be cast to java.sql.Connection - JackRo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://jackro.cn/atom.xml" title="JackRo 的个人博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">HOME</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/JackRo" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">类型转换异常com.sun.proxy.$Proxy0 cannot be cast to java.sql.Connection</h1><div class="post-info">Nov 18, 2015</div><div class="post-content"><p>代码如下：</p>
+<pre><code>    Connection proxy = (Connection) Proxy.newProxyInstance(Connection.class.getClassLoader(),
+            Connection.class.getInterfaces(), new InvocationHandler() {
+
+                @Override
+                public Object invoke(Object proxy, Method method,
+                        Object[] args) throws Throwable {
+                    if (&quot;close&quot;.equals(method.getName())) {
+                        returnConn(conn);
+                        return null;
+                    } else {
+                        return method.invoke(conn, args);
+                    }
+                }
+            });
+</code></pre><p>在使用动态代理增强Connection连接对象的close方法时，我碰到了如题所示的异常。通过搜索我发现这个异常出现的原因在于我使用的mysql数据库驱动的问题，由于数据库驱动不同，Connection.class.getInterfaces()返回的结果也不同，它返回的是一个Class[]数组，然而此数组的第一个元素必须是Connection才能把创建的代理类转为Connection对象，否则就会报错。<br>所以这里我们可以采取一个替代方式替换Connection.class.getInterfaces()，即new Class[] { Connection.class }，这样无论数据库驱动是什么版本的驱动，都能保证这个类型转换不出错。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2016/01/14/composer-install-error-unable-to-connect-to-getcomposer-org/" class="prev">prev_post</a><a href="/2015/10/28/windows-10-jar-double-click-to-run-resolve/" class="next">next_post</a></div><div class="copyright"><p>© 2014 - 2018 <a href="http://jackro.cn">JackRo</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

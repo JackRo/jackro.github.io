@@ -1,0 +1,292 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 解决Camera is being used after Camera.release() was called · JackRo 的个人博客</title><meta name="description" content="解决Camera is being used after Camera.release() was called - JackRo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://jackro.cn/atom.xml" title="JackRo 的个人博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">HOME</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/JackRo" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">解决Camera is being used after Camera.release() was called</h1><div class="post-info">Jul 1, 2016</div><div class="post-content"><pre><code>java.lang.RuntimeException: Camera is being used after Camera.release() was called
+</code></pre><p>在相机开发中，打开相机后点返回，偶尔会出现如上所示的异常，解决代码如下：</p>
+<pre><code>@BindView(R.id.sv_preview)
+SurfaceView mSvPreview;
+
+private BaseCameraManager cameraManager;
+
+@Override
+protected void onResume() {
+    super.onResume();
+
+    int hasCameraPermission = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
+    if (hasCameraPermission != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA},
+                MY_PERMISSIONS_REQUEST_CAMERA);
+    }
+
+    //region 这里调用初始化照相机并设置SurfaceHolder的回调以解决按下home键或者按下最近应用菜单键再返回扫码界面时相机不显示的问题
+
+    cameraManager = new CameraManager(getApplication());
+
+    setSurfaceViewVisible(true);
+
+    cameraManager.setOnResultListener(this);
+
+    mSvPreview.getHolder().addCallback(this);
+    //endregion
+}
+
+@Override
+public void surfaceDestroyed(SurfaceHolder holder) {        
+
+    setEmptyViewVisible(true);    
+    //解决java.lang.RuntimeException: Camera is being used after Camera.release() was called异常    
+    holder.removeCallback(this);    
+
+    cameraManager.releaseCamera();
+}
+</code></pre><p>BaseCameraManager源码如下：</p>
+<pre><code>/**
+ * CameraManager的基类
+ * Created by Jack on 2016/7/1 12:55
+ * Email: zhuochangjing@foxmail.com
+ */
+public abstract class BaseCameraManager {
+    private Point qrBoxSize;
+
+    boolean hook = false;
+    int rotate;
+    int count = 0;
+    boolean isRelease = true;
+    ExecutorService executor;
+    int displayOrientation;
+    private MultiFormatReader reader;
+    OnResultListener onResultListener;
+    protected Context context;
+
+    BaseCameraManager(Context context) {
+        this.context = context;
+        executor = Executors.newSingleThreadExecutor();
+        reader = new MultiFormatReader();
+        qrBoxSize = new Point();
+        qrBoxSize.x = (int) context.getResources().getDimension(R.dimen.width_qr_box_view);
+        qrBoxSize.y = (int) context.getResources().getDimension(R.dimen.height_qr_box_view);
+    }
+
+    QRResult getCodeValue(byte[] data, Point previewSize) {
+        Bitmap bitmap = null;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream(data.length);
+        YuvImage image = new YuvImage(data, ImageFormat.NV21, previewSize.x, previewSize.y, null);
+        int left = previewSize.x - qrBoxSize.x &gt;&gt; 1;
+        int right = previewSize.x + qrBoxSize.x &gt;&gt; 1;
+        int top = previewSize.y - qrBoxSize.y &gt;&gt; 1;
+        int bottom = previewSize.y + qrBoxSize.y &gt;&gt; 1;
+        Rect rect = new Rect(left, top, right, bottom);
+        if (image.compressToJpeg(rect, 100, stream)) {
+            byte[] bytes = stream.toByteArray();
+            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        }
+        try {
+            stream.close();
+        } catch (IOException e) {
+            Log.e(&quot;onPreviewFrame&quot;, e.toString());
+        }
+
+        if (displayOrientation &gt; 0) {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(displayOrientation);
+            assert bitmap != null;
+            Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+            bitmap.recycle();
+            bitmap = newBitmap;
+        }
+
+        assert bitmap != null;
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int[] pixels = new int[width * height];
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+        Result result = QRUtils.decode(new RGBLuminanceSource(width, height, pixels), reader);
+        if (result != null) {
+            return new QRResult(bitmap, result);
+        } else {
+            bitmap.recycle();
+            return null;
+        }
+    }
+
+    public void setHook(boolean hook) {
+        this.hook = hook;
+    }
+
+    public void setOnResultListener(OnResultListener onResultListener) {
+        this.onResultListener = onResultListener;
+    }
+
+    public void shutdownExecutor() {
+        executor.shutdown();
+    }
+
+    public ExecutorService getExecutor() {
+        return executor;
+    }
+
+    public void setRotate(int rotate) {
+        this.rotate = rotate;
+    }
+
+    public abstract void connectCamera(SurfaceHolder surfaceHolder);
+
+    public abstract void setCameraParameter();
+
+    public abstract void startCapture();
+
+    public abstract void releaseCamera();
+
+    public interface OnResultListener {
+        void onResult(QRResult qrResult);
+    }
+}
+</code></pre><p>CameraManager源码如下：</p>
+<pre><code>/**
+ * This class is for android targets below android 5.0 and it uses old camera api
+ * Created by Jack on 2016/7/1 12:55
+ * Email: zhuochangjing@foxmail.com
+ */
+@SuppressWarnings(&quot;deprecation&quot;)
+public class CameraManager extends BaseCameraManager implements Camera.AutoFocusCallback, Camera.PreviewCallback {
+
+    private Camera camera;
+
+    public CameraManager(Context context) {
+        super(context);
+    }
+
+    @Override
+    public void onAutoFocus(boolean success, Camera camera) {
+        if (hook || isRelease) return;
+        camera.setOneShotPreviewCallback(this);
+    }
+
+    @Override
+    public void connectCamera(SurfaceHolder surfaceHolder) {
+        if (!isRelease) return;
+        try {
+            camera = Camera.open();
+            isRelease = false;
+            camera.setPreviewDisplay(surfaceHolder);
+            setCameraParameter();
+            camera.startPreview();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void releaseCamera() {
+        if (isRelease) return;
+        isRelease = true;
+        camera.setPreviewCallback(null);
+        camera.cancelAutoFocus();
+        camera.stopPreview();
+        try {
+            camera.setPreviewDisplay(null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        camera.release();
+        camera = null;
+    }
+
+    @Override
+    public void startCapture() {
+        if (hook || isRelease || executor.isShutdown()) return;
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                camera.autoFocus(CameraManager.this);
+            }
+        });
+    }
+
+    @Override
+    public void setCameraParameter() {
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        Camera.getCameraInfo(0, cameraInfo);
+        int degrees = 0;
+        switch (rotate) {
+            case Surface.ROTATION_0: {
+                degrees = 0;
+                break;
+            }
+            case Surface.ROTATION_90: {
+                degrees = 90;
+                break;
+            }
+            case Surface.ROTATION_180: {
+                degrees = 180;
+                break;
+            }
+            case Surface.ROTATION_270: {
+                degrees = 270;
+                break;
+            }
+        }
+
+        if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            displayOrientation = (cameraInfo.orientation + degrees) % 360;
+            displayOrientation = (360 - displayOrientation) % 360;
+        } else {
+            displayOrientation = (cameraInfo.orientation - degrees + 360) % 360;
+        }
+
+        /** Warning : may throw exception with parameters not supported */
+        Camera.Parameters parameters = camera.getParameters();
+        List&lt;Camera.Size&gt; previewSizes = parameters.getSupportedPreviewSizes();
+        Camera.Size bestSize = previewSizes.get(0);
+        for (int i = 1; i &lt; previewSizes.size(); i++) {
+            if (previewSizes.get(i).width * previewSizes.get(i).height &gt; bestSize.width * bestSize.height) {
+                bestSize = previewSizes.get(i);
+            }
+        }
+        parameters.setPreviewSize(bestSize.width, bestSize.height);
+
+        List&lt;Camera.Size&gt; pictureSizes = parameters.getSupportedPictureSizes();
+        bestSize = pictureSizes.get(0);
+        for (int i = 1; i &lt; pictureSizes.size(); i++) {
+            if (pictureSizes.get(i).width * pictureSizes.get(i).height &gt; bestSize.width * bestSize.height) {
+                bestSize = pictureSizes.get(i);
+            }
+        }
+        parameters.setPictureSize(bestSize.width, bestSize.height);
+        camera.setParameters(parameters);
+        camera.setDisplayOrientation(displayOrientation);
+    }
+
+    @Override
+    public void onPreviewFrame(final byte[] data, final Camera camera) {
+        if (hook || executor.isShutdown()) return;
+        Observable
+                .just(camera.getParameters().getPreviewSize())
+                .subscribeOn(Schedulers.from(executor))
+                .map(new Func1&lt;Camera.Size, QRResult&gt;() {
+                    @Override
+                    public QRResult call(Camera.Size size) {
+                        return getCodeValue(data, new Point(size.width, size.height));
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1&lt;QRResult&gt;() {
+                    @Override
+                    public void call(QRResult qrResult) {
+                        if (qrResult == null) {
+                            count++;
+                            startCapture();
+                            return;
+                        }
+                        QRUtils.vibrate(context);
+                        if (onResultListener != null) {
+                            onResultListener.onResult(qrResult);
+                        }
+                        count = 0;
+                    }
+                }, new Action1&lt;Throwable&gt;() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(&quot;CameraManager&quot;, &quot;getCodeValue() failed .&quot;);
+                    }
+                });
+    }
+}
+</code></pre></div></article></div></main><footer><div class="paginator"><a href="/2016/10/10/android-edittext-drawableright-click-event-implement/" class="prev">prev_post</a><a href="/2016/06/15/viewpager-fragment-contain-baidu-mapview-switch-skip-frame/" class="next">next_post</a></div><div class="copyright"><p>© 2014 - 2018 <a href="http://jackro.cn">JackRo</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

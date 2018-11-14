@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>JackRo 的个人博客</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://jackro.cn/"/>
+  <updated>2018-11-14T14:30:41.994Z</updated>
+  <id>http://jackro.cn/</id>
+  
+  <author>
+    <name>JackRo</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于亲情，友情的想法</title>
+    <link href="http://jackro.cn/2018/11/14/about-family-and-friend-thinking/"/>
+    <id>http://jackro.cn/2018/11/14/about-family-and-friend-thinking/</id>
+    <published>2018-11-13T16:00:00.000Z</published>
+    <updated>2018-11-14T14:30:41.994Z</updated>
+    
+    <content type="html"><![CDATA[<p>嗯，自从我工作之后，我发现我爸非常幽默，经常“套路”我帮家里买一些家用电器啥的。我爸经常会这样跟我说，家里啥啥坏了，要换了；我的手机坏了，要换了。昨天，他就在微信里这样跟我说，先把净水器的照片拍给我，然后我问这是干嘛的，他就说家里新装了净水器，我没钱了。我一想，我有钱呀，好嘛，我给您。</p><p>今天和朋友聊到我给家里买小米电视（当时我爸说家里客厅缺一个电视，亲戚朋友来家里了，还可以看看电视）的事，朋友说我还挺孝顺的，这个价格在当时也是高价了。嗯，当时关于孝顺，自当是朋友夸我了，夸我嘛，挺高兴的，没啥其他想法，但后来我有一些想法。</p><p>我认为这不单单是孝顺。还未工作之前，我都是拿爸妈的钱。大学那会，我贪玩，不学习，因此挂科太多导致留级，系主任叫我爸去学校说留级的事，那天，我爸晚上就跟我说了很多，鼓励我还是要好好学习，嗯，虽然我当时没听进去，但是后来还是想通了。我爸当时的意思其实很简单，该玩的时候玩，该学习的时候还得学。在当时，我留级算是人生遭遇了挫折吧，我爸仍然给我鼓励，帮助我向好的方向发展。</p><p>现在的情况是，我妈下岗在家，我爸身体不好，干不了重活，家里经济来源很微薄，我爸妈需要一些物质上的帮助，我理应尽我所能，帮助我爸妈。这不只是尽孝心，我们是一家人嘛，一家人就该互相帮助。</p><p>然后，关于朋友、友情。我记得我看过关于朋友的一些话，像朋友之间不该有经济往来，还有啥大俗话说的，谈钱伤感情，这些我都认为不对，钱是必需品，没钱是没法在现在的社会上生存的。我认为，朋友，也是像亲人一样，应该互相帮助，彼此给予对方物质上的帮助和精神上的帮助。所以，既然需要物质上的帮助，经济往来就是必须的。</p><p>我记得我来上海之后，开始租的房子不好（很贵而且房子很小），想换个房子，然后换好房子之后，发现没钱交房租了（刚好够押金，不够房租），因为钱都交给了第一家的房东，然后我就只能跟朋友借钱了。嗯，这就是朋友之间的经济往来呀。</p><p>以前看过的电影《喋血双雄》里有一句话是这么说的，朋友无所谓谁欠谁的，不然要朋友来干嘛呢。我认为这句话诠释的应该就是朋友的真谛：彼此在物质上和精神上互相帮助，互相鼓励。《喋血双雄》里的主角小宝、四哥和毛头就是这样子的朋友，他们都是彼此拼了命的互相帮助。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;嗯，自从我工作之后，我发现我爸非常幽默，经常“套路”我帮家里买一些家用电器啥的。我爸经常会这样跟我说，家里啥啥坏了，要换了；我的手机坏了，要换了。昨天，他就在微信里这样跟我说，先把净水器的照片拍给我，然后我问这是干嘛的，他就说家里新装了净水器，我没钱了。我一想，我有钱呀，好
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Android面试展示iOS debug app时闪退</title>
+    <link href="http://jackro.cn/2018/05/14/audition-ios-show-debug-app-crash/"/>
+    <id>http://jackro.cn/2018/05/14/audition-ios-show-debug-app-crash/</id>
+    <published>2018-05-13T16:00:00.000Z</published>
+    <updated>2018-09-03T10:14:59.882Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天面试展示iOS debug app时不断闪退，无法打开应用，车祸现场相当尴尬。面试结束回到家后打开Xcode重新部署debug app到真机上，报错，无法部署。根据提示，换了下bundle ID，卸载真机上已安装的app，重新部署安装，仍然报错，无法部署。于是去看了下配置文件，发现provisioning profile报错，需要重新登录Apple ID，重新登录后，再次部署，并在真机上设置信任当前Apple ID，问题解决。</p><p>但是问题真的解决了吗？然后我仔细去看了下配置文件，终于找到问题原因，原来debug app的Provisioning profile是有过期时间的。如下图所示：</p><p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2018051401.jpg" alt="jackro_blog2018051401"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天面试展示iOS debug app时不断闪退，无法打开应用，车祸现场相当尴尬。面试结束回到家后打开Xcode重新部署debug app到真机上，报错，无法部署。根据提示，换了下bundle ID，卸载真机上已安装的app，重新部署安装，仍然报错，无法部署。于是去看了下配
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>mysql自定义function问题解决</title>
+    <link href="http://jackro.cn/2018/04/03/mysql-custom-function-problem-resolve/"/>
+    <id>http://jackro.cn/2018/04/03/mysql-custom-function-problem-resolve/</id>
+    <published>2018-04-02T16:00:00.000Z</published>
+    <updated>2018-04-18T01:06:57.963Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近公司生产环境的系统有个需求，需要往mysql数据库的一张表里批量添加数据，业务部门给的数据大致如下：</p><table><thead><tr><th>中心</th><th>3.5L箱子(条码)</th><th>8L箱子(条码)</th><th>15L箱子(条码)</th><th>20L箱子(条码)</th></tr></thead><tbody><tr><td>浙江物流一区</td><td>6个(X04571301-X04571306)</td><td>8个(X03571301-X03571308)</td><td>4个(X02571301-X02571304)</td><td>12个(X01571301-X01571312)</td></tr><tr><td>浙江物流二区</td><td>24个(X04571401-X04571424)</td><td>42个(X03571401-X03571442)</td><td>78个(X02571401-X02571478)</td><td>36个(X01571401-X01571436)</td></tr></tbody></table><p>这样的数据，首先想到的是在我的macOS上连上服务器数据库，然后把数据一条一条insert进去。但是我insert了几十条后，我发现业务部门给的数据累计有700多条。我当然不愿意就这样老老实实的一条一条insert了，因为实在是太耗费时间了。</p><p>根据以往的经验，最先想到的是，把表导入到navicat里，然后生成批量sql插入脚本，再传到服务器上去执行。但是，业务部门给的Excel并不是标准的一条一条的数据展示的，而是像上面那样给定箱子条码范围和数量。这样，我还得先给它生成一个标准的Excel，也比较麻烦。</p><p>然后我想到用写程序的方式，写循环，连接数据库插入数据。但是本地环境去连接生产环境的数据库是需要走流程申请权限的，可能流程要走个一两天，业务部门又急着要这个数据，这种方法又要摒弃掉了，只能使用下面一种方案了。</p><h2 id="mysql自定义function实现批量添加数据"><a href="#mysql自定义function实现批量添加数据" class="headerlink" title="mysql自定义function实现批量添加数据"></a>mysql自定义function实现批量添加数据</h2><h3 id="mysql定义function语法如下："><a href="#mysql定义function语法如下：" class="headerlink" title="mysql定义function语法如下："></a>mysql定义function语法如下：</h3><pre><code>CREATE FUNCTION func_name ( [func_parameter] ) //括号是必须的，参数是可选的  RETURNS type  [ characteristic ...] routine_body </code></pre><ul><li>CREATE FUNCTION 用来创建函数的关键字</li><li>func_name 表示函数的名称</li><li>func_parameters为函数的参数列表，参数列表的形式为：[IN|OUT|INOUT] param_name type<ol><li>IN：表示输入参数</li><li>OUT：表示输出参数</li><li>INOUT：表示既可以输入也可以输出</li><li>param_name：表示参数的名称</li><li>type：表示参数的类型，该类型可以是MySQL数据库中的任意类型</li></ol></li><li>RETURNS type：语句表示函数返回数据的类型</li><li>characteristic: 指定函数的特性，取值与存储过程的定义相同，可以有以下几种取值方式<ol><li>LANGUAGE SQL: 说明routine_body部分由SQL语句组成，当前系统支持的语言为SQL, SQL是LANGUAGE特性的唯一值</li><li>[NOT] DETERMINISTIC: 指明存储过程执行的结果是否正确。DETERMINISTIC表示结果是确定的。每次执行存储过程时，相同的输入会得到相同的输出；<br>而NOT DETERMINISTIC表示结果是不确定的，相同的输入可能得到不同的输出。如果没有指定任意一个值，默认为NOT DETERMINISTIC</li><li>{CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA}: 指明子程序使用SQL语句限制<ol><li>CONTAINS SQL表明子程序包含SQL语句，但是不包含读写数据的语句</li><li>NO SQL表明子程序不包含SQL语句</li><li>READS SQL DATA说明子程序包含读写数据的语句</li><li>MODIFIES SQL DATA表明子程序包含写数据的语句</li><li>默认情况下，系统会指定为CONTAINS SQL</li></ol></li><li>SQL SECURITY { DEFINER|INVOKER}: 指明谁有权限来执行。DEFINER表示只有定义存储过程者才能执行；INVOKER表示拥有权限的调用者可以执行。<br>默认情况下，系统指定为DEFINER</li><li>COMMENT ‘string’: 注释信息，可以用来描述存储过程或者函数</li></ol></li><li>routine_body是SQL代码内容，可以用BEGIN…END来表示SQL代码的开始与结束</li></ul><h3 id="实现批量添加数据的function过程如下："><a href="#实现批量添加数据的function过程如下：" class="headerlink" title="实现批量添加数据的function过程如下："></a>实现批量添加数据的function过程如下：</h3><p>首先，我把服务器数据库这张表的表结构拷到了本地，便于本地调试所写function是否正确。该表结构与所需要插入的数据相关的字段有三个:</p><pre><code>ybxtm, dept_id, box_size //ybxtm对应箱子条码, dept_id对应上面数据的中心, box_size对应箱子规格(3.5L, 8L, 15L, 20L)</code></pre><p>然后，实现function实现及调用：</p><pre><code>DELIMITER $$ /*定义分隔符，用于在Linux环境下防止function定义的内部分号造成的中途输出*/CREATE FUNCTION addData(deptId INT, boxSize DOUBLE, ybxtm VARCHAR(20), amount INT)  RETURNS INT DETERMINISTIC /*该参数需要指定，不指定Linux环境下执行时会提示你需要指定function的characteristic*/  BEGIN    DECLARE i INT DEFAULT 1;    DECLARE result INT DEFAULT 1;    DECLARE sampleBoxNum VARCHAR(20) DEFAULT &#39;&#39;;    myloop: LOOP      SET sampleBoxNum = ybxtm;      IF i &gt; amount      THEN LEAVE myloop;      END IF;      IF i &lt; 10      THEN SET sampleBoxNum = concat(sampleBoxNum, concat(&#39;0&#39;, i));      ELSE        SET sampleBoxNum = concat(sampleBoxNum, i);      END IF;      INSERT INTO lx_ybx (ybxtm, dept_id, box_size) VALUES (sampleBoxNum, deptId, boxSize);      SET result = result + 1;      SET i = i + 1;    END LOOP myloop;    RETURN result - 1;  END $$ /*结束时需要挂上分隔符，告诉Linux终端，function定义结束*//*调用function*/  SELECT addData(29, 20, &#39;X025714&#39;, 78);</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近公司生产环境的系统有个需求，需要往mysql数据库的一张表里批量添加数据，业务部门给的数据大致如下：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;中心&lt;/th&gt;
+&lt;th&gt;3.5L箱子(条码)&lt;/th&gt;
+&lt;th&gt;8L箱子(条码)&lt;/th&gt;
+&lt;th&gt;15L箱子
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Android Studio中鼠标悬停Fetching Documentation很长时间</title>
+    <link href="http://jackro.cn/2017/11/12/android-studio-mouse-hover-fetching-documentation-long-time/"/>
+    <id>http://jackro.cn/2017/11/12/android-studio-mouse-hover-fetching-documentation-long-time/</id>
+    <published>2017-11-11T16:00:00.000Z</published>
+    <updated>2018-04-03T09:00:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>当我使用Android Studio（macOS 10.12.6系统，Android Studio 3.0）进行Android项目开发时，我经常会使用鼠标悬停的方式去查看类、方法和字段的文档注释。但当我这样做时，我发现一个非常让我懊恼的问题，当我鼠标悬停时，出现的弹框中显示Fetching Documentation…，并且它会显示很长一段时间。</p><p>问题总是得解决的，经过一番搜索，我找到了问题的解决方法：修改配置文件。修改方法如下：</p><ol><li>找到AS的配置文件目录，我的是在~/Library/Preferences下</li><li>找到AS当前版本的配置文件目录，我的是在~/Library/Preferences/AndroidStudio3.0下</li><li>找到配置文件目录下options/jdk.table.xml文件打开</li><li>找到你当前项目compileSdkVersion对应的版本所对应的jdk节点（当然如果需要的话你也可以修改所有版本的jdk节点）</li><li>再找到roots节点下的javadocPath节点，修改该节点里的的url属性，使之与sourcePath节点里的url属性一致即可</li></ol><p>修改前的节点如下所示：</p><pre><code>        &lt;javadocPath&gt;          &lt;root type=&quot;composite&quot;&gt;            &lt;root type=&quot;simple&quot; url=&quot;http://developer.android.com/reference/&quot; /&gt;          &lt;/root&gt;        &lt;/javadocPath&gt;        &lt;sourcePath&gt;          &lt;root type=&quot;composite&quot;&gt;            &lt;root type=&quot;simple&quot; url=&quot;file://$USER_HOME$/Library/Android/sdk/sources/android-26&quot; /&gt;          &lt;/root&gt;        &lt;/sourcePath&gt;</code></pre><p>在上面修改前的节点中，javadocPath在找android developer官网上的doc，由于网络的原因（某墙），肯定很难fetching到documentation。所以将url修改为下载到本地的源码（去本地源码中fetching documentation自然很快），如下所示：</p><pre><code>        &lt;javadocPath&gt;          &lt;root type=&quot;composite&quot;&gt;            &lt;root type=&quot;simple&quot; url=&quot;file://$USER_HOME$/Library/Android/sdk/sources/android-26&quot; /&gt;          &lt;/root&gt;        &lt;/javadocPath&gt;        &lt;sourcePath&gt;          &lt;root type=&quot;composite&quot;&gt;            &lt;root type=&quot;simple&quot; url=&quot;file://$USER_HOME$/Library/Android/sdk/sources/android-26&quot; /&gt;          &lt;/root&gt;        &lt;/sourcePath&gt;</code></pre><p>修改完之后，需要重启下AS，fetching documentation就会很快了（不是很快，是非常快！）。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;当我使用Android Studio（macOS 10.12.6系统，Android Studio 3.0）进行Android项目开发时，我经常会使用鼠标悬停的方式去查看类、方法和字段的文档注释。但当我这样做时，我发现一个非常让我懊恼的问题，当我鼠标悬停时，出现的弹框中显示
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Mac os中git提交操作.DS_Store文件引发的问题解决</title>
+    <link href="http://jackro.cn/2017/09/22/macos-git-commit-ds_store-file-question-resolve/"/>
+    <id>http://jackro.cn/2017/09/22/macos-git-commit-ds_store-file-question-resolve/</id>
+    <published>2017-09-21T16:00:00.000Z</published>
+    <updated>2018-09-03T09:53:56.340Z</updated>
+    
+    <content type="html"><![CDATA[<p>在Mac os中是存在.DS_Store文件的，在使用git对项目进行版本控制时，该文件如果不加入.gitignore中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p><p>经过一番搜索，我找到了解决方法，我们可以先在.gitignore中加入该文件的忽略规则，如下所示：</p><pre><code>.DS_Store</code></pre><p>然后删除项目中所有的.DS_Store，在项目目录下执行如下命令：</p><pre><code>find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch</code></pre><p>然后提交项目即可。</p><p>但是，我发现我的项目是用webstorm打开的，项目目录下自动生成了.idea文件，每次提交.idea文件也会提交，加入忽略规则也不行，我想到了和上面类似的方法，删除.idea目录，然后再提交，即可解决。</p><p>参考链接：</p><p><a href="http://www.jianshu.com/p/fdaa8be7f6c3" target="_blank" rel="noopener">如何删除GIT中的.DS_Store</a></p><p><a href="http://www.jianshu.com/p/8c0d262e49a6" target="_blank" rel="noopener">Git中全局忽略.DS_Store文件</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在Mac os中是存在.DS_Store文件的，在使用git对项目进行版本控制时，该文件如果不加入.gitignore中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。&lt;/p&gt;
+&lt;p&gt;经过一番搜索，我找到了解决方法，我们可以
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Safari浏览器设置Java支持</title>
+    <link href="http://jackro.cn/2017/09/21/safari-explorer-set-java-support/"/>
+    <id>http://jackro.cn/2017/09/21/safari-explorer-set-java-support/</id>
+    <published>2017-09-20T16:00:00.000Z</published>
+    <updated>2018-09-03T09:55:13.139Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天碰到一个公司的项目连接服务器的页面在浏览器中打开需要安装JDK并打开浏览器Java支持的问题。经过一番搜索发现，Java官网的帮助中心中介绍推荐使用IE（windows）和Safari（Mac os）（参见链接：<a href="https://www.java.com/zh_CN/download/faq/chrome.xml" target="_blank" rel="noopener">https://www.java.com/zh_CN/download/faq/chrome.xml</a>），由于自己家里电脑是Mac os（Mac OS 10.12.6），所以使用Safari（自己电脑当前版本是11.0）来打开浏览器Java支持。</p><p>在Safari中如何打开浏览器Java支持呢？经过一番搜索，发现可以在Safari的偏好设置中的网站选项去打开Java支持，针对某个网站去打开即可，如下图所示：</p><p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017092101.jpg" alt="jackro_blog2017092101"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天碰到一个公司的项目连接服务器的页面在浏览器中打开需要安装JDK并打开浏览器Java支持的问题。经过一番搜索发现，Java官网的帮助中心中介绍推荐使用IE（windows）和Safari（Mac os）（参见链接：&lt;a href=&quot;https://www.java.com
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Android项目CMake构建脚本放置在项目根目录下导致build失败的问题</title>
+    <link href="http://jackro.cn/2017/09/20/android-cmake-build-script-in-project-root-direc-resulting-in-build-fail/"/>
+    <id>http://jackro.cn/2017/09/20/android-cmake-build-script-in-project-root-direc-resulting-in-build-fail/</id>
+    <published>2017-09-19T16:00:00.000Z</published>
+    <updated>2018-04-03T05:51:17.779Z</updated>
+    
+    <content type="html"><![CDATA[<p>在现有Android项目中做JNI配置时，碰到了CMake构建脚本放置在项目中的位置的问题。当放置在项目的根目录下，app的build.gradle文件中配置（该配置是通过右键项目的app模块选择 Link C++ Project with Gradle后自动生成的）如下：</p><pre><code> externalNativeBuild {    cmake {        path &#39;../CMakeLists.txt&#39;    }}</code></pre><p>此时对项目进行build操作时，build会失败。</p><p>当尝试把CMake构建脚本放置在项目的app目录下，build就可以成功，此时app的build.gradle文件中配置如下：</p><pre><code> externalNativeBuild {    cmake {        path &#39;CMakeLists.txt&#39;    }}</code></pre><p>解决该问题参考了官方文档，参考链接如下：<br><a href="https://developer.android.com/studio/projects/add-native-code.html" target="_blank" rel="noopener">https://developer.android.com/studio/projects/add-native-code.html</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在现有Android项目中做JNI配置时，碰到了CMake构建脚本放置在项目中的位置的问题。当放置在项目的根目录下，app的build.gradle文件中配置（该配置是通过右键项目的app模块选择 Link C++ Project with Gradle后自动生成的）如下：
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Java中判断一个字符串数组是否包含相同字符串</title>
+    <link href="http://jackro.cn/2017/09/11/java-judge-string-array-is-contain-same-string/"/>
+    <id>http://jackro.cn/2017/09/11/java-judge-string-array-is-contain-same-string/</id>
+    <published>2017-09-10T16:00:00.000Z</published>
+    <updated>2018-04-03T05:51:01.381Z</updated>
+    
+    <content type="html"><![CDATA[<p>如题。该问题很简单，使用一个嵌套循环即可解决，代码如下所示：</p><pre><code>/** * judge that a String Array whether or not contained equal String *  * @param strings *            a string Array * @return return true, contained; return false, not contained */public static boolean judgeStrArrayContainsSameStr(String[] strings) {    int len = strings.length;    for (int i = 0; i &lt; len; i++) {        String temp = strings[i];        for (int j = i + 1; j &lt; len; j++) {            String string = strings[j];            if (string.equals(temp)) {                return true;            }        }    }    return false;}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;如题。该问题很简单，使用一个嵌套循环即可解决，代码如下所示：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/**
+ * judge that a String Array whether or not contained equal String
+ * 
+ * @param string
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>使用scp上传文件到Linux服务器</title>
+    <link href="http://jackro.cn/2017/06/23/use-scp-upload-file-to-linux-server/"/>
+    <id>http://jackro.cn/2017/06/23/use-scp-upload-file-to-linux-server/</id>
+    <published>2017-06-22T16:00:00.000Z</published>
+    <updated>2018-04-03T05:50:55.607Z</updated>
+    
+    <content type="html"><![CDATA[<p>我的服务器是阿里云的ubuntu 16.04，电脑是Mac os。上传文件到Linux服务器可以在终端中采用如下命令上传：</p><pre><code>//filename是你要上传的文件名，username是服务器主机用户名，x.x.x.x是服务器IP地址，directory是要将文件上传到服务器的directory目录下scp [filename] [username]@x.x.x.x:[dirctory]</code></pre><p>命令scp基于ssh协议，可以将文件拷贝到远程服务器上的指定目录，Mac os自带，使用很方便。当然还可以使用ftp/sftp方式上传。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;我的服务器是阿里云的ubuntu 16.04，电脑是Mac os。上传文件到Linux服务器可以在终端中采用如下命令上传：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;//filename是你要上传的文件名，username是服务器主机用户名，x.x.x.x是服务器IP地址，direct
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SQLite清空表数据并将自增量归零</title>
+    <link href="http://jackro.cn/2017/06/16/sqlite-clear-table-data-and-set-autoincrement-to-zero/"/>
+    <id>http://jackro.cn/2017/06/16/sqlite-clear-table-data-and-set-autoincrement-to-zero/</id>
+    <published>2017-06-15T16:00:00.000Z</published>
+    <updated>2018-04-03T05:50:49.028Z</updated>
+    
+    <content type="html"><![CDATA[<p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。但是SQLite可以通过如下方式来实现：</p><p>1）先清空表数据：</p><pre><code>    delete from [tablename];</code></pre><p>2）当数据库中包含自增列时，会自动建立一个名为 sqlite_sequence 的表。这个表包含两个列：name和seq。name记录自增列所在的表（即tablename），seq记录当前序号（下一条记录的编号就是当前序号加1）。你可以通过如下方式将自增量归零：</p><pre><code>    //1. 将表名为tablename的自增量置0    update sqlite_sequence set seq = 0 where name = &#39;tablename&#39;    //2. 将表名为tablename的记录删除    delete from sqlite_sequence where name = &#39;tablename&#39;    //3. 将sqlite_sequence表清空数据    delete from sqlite_sequence</code></pre><p>虽然在普通的DBMS中，用delete不如用truncate快，但是SQLite对delete做了优化，这个优化也可以使它运行的很快。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。但是SQLite可以通过如下方式来实现：&lt;/p&gt;
+&lt;p&gt;1）先清空表数据：&lt;/p&gt;
+&lt;pre&gt;&lt;co
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>adb shell中提示Permission denied</title>
+    <link href="http://jackro.cn/2017/06/15/prompt-permission-denied-in-adb-shell/"/>
+    <id>http://jackro.cn/2017/06/15/prompt-permission-denied-in-adb-shell/</id>
+    <published>2017-06-14T16:00:00.000Z</published>
+    <updated>2018-04-03T05:50:43.004Z</updated>
+    
+    <content type="html"><![CDATA[<p>在Android开发中，如果需要查看本地数据库，可以在adb shell中查看（当然前提条件是真机root或者使用模拟器），输入下面的命令可以查看：</p><pre><code>Last login: Thu Jun 15 10:02:21 on ttys000JackRodeMacBook-Pro:~ jack$ adb shellgeneric_x86_64:/ $ cd /data/data/cn.jackro.databasedemo/databases//system/bin/sh: cd: /data/data/cn.jackro.databasedemo/databases:     Permission denied2|generic_x86_64:/ $ </code></pre><p>但是当执行cd命令切换到应用的数据库目录时，却提示Permission denied（权限拒绝），经查，可以执行su命令切换到超级用户来提高权限，访问该文件。命令如下所示：</p><pre><code>Last login: Thu Jun 15 10:09:58 on ttys000JackRodeMacBook-Pro:~ jack$ adb shellgeneric_x86_64:/ $ cd /data/data/cn.jackro.databasedemo/databases/system/bin/sh: cd: /data/data/cn.jackro.databasedemo/databases: Permission denied2|generic_x86_64:/ $ sugeneric_x86_64:/ # cd /data/data/cn.jackro.databasedemo/databasesgeneric_x86_64:/data/data/cn.jackro.databasedemo/databases # lsBookStore.db BookStore.db-journal generic_x86_64:/data/data/cn.jackro.databasedemo/databases #</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在Android开发中，如果需要查看本地数据库，可以在adb shell中查看（当然前提条件是真机root或者使用模拟器），输入下面的命令可以查看：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Last login: Thu Jun 15 10:02:21 on ttys000
+Jack
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Android 7.0行为变更之后台优化</title>
+    <link href="http://jackro.cn/2017/06/13/android-7.0-behavior-change-background-optimizations/"/>
+    <id>http://jackro.cn/2017/06/13/android-7.0-behavior-change-background-optimizations/</id>
+    <published>2017-06-12T16:00:00.000Z</published>
+    <updated>2018-04-03T05:50:31.907Z</updated>
+    
+    <content type="html"><![CDATA[<p>Android 7.0 对系统和API做了一些变更。其中关于隐式广播的移除见官方文档链接：<a href="https://developer.android.com/about/versions/nougat/android-7.0-changes.html#bg-opt" target="_blank" rel="noopener">Project Svelte：后台优化</a>，根据官方文档介绍，该变更主要是为了帮助优化内存使用和电量消耗，因为隐式广播会在后台频繁启动已注册侦听这些广播的应用，删除这些广播可以显著提升设备性能和用户体验。</p><p>针对这一变更，官方文档也给出了应用开发者如何改写应用的一些建议，官方文档参考：<a href="https://developer.android.com/preview/features/background-optimization.html" target="_blank" rel="noopener">后台优化</a>。</p><p>1）<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION" target="_blank" rel="noopener">CONNECTIVITY_ACTION</a></p><p>面向Android 7.0(API 24)及以上的应用如果在应用的AndroidManifest静态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION" target="_blank" rel="noopener">CONNECTIVITY_ACTION</a>，将不会收到该广播。但是我们可以使用<a href="https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver, android.content.IntentFilter" target="_blank" rel="noopener">Context.registerReceiver()</a>)动态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION" target="_blank" rel="noopener">CONNECTIVITY_ACTION</a>，这将会让我们的应用在运行时收到该广播（这样也可以改善内存使用和电量消耗）。</p><p>Android 7.0(API 24)还为我们提供了<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html" target="_blank" rel="noopener">JobScheduler</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters" target="_blank" rel="noopener">onStartJob()</a>)（<a href="https://developer.android.com/reference/android/app/job/JobService.html" target="_blank" rel="noopener">JobService</a>的回调方法），我们可以使用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html" target="_blank" rel="noopener">JobInfo.Builder</a>构建一个在Unmetered Network Connection上的<a href="https://developer.android.com/reference/android/app/job/JobInfo.html" target="_blank" rel="noopener">JobInfo</a>对象，然后使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html" target="_blank" rel="noopener">JobScheduler</a>执行这个<a href="https://developer.android.com/reference/android/app/job/JobInfo.html" target="_blank" rel="noopener">JobInfo</a>对象，接下来就可以在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters" target="_blank" rel="noopener">onStartJob()</a>)方法里执行我们自己的逻辑。</p><p>我们还可以使用<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html" target="_blank" rel="noopener">ConnectivityManager.NetworkCallback</a>来监听网络变化，比如该接口中的<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html#onAvailable(android.net.Network" target="_blank" rel="noopener">onAvailable()</a>)方法。</p><p>2）<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_PICTURE" target="_blank" rel="noopener">ACTION_NEW_PICTURE</a>或<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_VIDEO" target="_blank" rel="noopener">ACTION_NEW_VIDEO</a></p><p>在Android 7.0(API 24)里，这两个隐式广播被移除了，应用程序不能发送或接受这两个广播来监听系统的照片或者视频的拍摄。但是在Android 8.0(API 26)，这两个广播又被添加回来了，不过也仅仅可以通过动态注册来接收，并且仅仅适用于监听到他们来执行简单的可以立即被执行的任务，执行复杂的繁重的任务仍然需要使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html" target="_blank" rel="noopener">JobScheduler</a>、<a href="https://developer.android.com/reference/android/app/job/JobInfo.html" target="_blank" rel="noopener">JobInfo</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters" target="_blank" rel="noopener">onStartJob()</a>)，和上面第一点处理方法类似，不同的是，需要调用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html#addTriggerContentUri(android.app.job.JobInfo.TriggerContentUri" target="_blank" rel="noopener">JobInfo.Builder.addTriggerContentUri()</a>)构造<a href="https://developer.android.com/reference/android/app/job/JobInfo.html" target="_blank" rel="noopener">JobInfo</a>对象，然后在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters" target="_blank" rel="noopener">onStartJob()</a>)回调方法里去调用<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentAuthorities(" target="_blank" rel="noopener">JobParameters.getTriggeredContentAuthorities()</a>)和<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentUris(" target="_blank" rel="noopener">JobParameters.getTriggeredContentUris()</a>)来获取拍照或摄像时增加的照片或视频的Uri。</p><p>像上面这样优化App可以让App在低内存的设备上改善性能和用户体验（这可以改善Android应用生态环境），移除后台服务（background service）和隐式广播的依赖可以帮助你的App在这样的设备上运行的更好。虽然Android 7.0(API 24)在逐步减少这样的issue，但是我们仍然推荐你通过完全不使用这样的后台进程来优化你的App。<br>Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不使用后台进程时是否还能很好的运行。命令如下：</p><pre><code>    //模拟隐式广播和后台服务（background service）不可用的条件    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND ignore    //重新使隐式广播和后台服务（background service）可用    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND allow</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Android 7.0 对系统和API做了一些变更。其中关于隐式广播的移除见官方文档链接：&lt;a href=&quot;https://developer.android.com/about/versions/nougat/android-7.0-changes.html#bg-opt
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Mac Android项目目录下执行./gradlew clean 提示Permission denied</title>
+    <link href="http://jackro.cn/2017/04/10/mac-android-project-directory-execute-gradle-clean-prompt-permission-denied/"/>
+    <id>http://jackro.cn/2017/04/10/mac-android-project-directory-execute-gradle-clean-prompt-permission-denied/</id>
+    <published>2017-04-09T16:00:00.000Z</published>
+    <updated>2018-04-03T05:50:25.644Z</updated>
+    
+    <content type="html"><![CDATA[<p>Mac环境下Android Studio创建的android项目，在项目目录下执行./gradlew clean，提示Permission denied，看到这个提示，自然想到的是sudo执行，然而sudo执行并不能解决问题，反而会提示command not found。万般无奈，只能百度，发现执行以下命令即可解决问题。</p><pre><code>//为gradlew文件添加可执行属性chmod +x gradlew</code></pre><p>chmod命令是修改文件访问权限的命令，文件访问权限包括只读、只写、可执行三种，其实最开始的提示Permission denied（权限拒绝）已经告诉了我们是android项目目录下可执行文件gradlew的访问权限的问题。因此需要为该文件添加可执行权限，所以执行以上命令即可解决该问题。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Mac环境下Android Studio创建的android项目，在项目目录下执行./gradlew clean，提示Permission denied，看到这个提示，自然想到的是sudo执行，然而sudo执行并不能解决问题，反而会提示command not found。万
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>模拟器收不到UILocalNotification本地通知</title>
+    <link href="http://jackro.cn/2017/02/24/ios-monitor-unable-get-uilocalnotification-local-notification/"/>
+    <id>http://jackro.cn/2017/02/24/ios-monitor-unable-get-uilocalnotification-local-notification/</id>
+    <published>2017-02-23T16:00:00.000Z</published>
+    <updated>2018-04-03T05:50:19.055Z</updated>
+    
+    <content type="html"><![CDATA[<p>通知功能是iOS应用开发经常会碰到的需求，iOS应用的通知分为本地通知和远程通知（即消息推送），Apple develop官网的API Guides对通知的开发有详细的介绍。</p><p>今天我碰到的问题是模拟器收不到本地通知，按照惯例，先上本地通知的代码：</p><pre><code>    UILocalNotification *note = [[UILocalNotification alloc] init];    note.alertBody = @&quot;Hypnotize&quot;;    note.fireDate = date; //这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的    note.applicationIconBadgeNumber = 1;    [[UIApplication sharedApplication] scheduleLocalNotification:note];</code></pre><p>原本以为这样就可以接收到通知了，结果一运行，始终看不到通知，过了通知的设定时间好久了，也看不到通知。查阅了下通知的用法文档，才知道需要去申请发送通知的授权。修正后的代码如下所示：</p><pre><code>//判断是否已经授权用户发送通知if ([[UIApplication sharedApplication] currentUserNotificationSettings].types != UIUserNotificationTypeNone) {    UILocalNotification *note = [[UILocalNotification alloc] init];    note.alertBody = @&quot;Hypnotize&quot;;    note.fireDate = date;//这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的    note.applicationIconBadgeNumber = 1;    [[UIApplication sharedApplication] scheduleLocalNotification:note];} else{    //用户注册通知，注册后才能收到通知，这会给用户一个弹框，提示用户选择是否允许发送通知    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound   categories:nil]];}</code></pre><p>用户注册通知后，会收到一个回调函数，一般如果未授权，创建通知就在这个回调函数里进行。</p><pre><code>//用户注册通知回调函数- (void)application:(UIApplication *) application    didRegisterUserNotificationSettings:(UIUserNotificationSettings   *)notificationSettings {     if (notificationSettings.types != UIUserNotificationTypeNone) {         NSLog(@&quot;haha&quot;);        UILocalNotification *note = [[UILocalNotification alloc] init];        note.alertBody = @&quot;Hypnotize&quot;;        note.fireDate = rvc.selectDate;        note.applicationIconBadgeNumber = 1;        [[UIApplication sharedApplication] scheduleLocalNotification:note];    }}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;通知功能是iOS应用开发经常会碰到的需求，iOS应用的通知分为本地通知和远程通知（即消息推送），Apple develop官网的API Guides对通知的开发有详细的介绍。&lt;/p&gt;
+&lt;p&gt;今天我碰到的问题是模拟器收不到本地通知，按照惯例，先上本地通知的代码：&lt;/p&gt;
+&lt;p
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>自定义UIView不响应touchesBegan事件</title>
+    <link href="http://jackro.cn/2017/02/23/custom-uiview-not-respond-touchesbegan-event/"/>
+    <id>http://jackro.cn/2017/02/23/custom-uiview-not-respond-touchesbegan-event/</id>
+    <published>2017-02-22T16:00:00.000Z</published>
+    <updated>2018-09-03T10:10:28.529Z</updated>
+    
+    <content type="html"><![CDATA[<p>iOS开发中会使用到自定义UIView，下面是我在学习过程中写的一个自定义UIView：</p><pre><code>#import &quot;BNRHypnosisView.h&quot;@interface BNRHypnosisView()@property(nonatomic, strong) UIColor *circleColor;@end@implementation BNRHypnosisView- (void)setCircleColor:(UIColor *)circleColor {    _circleColor = circleColor;    [self setNeedsDisplay];}- (instancetype)initWithFrame:(CGRect)frame{    self = [super initWithFrame:frame];    if (self) {        self.backgroundColor = [UIColor clearColor];        self.circleColor = [UIColor lightGrayColor];        //self.userInteractionEnabled = YES; //开启用户交互仍然不能响应touchesBegan事件    }    return self;}- (void)drawRect:(CGRect)rect {    CGContextRef cgContext = UIGraphicsGetCurrentContext();    CGRect bounds = self.bounds;    CGPoint center;    center.x = bounds.origin.x + bounds.size.width / 2.0;    center.y = bounds.origin.y + bounds.size.height / 2.0;    float maxRadius = hypot(bounds.size.width, bounds.size.height) / 2.0;    UIBezierPath *path = [[UIBezierPath alloc] init];   for (float currentRadius = maxRadius; currentRadius &gt; 0; currentRadius -=     20) {        [path moveToPoint:CGPointMake(center.x + currentRadius, center.y)];        [path addArcWithCenter:center radius:currentRadius startAngle:0.0   endAngle:M_PI*2.0 clockwise:YES];    }    [self.circleColor setStroke];    path.lineWidth = 10.0;    [path stroke];    CGContextSaveGState(cgContext);    CGContextSetShadow(cgContext, CGSizeMake(4, 7), 3);    UIImage *logoImage = [UIImage imageNamed:@&quot;logo.png&quot;];    [logoImage drawInRect:rect];    CGContextRestoreGState(cgContext);}- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent   *)event {    NSLog(@&quot;%@ was touched&quot;, self);    float red = (arc4random() % 100) / 100.0;    float green = (arc4random() % 100) / 100.0;    float blue = (arc4random() % 100) / 100.0;    UIColor *randomColor = [UIColor colorWithRed:red                                       green:green blue:blue alpha:1.0];    self.circleColor = randomColor;}@end</code></pre><p>在AppDelegate中使用这个自定义UIView，代码如下所示：</p><pre><code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    // Override point for customization after application launch.    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];    NSArray *windows = [[UIApplication sharedApplication] windows];    for(UIWindow *window in windows) {        if(window.rootViewController == nil){            UIViewController *vc = [[UIViewController alloc]initWithNibName:nil                                                                 bundle:nil];            window.rootViewController = vc;        }    }    CGRect firstFrame = self.window.bounds;    BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];   [self.window addSubview:firstView];    self.window.backgroundColor = [UIColor whiteColor];    [self.window makeKeyAndVisible];    return YES;}</code></pre><p>看似很完美的代码，但是一运行，无法响应touchesBegan事件，开始以为是没有开启用户交互，加上开启用户交互self.userInteractionEnabled = YES，仍然没用，后来有人说是这个自定义UIView视图被遮挡，导致无法响应触摸事件，给了我开启视图调试器调试看看的建议，果然，开启视图调试器看到这个自定义UIView确实被遮挡了，如下图所示：</p><p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022301.jpeg" alt="jackro_blog2017022301"></p><p>该怎么解决呢？有人说是[self.window makeKeyAndVisible]出了问题，他会把window的rootViewController放到最前面，但我想这肯定是没读懂官方文档对makeKeyAndVisible方法的解释，如下图所示：</p><p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022303.png" alt="jackro_blog2017022303"></p><p>它是UIWindow对象的一个实例方法，是把当前window置于其他window的前面，也就是说是把整个包含了我的自定义UIView的window对象置于最前面，所以，即使注释掉这行代码，仍然无法解决我的自定义UIView被遮挡的问题。</p><p>那么问题出在哪里呢？对，问题就出在AppDelegate的下面这段代码中：</p><pre><code>NSArray *windows = [[UIApplication sharedApplication] windows];for(UIWindow *window in windows) {    if(window.rootViewController == nil){        UIViewController *vc = [[UIViewController alloc]initWithNibName:nil                                                                 bundle:nil];        window.rootViewController = vc;     }}</code></pre><p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022302.jpeg" alt="jackro_blog2017022302"></p><p>根据上图所示官方文档对rootViewController的说明，可以知道设置了window.rootViewController会给window设定一个content view。根据视图调试器显示出来的内容，这个content view应该也就是一个UIView。所以当这个自定义的UIView添加到self.window上，代码如下所示：</p><pre><code>CGRect firstFrame = self.window.bounds;BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];[self.window addSubview:firstView];</code></pre><p>这个自定义UIView就会被rootViewController设定的content view遮挡，就不能响应触摸事件了。</p><p>因此，解决这个问题修改后的关键代码如下所示：</p><pre><code>CGRect firstFrame = self.window.bounds;BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];[self.window.rootViewController.view addSubview:firstView];</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;iOS开发中会使用到自定义UIView，下面是我在学习过程中写的一个自定义UIView：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#import &amp;quot;BNRHypnosisView.h&amp;quot;
+
+@interface BNRHypnosisView()
+
+@propert
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Application windows are expected to have a root view controller at the end of application launch</title>
+    <link href="http://jackro.cn/2017/02/22/application-windows-are-expected-to-have-a-root-view-controller-at-the-end-of-application-launch/"/>
+    <id>http://jackro.cn/2017/02/22/application-windows-are-expected-to-have-a-root-view-controller-at-the-end-of-application-launch/</id>
+    <published>2017-02-21T16:00:00.000Z</published>
+    <updated>2018-09-03T10:16:25.351Z</updated>
+    
+    <content type="html"><![CDATA[<p>现阶段的iOS应用开发，我们必须在AppDelegate中设置self.window.rootViewController，但是在以前老版本的xcode中可以不设置，iOS应用也可以照常运行。因此如果一些老的项目或者照一些老的iOS教程书籍敲的代码，运行就可能会出现下面的异常：</p><pre><code>*** Terminating app due to uncaught exception &#39;NSInternalInconsistencyException&#39;, reason: &#39;Application windows are expected to have a root view controller at the end of application launch&#39;</code></pre><p>并且app只能打开启动屏，无法进入应用，程序在main函数中停止运行，如下图所示：</p><p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022201.png" alt="jackro_blog2017022201"></p><p>这里我碰到这个问题的demo是这样的，有一个自定义view，代码如下：</p><pre><code>////  BNRHypnosisView.h//  Hypnosister////  Created by JackRo on 2017/2/21.//  Copyright © 2017年 JackRo. All rights reserved.//#import &lt;UIKit/UIKit.h&gt;@interface BNRHypnosisView : UIView@end////  BNRHypnosisView.m//  Hypnosister////  Created by JackRo on 2017/2/21.//  Copyright © 2017年 JackRo. All rights reserved.//#import &quot;BNRHypnosisView.h&quot;@implementation BNRHypnosisView- (instancetype)initWithFrame:(CGRect)frame{    self = [super initWithFrame:frame];    if (self) {        self.backgroundColor = [UIColor clearColor];    }    return self;}/*// Only override drawRect: if you perform custom drawing.// An empty implementation adversely affects performance during animation.- (void)drawRect:(CGRect)rect {    // Drawing code}*/- (void)drawRect:(CGRect)rect {    CGRect bounds = self.bounds;    CGPoint center;    center.x = bounds.origin.x + bounds.size.width / 2.0;    center.y = bounds.origin.y + bounds.size.height / 2.0;    float radius = (MIN(bounds.size.width, bounds.size.height) / 2.0);    UIBezierPath *path = [[UIBezierPath alloc] init];    [path addArcWithCenter:center radius:radius startAngle:0.0 endAngle:M_PI*2.0 clockwise:YES];    [path stroke];}@end</code></pre><p>AppDelegate中代码如下：</p><pre><code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    // Override point for customization after application launch.    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];    CGRect firstFrame = self.window.bounds;    BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];    firstView.backgroundColor = [UIColor redColor];    [self.window addSubview:firstView];    self.window.backgroundColor = [UIColor whiteColor];    [self.window makeKeyAndVisible];    return YES;}</code></pre><p>根据异常信息的意思，应用就是缺少一个rootViewController，所以在AppDelegate中给应用设置rootViewController就可以了，所以解决后的代码如下所示：</p><pre><code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    // Override point for customization after application launch.    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];    //-----------------------------------------------------------------------------------------    //解决该问题的代码    NSArray *windows = [[UIApplication sharedApplication] windows];    for(UIWindow *window in windows) {        if(window.rootViewController == nil){            UIViewController *vc = [[UIViewController alloc]initWithNibName:nil                                                                 bundle:nil];            window.rootViewController = vc;        }    }    //解决该问题的代码    //----------------------------------------------------------------------------------------    CGRect firstFrame = self.window.bounds;    BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];    firstView.backgroundColor = [UIColor redColor];    [self.window addSubview:firstView];    self.window.backgroundColor = [UIColor whiteColor];    [self.window makeKeyAndVisible];    return YES;}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;现阶段的iOS应用开发，我们必须在AppDelegate中设置self.window.rootViewController，但是在以前老版本的xcode中可以不设置，iOS应用也可以照常运行。因此如果一些老的项目或者照一些老的iOS教程书籍敲的代码，运行就可能会出现下面的异
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Android实现FloatingActionButton自定义大小</title>
+    <link href="http://jackro.cn/2016/11/20/android-floatingactionbutton-custom-size/"/>
+    <id>http://jackro.cn/2016/11/20/android-floatingactionbutton-custom-size/</id>
+    <published>2016-11-19T16:00:00.000Z</published>
+    <updated>2018-09-03T10:23:47.069Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在项目中使用了<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html" target="_blank" rel="noopener">FloatingActionButton</a> ，但是为了让UI看起来留白不是那么多，需要对<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html" target="_blank" rel="noopener">FloatingActionButton</a> 进行自定义大小。</p><p>根据官方文档的说明，<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html" target="_blank" rel="noopener">FloatingActionButton</a> 仅仅支持设置app:fabSize=”normal”来改变fab的大小，并且这个fabSize的大小提供了三个可选项（normal，mini和auto）来设置，可以在布局里设置也可以在代码里调用setSize方法进行设置。</p><p>这里一开始是想到通过在布局里改变layout_width和layout_height来改变控件的大小的，但是设置之后（两者均设置为100dp，fabSize设置为normal），效果如下所示：</p><p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112001.png" alt="jackro_blog2016112001"></p><p>并且当设置了fab的固定宽高再来改变它的fabSize属性（改为mini或auto）时，效果会是fab的图标被撑的很大，甚至边缘都看不到了，显然这样通过固定fab的宽高属性来改变其大小是行不通的。</p><p>翻阅FloatingActionButton的源码，其第三个构造函数如下</p><pre><code class="java">    public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {        super(context, attrs, defStyleAttr);        ThemeUtils.checkAppCompatTheme(context);        TypedArray a = context.obtainStyledAttributes(attrs,                R.styleable.FloatingActionButton, defStyleAttr,                R.style.Widget_Design_FloatingActionButton);        mBackgroundTint = a.getColorStateList(R.styleable.FloatingActionButton_backgroundTint);        mBackgroundTintMode = ViewUtils.parseTintMode(a.getInt(                R.styleable.FloatingActionButton_backgroundTintMode, -1), null);        mRippleColor = a.getColor(R.styleable.FloatingActionButton_rippleColor, 0);        mSize = a.getInt(R.styleable.FloatingActionButton_fabSize, SIZE_AUTO);        mBorderWidth = a.getDimensionPixelSize(R.styleable.FloatingActionButton_borderWidth, 0);        final float elevation = a.getDimension(R.styleable.FloatingActionButton_elevation, 0f);        final float pressedTranslationZ = a.getDimension(                R.styleable.FloatingActionButton_pressedTranslationZ, 0f);        mCompatPadding = a.getBoolean(R.styleable.FloatingActionButton_useCompatPadding, false);        a.recycle();        mImageHelper = new AppCompatImageHelper(this);        mImageHelper.loadFromAttributes(attrs, defStyleAttr);        mMaxImageSize = (int) getResources().getDimension(R.dimen.design_fab_image_size);        getImpl().setBackgroundDrawable(mBackgroundTint, mBackgroundTintMode,                mRippleColor, mBorderWidth);        getImpl().setElevation(elevation);        getImpl().setPressedTranslationZ(pressedTranslationZ);    }</code></pre><p>都是读取属性来设置一些自定义属性，看到最后三行，发现getImpl方法的调用，它的返回值是FloatingActionButtonImpl，原来fab都是通过FloatingActionButtonImpl来实现其自定义属性的，找到getImpl这个方法，源码如下：</p><pre><code class="java">    private FloatingActionButtonImpl getImpl() {        if (mImpl == null) {            mImpl = createImpl();        }        return mImpl;    }    private FloatingActionButtonImpl createImpl() {        final int sdk = Build.VERSION.SDK_INT;        if (sdk &gt;= 21) {            return new FloatingActionButtonLollipop(this, new ShadowDelegateImpl(),                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);        } else if (sdk &gt;= 14) {            return new FloatingActionButtonIcs(this, new ShadowDelegateImpl(),                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);        } else {            return new FloatingActionButtonGingerbread(this, new ShadowDelegateImpl(),                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);        }    }</code></pre><p>上面创建FloatingActionButtonImpl每种情况都传递了ShadowDelegateImpl的一个实例，说明这个类对创建FloatingActionButtonImpl很重要，往下看这个类的源码，如下所示：</p><pre><code class="java">    private class ShadowDelegateImpl implements ShadowViewDelegate {        ShadowDelegateImpl() {        }        @Override        public float getRadius() {            return getSizeDimension() / 2f;        }        @Override        public void setShadowPadding(int left, int top, int right, int bottom) {            mShadowPadding.set(left, top, right, bottom);            setPadding(left + mImagePadding, top + mImagePadding,                    right + mImagePadding, bottom + mImagePadding);        }        @Override        public void setBackgroundDrawable(Drawable background) {            FloatingActionButton.super.setBackgroundDrawable(background);        }        @Override        public boolean isCompatPaddingEnabled() {            return mCompatPadding;        }    }</code></pre><p>这个类里有一个getRadius方法，字面意思理解就是获取半径的，终于柳暗花明，原来fab的大小（即半径）是这个方法来获取的，可以看到它调用了getSizeDimension，下面看这个getSizeDimension方法，源码如下：</p><pre><code class="java">    int getSizeDimension() {        return getSizeDimension(mSize);    }    private int getSizeDimension(@Size final int size) {        final Resources res = getResources();        switch (size) {            case SIZE_AUTO:                // If we&#39;re set to auto, grab the size from resources and refresh                final int width = ConfigurationHelper.getScreenWidthDp(res);                final int height = ConfigurationHelper.getScreenHeightDp(res);                return Math.max(width, height) &lt; AUTO_MINI_LARGEST_SCREEN_WIDTH                        ? getSizeDimension(SIZE_MINI)                        : getSizeDimension(SIZE_NORMAL);            case SIZE_MINI:                return res.getDimensionPixelSize(R.dimen.design_fab_size_mini);            case SIZE_NORMAL:            default:                return res.getDimensionPixelSize(R.dimen.design_fab_size_normal);        }    }</code></pre><p>原来这里google做的控件也是通过获取资源文件dimens.xml来获取dimen值的（废话，当然是了）。终于看到这里，我才恍然大悟，我可以通过自定义这个design_fab_size_normal来实现覆盖默认的dimen值呀（因为我的布局里是设置fabSize为normal的），自定义代码如下所示：</p><pre><code class="xml">&lt;dimen name=&quot;design_fab_size_normal&quot; tools:ignore=&quot;PrivateResource&quot;&gt;80dp&lt;/dimen&gt;</code></pre><p>这样即完美搞定我的fab自定义大小的需求。上张效果图，如下所示：</p><p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112002.jpg" alt="jackro_blog2016112002"></p><p>和之前那个设置fab的固定宽高的效果比好多了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近在项目中使用了&lt;a href=&quot;https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html&quot; target=&quot;_blank&quot; rel=&quot;n
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Android实现EditText响应drawableRight点击事件</title>
+    <link href="http://jackro.cn/2016/10/10/android-edittext-drawableright-click-event-implement/"/>
+    <id>http://jackro.cn/2016/10/10/android-edittext-drawableright-click-event-implement/</id>
+    <published>2016-10-09T16:00:00.000Z</published>
+    <updated>2018-04-03T05:49:13.325Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里自定义了一个RightPicClickEditText，继承AppCompatEditText，并且在其三个构造函数中调用父组件的相应构造函数，是为了适配5.0以下应用MD风格，代码如下：</p><pre><code>public RightPicClickEditText(Context context) {    super(context);    init();}public RightPicClickEditText(Context context, AttributeSet attrs) {    super(context, attrs);    init();}public RightPicClickEditText(Context context, AttributeSet attrs, int defStyleAttr) {    super(context, attrs, defStyleAttr);    init();}</code></pre><p>我们或许还需要定义一个右侧图标变量的引用，你可以对这个右侧图标干些自定义的事，代码如下：</p><pre><code>/** * EditText右侧的图标 */protected Drawable mRightDrawable;private void init() {    mRightDrawable = getCompoundDrawables()[2];    if (mRightDrawable == null) {//这里当没有设置右侧图标时你可以给它设置个默认的右侧图标，当然根据你的项目需求来        return;    }//这里当设置了右侧图标时，我们对图标做了一些自定义设置，你也可以做其他设置    mRightDrawable.setBounds(0, 0, mRightDrawable.getIntrinsicWidth(), mRightDrawable.getIntrinsicHeight());}</code></pre><p>最关键的来了，我们需要重写自定义EditText的触摸事件onTouchEvent，这里我们通过判断触摸的坐标位置是否在右侧图标范围内来模拟右侧图标的点击事件。如果在这个范围内，则证明点击了右侧图标，为了方便外部调用处理，我们定义了一个接口在这里回调，一旦点击了右侧图标，则触发接口回调。代码如下：</p><pre><code>public void setRightPicOnclickListener(RightPicOnclickListener rightPicOnclickListener) {    this.rightPicOnclickListener = rightPicOnclickListener;}public interface RightPicOnclickListener {    void rightPicClick();}private RightPicOnclickListener rightPicOnclickListener;@Overridepublic boolean onTouchEvent(MotionEvent event) {    if (event.getAction() == MotionEvent.ACTION_UP) {        if (mRightDrawable != null) {            boolean touchable = event.getX() &gt; (getWidth() - getTotalPaddingRight())                    &amp;&amp; (event.getX() &lt; ((getWidth() - getPaddingRight())));            if (touchable) {                //设置点击EditText右侧图标EditText失去焦点，                // 防止点击EditText右侧图标EditText获得焦点，软键盘弹出                setFocusableInTouchMode(false);                setFocusable(false);                //点击EditText右侧图标事件接口回调                if (onRightPicClickListener != null) {                    onRightPicClickListener.rightPicClick(this);                }            } else {                //设置点击EditText输入区域，EditText请求焦点，软键盘弹出，EditText可编辑                //setFocusableInTouchMode(true);                //setFocusable(true);                //设置点击EditText输入区域，EditText不请求焦点，软键盘不弹出，EditText不可编辑                setFocusableInTouchMode(false);                setFocusable(false);            }        }    }    return super.onTouchEvent(event);}</code></pre><p>外部应用就简单了，示例代码如下：</p><pre><code>&lt;cn.jackro.rightpicclickedittext.RightPicClickEditText    android:id=&quot;@+id/right_click_et&quot;    android:layout_width=&quot;wrap_content&quot;    android:layout_height=&quot;wrap_content&quot;    android:layout_gravity=&quot;center&quot;    android:drawableRight=&quot;@android:drawable/ic_menu_search&quot;    android:hint=&quot;@string/click_hint&quot;    android:inputType=&quot;text&quot;    android:maxLines=&quot;1&quot;    tools:ignore=&quot;RtlHardcoded&quot;/&gt;public class MainActivity extends AppCompatActivity implements RightPicClickEditText.OnRightPicClickListener {    @BindView(R.id.right_click_et)    RightPicClickEditText mRightClickEt;    @Override    protected void onCreate(Bundle savedInstanceState) {        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_main);        ButterKnife.bind(this);        mRightClickEt.setOnRightPicClickListener(this);    }    @Override    public void rightPicClick(EditText editText) {        Toast.makeText(this, &quot;点击了搜索按钮&quot;, Toast.LENGTH_SHORT).show();    }}</code></pre><p>实现这样一个功能，我们除了像上面这样干之外，还可以直接使用布局包裹一个EditText和一个ImageView，然后给ImageView设置点击事件即可，这种方法稍微简单点。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这里自定义了一个RightPicClickEditText，继承AppCompatEditText，并且在其三个构造函数中调用父组件的相应构造函数，是为了适配5.0以下应用MD风格，代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public RightPicClickEditT
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>解决Camera is being used after Camera.release() was called</title>
+    <link href="http://jackro.cn/2016/07/01/resolve-camera-is-being-used-after-camera-release()-was-called/"/>
+    <id>http://jackro.cn/2016/07/01/resolve-camera-is-being-used-after-camera-release()-was-called/</id>
+    <published>2016-06-30T16:00:00.000Z</published>
+    <updated>2018-04-03T05:49:08.157Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>java.lang.RuntimeException: Camera is being used after Camera.release() was called</code></pre><p>在相机开发中，打开相机后点返回，偶尔会出现如上所示的异常，解决代码如下：</p><pre><code>@BindView(R.id.sv_preview)SurfaceView mSvPreview;private BaseCameraManager cameraManager;@Overrideprotected void onResume() {    super.onResume();    int hasCameraPermission = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);    if (hasCameraPermission != PackageManager.PERMISSION_GRANTED) {        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA},                MY_PERMISSIONS_REQUEST_CAMERA);    }    //region 这里调用初始化照相机并设置SurfaceHolder的回调以解决按下home键或者按下最近应用菜单键再返回扫码界面时相机不显示的问题    cameraManager = new CameraManager(getApplication());    setSurfaceViewVisible(true);    cameraManager.setOnResultListener(this);    mSvPreview.getHolder().addCallback(this);    //endregion}@Overridepublic void surfaceDestroyed(SurfaceHolder holder) {            setEmptyViewVisible(true);        //解决java.lang.RuntimeException: Camera is being used after Camera.release() was called异常        holder.removeCallback(this);        cameraManager.releaseCamera();}</code></pre><p>BaseCameraManager源码如下：</p><pre><code>/** * CameraManager的基类 * Created by Jack on 2016/7/1 12:55 * Email: zhuochangjing@foxmail.com */public abstract class BaseCameraManager {    private Point qrBoxSize;    boolean hook = false;    int rotate;    int count = 0;    boolean isRelease = true;    ExecutorService executor;    int displayOrientation;    private MultiFormatReader reader;    OnResultListener onResultListener;    protected Context context;    BaseCameraManager(Context context) {        this.context = context;        executor = Executors.newSingleThreadExecutor();        reader = new MultiFormatReader();        qrBoxSize = new Point();        qrBoxSize.x = (int) context.getResources().getDimension(R.dimen.width_qr_box_view);        qrBoxSize.y = (int) context.getResources().getDimension(R.dimen.height_qr_box_view);    }    QRResult getCodeValue(byte[] data, Point previewSize) {        Bitmap bitmap = null;        ByteArrayOutputStream stream = new ByteArrayOutputStream(data.length);        YuvImage image = new YuvImage(data, ImageFormat.NV21, previewSize.x, previewSize.y, null);        int left = previewSize.x - qrBoxSize.x &gt;&gt; 1;        int right = previewSize.x + qrBoxSize.x &gt;&gt; 1;        int top = previewSize.y - qrBoxSize.y &gt;&gt; 1;        int bottom = previewSize.y + qrBoxSize.y &gt;&gt; 1;        Rect rect = new Rect(left, top, right, bottom);        if (image.compressToJpeg(rect, 100, stream)) {            byte[] bytes = stream.toByteArray();            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);        }        try {            stream.close();        } catch (IOException e) {            Log.e(&quot;onPreviewFrame&quot;, e.toString());        }        if (displayOrientation &gt; 0) {            Matrix matrix = new Matrix();            matrix.postRotate(displayOrientation);            assert bitmap != null;            Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);            bitmap.recycle();            bitmap = newBitmap;        }        assert bitmap != null;        int width = bitmap.getWidth();        int height = bitmap.getHeight();        int[] pixels = new int[width * height];        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);        Result result = QRUtils.decode(new RGBLuminanceSource(width, height, pixels), reader);        if (result != null) {            return new QRResult(bitmap, result);        } else {            bitmap.recycle();            return null;        }    }    public void setHook(boolean hook) {        this.hook = hook;    }    public void setOnResultListener(OnResultListener onResultListener) {        this.onResultListener = onResultListener;    }    public void shutdownExecutor() {        executor.shutdown();    }    public ExecutorService getExecutor() {        return executor;    }    public void setRotate(int rotate) {        this.rotate = rotate;    }    public abstract void connectCamera(SurfaceHolder surfaceHolder);    public abstract void setCameraParameter();    public abstract void startCapture();    public abstract void releaseCamera();    public interface OnResultListener {        void onResult(QRResult qrResult);    }}</code></pre><p>CameraManager源码如下：</p><pre><code>/** * This class is for android targets below android 5.0 and it uses old camera api * Created by Jack on 2016/7/1 12:55 * Email: zhuochangjing@foxmail.com */@SuppressWarnings(&quot;deprecation&quot;)public class CameraManager extends BaseCameraManager implements Camera.AutoFocusCallback, Camera.PreviewCallback {    private Camera camera;    public CameraManager(Context context) {        super(context);    }    @Override    public void onAutoFocus(boolean success, Camera camera) {        if (hook || isRelease) return;        camera.setOneShotPreviewCallback(this);    }    @Override    public void connectCamera(SurfaceHolder surfaceHolder) {        if (!isRelease) return;        try {            camera = Camera.open();            isRelease = false;            camera.setPreviewDisplay(surfaceHolder);            setCameraParameter();            camera.startPreview();        } catch (Exception e) {            throw new RuntimeException(e);        }    }    @Override    public void releaseCamera() {        if (isRelease) return;        isRelease = true;        camera.setPreviewCallback(null);        camera.cancelAutoFocus();        camera.stopPreview();        try {            camera.setPreviewDisplay(null);        } catch (IOException e) {            throw new RuntimeException(e);        }        camera.release();        camera = null;    }    @Override    public void startCapture() {        if (hook || isRelease || executor.isShutdown()) return;        executor.execute(new Runnable() {            @Override            public void run() {                camera.autoFocus(CameraManager.this);            }        });    }    @Override    public void setCameraParameter() {        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();        Camera.getCameraInfo(0, cameraInfo);        int degrees = 0;        switch (rotate) {            case Surface.ROTATION_0: {                degrees = 0;                break;            }            case Surface.ROTATION_90: {                degrees = 90;                break;            }            case Surface.ROTATION_180: {                degrees = 180;                break;            }            case Surface.ROTATION_270: {                degrees = 270;                break;            }        }        if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {            displayOrientation = (cameraInfo.orientation + degrees) % 360;            displayOrientation = (360 - displayOrientation) % 360;        } else {            displayOrientation = (cameraInfo.orientation - degrees + 360) % 360;        }        /** Warning : may throw exception with parameters not supported */        Camera.Parameters parameters = camera.getParameters();        List&lt;Camera.Size&gt; previewSizes = parameters.getSupportedPreviewSizes();        Camera.Size bestSize = previewSizes.get(0);        for (int i = 1; i &lt; previewSizes.size(); i++) {            if (previewSizes.get(i).width * previewSizes.get(i).height &gt; bestSize.width * bestSize.height) {                bestSize = previewSizes.get(i);            }        }        parameters.setPreviewSize(bestSize.width, bestSize.height);        List&lt;Camera.Size&gt; pictureSizes = parameters.getSupportedPictureSizes();        bestSize = pictureSizes.get(0);        for (int i = 1; i &lt; pictureSizes.size(); i++) {            if (pictureSizes.get(i).width * pictureSizes.get(i).height &gt; bestSize.width * bestSize.height) {                bestSize = pictureSizes.get(i);            }        }        parameters.setPictureSize(bestSize.width, bestSize.height);        camera.setParameters(parameters);        camera.setDisplayOrientation(displayOrientation);    }    @Override    public void onPreviewFrame(final byte[] data, final Camera camera) {        if (hook || executor.isShutdown()) return;        Observable                .just(camera.getParameters().getPreviewSize())                .subscribeOn(Schedulers.from(executor))                .map(new Func1&lt;Camera.Size, QRResult&gt;() {                    @Override                    public QRResult call(Camera.Size size) {                        return getCodeValue(data, new Point(size.width, size.height));                    }                })                .observeOn(AndroidSchedulers.mainThread())                .subscribe(new Action1&lt;QRResult&gt;() {                    @Override                    public void call(QRResult qrResult) {                        if (qrResult == null) {                            count++;                            startCapture();                            return;                        }                        QRUtils.vibrate(context);                        if (onResultListener != null) {                            onResultListener.onResult(qrResult);                        }                        count = 0;                    }                }, new Action1&lt;Throwable&gt;() {                    @Override                    public void call(Throwable throwable) {                        Log.e(&quot;CameraManager&quot;, &quot;getCodeValue() failed .&quot;);                    }                });    }}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre&gt;&lt;code&gt;java.lang.RuntimeException: Camera is being used after Camera.release() was called
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在相机开发中，打开相机后点返回，偶尔会出现如上所示的异常，解
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ViewPager中的Fragment有百度地图MapView切换卡顿闪屏</title>
+    <link href="http://jackro.cn/2016/06/15/viewpager-fragment-contain-baidu-mapview-switch-skip-frame/"/>
+    <id>http://jackro.cn/2016/06/15/viewpager-fragment-contain-baidu-mapview-switch-skip-frame/</id>
+    <published>2016-06-14T16:00:00.000Z</published>
+    <updated>2018-04-03T05:49:01.824Z</updated>
+    
+    <content type="html"><![CDATA[<p>当Fragment和ViewPager一起使用时，某个Fragment中含有百度地图MapView时，当你从其他Fragment切换到含有百度地图MapView的Fragment时，会有卡顿闪屏的效果。解决方法是把百度地图的MapView替换成TextureMapView，卡顿闪屏问题完美解决。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;当Fragment和ViewPager一起使用时，某个Fragment中含有百度地图MapView时，当你从其他Fragment切换到含有百度地图MapView的Fragment时，会有卡顿闪屏的效果。解决方法是把百度地图的MapView替换成TextureMapView，
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
