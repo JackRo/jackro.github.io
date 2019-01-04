@@ -1,0 +1,82 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Fragment懒加载失效，多次加载数据 · JackRo 的个人博客</title><meta name="description" content="Fragment懒加载失效，多次加载数据 - JackRo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://jackro.cn/atom.xml" title="JackRo 的个人博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">HOME</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/JackRo" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Fragment懒加载失效，多次加载数据</h1><div class="post-info">May 29, 2016</div><div class="post-content"><p>ViewPager和Fragment一起使用时，为了防止一进入Activity就加载所有Fragment的数据，减轻Activity初始化加载的负担，需要用懒加载的方式去加载Fragment，懒加载的方法如下：</p>
+<p>让Fragment继承BaseFragment，BaseFragment代码如下所示：</p>
+<pre><code>    /**
+     * 应用程序的基类Fragment，实现懒加载
+     * Created by Jack on 2016/5/17 08:31.
+     * Email: zhuochangjing@foxmail.com
+     */
+    public abstract class BaseFragment extends Fragment {
+        protected boolean isVisible;
+
+        protected Dialog mDialog;
+
+        /**
+         * 在这里实现Fragment数据的懒加载
+         *
+         * @param isVisibleToUser Fragment UI对用户是否可见
+         */
+        @Override
+        public void setUserVisibleHint(boolean isVisibleToUser) {
+            super.setUserVisibleHint(isVisibleToUser);
+            if (getUserVisibleHint()) {
+                isVisible = true;
+                onVisible();
+            } else {
+                isVisible = false;
+                onInvisible();
+            }
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
+                savedInstanceState) {
+            View view = inflater.inflate(getContentView(), container, false);
+            initView(view);
+            mDialog = DialogUtil.createLoadingDialog(getActivity(), &quot;正在加载数据中......&quot;);
+            return view;
+        }
+
+        @Override
+        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+            lazyLoad();
+        }
+
+        protected void onVisible() {
+            lazyLoad();
+        }
+
+        protected void onInvisible() {
+        }
+
+        protected abstract void lazyLoad();
+
+        protected abstract int getContentView();
+
+        protected abstract void initView(View view);
+    }
+</code></pre><p>子Fragment代码如下：</p>
+<pre><code>    public class LogisticsFragment extends BaseFragment{
+        private boolean isPrepared;
+
+        @Override
+        protected void lazyLoad() {
+            if (isPrepared &amp;&amp; isVisible) {
+                //做加载数据的网络操作
+                isPrepared = false;
+            }
+        }
+        @Override
+        protected void initView(View view) {
+            //做初始化View的操作
+            isPrepared = true;
+        }
+    }
+</code></pre><p>但是现在由于ViewPager和Fragment一起用，由于ViewPager默认只能缓存Fragment左右两边各一个Fragment，也就是说缓存值是1，设置缓存页面的方法如下：</p>
+<pre><code>mViewpager.setOffscreenPageLimit(2);
+</code></pre><p>如果未调用上面的设置缓存页面的方法，默认缓存值就是1，此时如果你的Fragment页在3个及以上时，当你切换Fragment时，就会造成未缓存的Fragment会执行onDestroyView，然而再次切换到这个未缓存的Fragment或者切换到与这个未缓存的Fragment相邻的Fragment时，他就会再次执行onCreateView方法，也就是说再次initView，这样isPrepared又会被置为true，因此导致lazyLoad方法里的判断加载数据的表达式为true，加载数据就会再次执行了。</p>
+<p>这里懒加载并不是说让lazyLoad方法只执行一次，而是通过判断让加载数据只执行一次。</p>
+<p>ViewPager的设置缓存页面的方法具体细节可以翻阅官方文档：<a href="https://developer.android.google.cn/reference/android/support/v4/view/ViewPager.html#setOffscreenPageLimit(int" target="_blank" rel="noopener">setOffscreenPageLimit</a>)</p>
+<p>参考链接：<a href="http://blog.csdn.net/feixiangdexin123087/article/details/42059975" target="_blank" rel="noopener">ViewPager中切换界面Fragment被销毁的问题分析</a></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2016/05/30/open-polling-service-when-activity-exception-destroy/" class="prev">prev_post</a><a href="/2016/05/28/android-exception-windowmanager-badtokenexception-resolve/" class="next">next_post</a></div><div class="copyright"><p>© 2014 - 2019 <a href="http://jackro.cn">JackRo</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

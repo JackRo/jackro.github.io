@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Android Studio中鼠标悬停Fetching Documentation很长时间 · JackRo 的个人博客</title><meta name="description" content="Android Studio中鼠标悬停Fetching Documentation很长时间 - JackRo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://jackro.cn/atom.xml" title="JackRo 的个人博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">HOME</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/JackRo" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Android Studio中鼠标悬停Fetching Documentation很长时间</h1><div class="post-info">Nov 12, 2017</div><div class="post-content"><p>当我使用Android Studio（macOS 10.12.6系统，Android Studio 3.0）进行Android项目开发时，我经常会使用鼠标悬停的方式去查看类、方法和字段的文档注释。但当我这样做时，我发现一个非常让我懊恼的问题，当我鼠标悬停时，出现的弹框中显示Fetching Documentation…，并且它会显示很长一段时间。</p>
+<p>问题总是得解决的，经过一番搜索，我找到了问题的解决方法：修改配置文件。修改方法如下：</p>
+<ol>
+<li>找到AS的配置文件目录，我的是在~/Library/Preferences下</li>
+<li>找到AS当前版本的配置文件目录，我的是在~/Library/Preferences/AndroidStudio3.0下</li>
+<li>找到配置文件目录下options/jdk.table.xml文件打开</li>
+<li>找到你当前项目compileSdkVersion对应的版本所对应的jdk节点（当然如果需要的话你也可以修改所有版本的jdk节点）</li>
+<li>再找到roots节点下的javadocPath节点，修改该节点里的的url属性，使之与sourcePath节点里的url属性一致即可</li>
+</ol>
+<p>修改前的节点如下所示：</p>
+<pre><code>        &lt;javadocPath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;http://developer.android.com/reference/&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/javadocPath&gt;
+        &lt;sourcePath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;file://$USER_HOME$/Library/Android/sdk/sources/android-26&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/sourcePath&gt;
+</code></pre><p>在上面修改前的节点中，javadocPath在找android developer官网上的doc，由于网络的原因（某墙），肯定很难fetching到documentation。所以将url修改为下载到本地的源码（去本地源码中fetching documentation自然很快），如下所示：</p>
+<pre><code>        &lt;javadocPath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;file://$USER_HOME$/Library/Android/sdk/sources/android-26&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/javadocPath&gt;
+        &lt;sourcePath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;file://$USER_HOME$/Library/Android/sdk/sources/android-26&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/sourcePath&gt;
+</code></pre><p>修改完之后，需要重启下AS，fetching documentation就会很快了（不是很快，是非常快！）。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/04/03/mysql-custom-function-problem-resolve/" class="prev">prev_post</a><a href="/2017/09/22/macos-git-commit-ds_store-file-question-resolve/" class="next">next_post</a></div><div class="copyright"><p>© 2014 - 2019 <a href="http://jackro.cn">JackRo</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

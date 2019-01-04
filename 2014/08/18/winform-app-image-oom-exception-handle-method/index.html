@@ -1,0 +1,65 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Winform应用程序Image OOM异常的处理方法 · JackRo 的个人博客</title><meta name="description" content="Winform应用程序Image OOM异常的处理方法 - JackRo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://jackro.cn/atom.xml" title="JackRo 的个人博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">HOME</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/JackRo" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Winform应用程序Image OOM异常的处理方法</h1><div class="post-info">Aug 18, 2014</div><div class="post-content"><p>在做Winform应用程序处理Image时碰到了这样一个问题。窗体设计如下：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081801.jpg" alt="jackro_blog2014081801"></p>
+<p>当点击上面窗体中的上一张和下一张时，PictureBox中的图片会跟着切换，但是切换时却抛出了如下图所示的异常：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081802.jpg" alt="jackro_blog2014081802"></p>
+<p>内存不足！！！<br>我一开始的关键代码如下所示：</p>
+<pre><code>    private void Form1_Load(object sender, EventArgs e)
+        {
+            pictureBox1.Image = Image.FromFile(@&quot;f:\图片\1.jpg&quot;);
+        }
+
+        string[] path = Directory.GetFiles(@&quot;f:\图片&quot;);
+
+        int i = 0;
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            i++;
+            if (i == path.Length)
+            {
+                i = 0;
+            }
+            pictureBox1.Image = Image.FromFile(path[i]);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            i--;
+            if (i &lt; 0)
+            {
+                i = path.Length - 1;
+            }
+            pictureBox1.Image = Image.FromFile(path[i]);
+        }
+</code></pre><p>后来，我在博客园里找问题的答案，找到了如下几种解决办法：</p>
+<p><strong><1>释放内存</1></strong></p>
+<p>每次在PictureBox中显示完图像时，将其释放掉。释放内存关键代码如下：</p>
+<pre><code>    //if (pictureBox1.Image != null)//
+    {//    pictureBox1.Image.Dispose();//}
+    //或者像下面这样回收所有资源// GC.Collect();
+</code></pre><p><strong><2>双缓冲(类似于GDI+中的双倍缓冲)</2></strong><br>就是创建一个缓冲的“内存库”来存储图像，关键代码如下：</p>
+<pre><code>    //Bitmap bmp = new Bitmap(path[i]);  //bmp即相当于一个缓冲的“内存库”
+    //pictureBox1.Image = (Image)bmp;
+</code></pre><p><strong><3>自己琢磨出来的解决方法</3></strong><br>这种方法也可以释放内存，释放内存通过bmp和Image的Dispose()方法实现。<br>上面两种方法我都试了，可是都还是会抛出异常。后来我经过多次的调试，找到了一种解决问题的办法，这种办法我觉得很奇怪，有点匪夷所思。我先把解决问题的代码展示出来供诸君参考吧，希望看到的大猿能帮我解释下其中的道理。<br>我只改了我自己写的代码中的“遍历”的范围，修改的关键部分如下所示：</p>
+<pre><code>        private void button2_Click(object sender, EventArgs e)
+        {
+            i++;
+            if (i == path.Length - 1)
+            {
+                i = 0;
+            }
+            pictureBox1.Image = Image.FromFile(path[i]);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            i--;
+            if (i &lt; 0)
+            {
+                i = path.Length - 2;
+            }
+            pictureBox1.Image = Image.FromFile(path[i]);
+            GC.Collect();
+        }
+</code></pre><p>这种方法既没有释放内存，也没有做缓冲的“内存库”存图像，可是程序却跑的很正常，实在让人费解其中的道理。希望看到的大猿能给我解释下这其中的道理，感激不尽！</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2015/06/08/android-image-oom-question-resolve/" class="prev">prev_post</a><a href="/2014/08/13/winform-window-pass-value-way-summary/" class="next">next_post</a></div><div class="copyright"><p>© 2014 - 2019 <a href="http://jackro.cn">JackRo</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

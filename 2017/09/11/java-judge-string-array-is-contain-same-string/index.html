@@ -1,0 +1,22 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Java中判断一个字符串数组是否包含相同字符串 · JackRo 的个人博客</title><meta name="description" content="Java中判断一个字符串数组是否包含相同字符串 - JackRo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://jackro.cn/atom.xml" title="JackRo 的个人博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">HOME</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/JackRo" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Java中判断一个字符串数组是否包含相同字符串</h1><div class="post-info">Sep 11, 2017</div><div class="post-content"><p>如题。该问题很简单，使用一个嵌套循环即可解决，代码如下所示：</p>
+<pre><code>/**
+ * judge that a String Array whether or not contained equal String
+ * 
+ * @param strings
+ *            a string Array
+ * @return return true, contained; return false, not contained
+ */
+public static boolean judgeStrArrayContainsSameStr(String[] strings) {
+    int len = strings.length;
+    for (int i = 0; i &lt; len; i++) {
+        String temp = strings[i];
+        for (int j = i + 1; j &lt; len; j++) {
+            String string = strings[j];
+            if (string.equals(temp)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+</code></pre></div></article></div></main><footer><div class="paginator"><a href="/2017/09/20/android-cmake-build-script-in-project-root-direc-resulting-in-build-fail/" class="prev">prev_post</a><a href="/2017/06/23/use-scp-upload-file-to-linux-server/" class="next">next_post</a></div><div class="copyright"><p>© 2014 - 2019 <a href="http://jackro.cn">JackRo</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

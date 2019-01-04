@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 模拟器收不到UILocalNotification本地通知 · JackRo 的个人博客</title><meta name="description" content="模拟器收不到UILocalNotification本地通知 - JackRo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://jackro.cn/atom.xml" title="JackRo 的个人博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">HOME</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/JackRo" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">模拟器收不到UILocalNotification本地通知</h1><div class="post-info">Feb 24, 2017</div><div class="post-content"><p>通知功能是iOS应用开发经常会碰到的需求，iOS应用的通知分为本地通知和远程通知（即消息推送），Apple develop官网的API Guides对通知的开发有详细的介绍。</p>
+<p>今天我碰到的问题是模拟器收不到本地通知，按照惯例，先上本地通知的代码：</p>
+<pre><code>    UILocalNotification *note = [[UILocalNotification alloc] init];
+    note.alertBody = @&quot;Hypnotize&quot;;
+    note.fireDate = date; //这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
+    note.applicationIconBadgeNumber = 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:note];
+</code></pre><p>原本以为这样就可以接收到通知了，结果一运行，始终看不到通知，过了通知的设定时间好久了，也看不到通知。查阅了下通知的用法文档，才知道需要去申请发送通知的授权。修正后的代码如下所示：</p>
+<pre><code>//判断是否已经授权用户发送通知
+if ([[UIApplication sharedApplication] currentUserNotificationSettings].types != UIUserNotificationTypeNone) {
+    UILocalNotification *note = [[UILocalNotification alloc] init];
+    note.alertBody = @&quot;Hypnotize&quot;;
+    note.fireDate = date;//这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
+    note.applicationIconBadgeNumber = 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:note];
+} else{
+    //用户注册通知，注册后才能收到通知，这会给用户一个弹框，提示用户选择是否允许发送通知
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound   categories:nil]];
+}
+</code></pre><p>用户注册通知后，会收到一个回调函数，一般如果未授权，创建通知就在这个回调函数里进行。</p>
+<pre><code>//用户注册通知回调函数
+- (void)application:(UIApplication *) application
+    didRegisterUserNotificationSettings:(UIUserNotificationSettings   *)notificationSettings {
+     if (notificationSettings.types != UIUserNotificationTypeNone) {
+         NSLog(@&quot;haha&quot;);
+        UILocalNotification *note = [[UILocalNotification alloc] init];
+        note.alertBody = @&quot;Hypnotize&quot;;
+        note.fireDate = rvc.selectDate;
+        note.applicationIconBadgeNumber = 1;
+        [[UIApplication sharedApplication] scheduleLocalNotification:note];
+    }
+}
+</code></pre></div></article></div></main><footer><div class="paginator"><a href="/2017/04/10/mac-android-project-directory-execute-gradle-clean-prompt-permission-denied/" class="prev">prev_post</a><a href="/2017/02/23/custom-uiview-not-respond-touchesbegan-event/" class="next">next_post</a></div><div class="copyright"><p>© 2014 - 2019 <a href="http://jackro.cn">JackRo</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

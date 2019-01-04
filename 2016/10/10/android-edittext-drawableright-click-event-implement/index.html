@@ -1,0 +1,104 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Android实现EditText响应drawableRight点击事件 · JackRo 的个人博客</title><meta name="description" content="Android实现EditText响应drawableRight点击事件 - JackRo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://jackro.cn/atom.xml" title="JackRo 的个人博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">HOME</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/JackRo" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Android实现EditText响应drawableRight点击事件</h1><div class="post-info">Oct 10, 2016</div><div class="post-content"><p>这里自定义了一个RightPicClickEditText，继承AppCompatEditText，并且在其三个构造函数中调用父组件的相应构造函数，是为了适配5.0以下应用MD风格，代码如下：</p>
+<pre><code>public RightPicClickEditText(Context context) {
+    super(context);
+    init();
+}
+
+public RightPicClickEditText(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    init();
+}
+
+public RightPicClickEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init();
+}
+</code></pre><p>我们或许还需要定义一个右侧图标变量的引用，你可以对这个右侧图标干些自定义的事，代码如下：</p>
+<pre><code>/**
+ * EditText右侧的图标
+ */
+protected Drawable mRightDrawable;
+
+private void init() {
+    mRightDrawable = getCompoundDrawables()[2];
+
+    if (mRightDrawable == null) {
+//这里当没有设置右侧图标时你可以给它设置个默认的右侧图标，当然根据你的项目需求来
+        return;
+    }
+
+//这里当设置了右侧图标时，我们对图标做了一些自定义设置，你也可以做其他设置
+    mRightDrawable.setBounds(0, 0, mRightDrawable.getIntrinsicWidth(), mRightDrawable.getIntrinsicHeight());
+}
+</code></pre><p>最关键的来了，我们需要重写自定义EditText的触摸事件onTouchEvent，这里我们通过判断触摸的坐标位置是否在右侧图标范围内来模拟右侧图标的点击事件。如果在这个范围内，则证明点击了右侧图标，为了方便外部调用处理，我们定义了一个接口在这里回调，一旦点击了右侧图标，则触发接口回调。代码如下：</p>
+<pre><code>public void setRightPicOnclickListener(RightPicOnclickListener rightPicOnclickListener) {
+    this.rightPicOnclickListener = rightPicOnclickListener;
+}
+
+public interface RightPicOnclickListener {
+    void rightPicClick();
+}
+
+private RightPicOnclickListener rightPicOnclickListener;
+
+@Override
+public boolean onTouchEvent(MotionEvent event) {
+    if (event.getAction() == MotionEvent.ACTION_UP) {
+        if (mRightDrawable != null) {
+            boolean touchable = event.getX() &gt; (getWidth() - getTotalPaddingRight())
+                    &amp;&amp; (event.getX() &lt; ((getWidth() - getPaddingRight())));
+            if (touchable) {
+
+                //设置点击EditText右侧图标EditText失去焦点，
+                // 防止点击EditText右侧图标EditText获得焦点，软键盘弹出
+                setFocusableInTouchMode(false);
+                setFocusable(false);
+
+                //点击EditText右侧图标事件接口回调
+                if (onRightPicClickListener != null) {
+                    onRightPicClickListener.rightPicClick(this);
+                }
+            } else {
+                //设置点击EditText输入区域，EditText请求焦点，软键盘弹出，EditText可编辑
+                //setFocusableInTouchMode(true);
+                //setFocusable(true);
+                //设置点击EditText输入区域，EditText不请求焦点，软键盘不弹出，EditText不可编辑
+                setFocusableInTouchMode(false);
+                setFocusable(false);
+            }
+        }
+    }
+    return super.onTouchEvent(event);
+}
+</code></pre><p>外部应用就简单了，示例代码如下：</p>
+<pre><code>&lt;cn.jackro.rightpicclickedittext.RightPicClickEditText
+    android:id=&quot;@+id/right_click_et&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_gravity=&quot;center&quot;
+    android:drawableRight=&quot;@android:drawable/ic_menu_search&quot;
+    android:hint=&quot;@string/click_hint&quot;
+    android:inputType=&quot;text&quot;
+    android:maxLines=&quot;1&quot;
+    tools:ignore=&quot;RtlHardcoded&quot;/&gt;
+
+public class MainActivity extends AppCompatActivity implements RightPicClickEditText.OnRightPicClickListener {
+
+    @BindView(R.id.right_click_et)
+    RightPicClickEditText mRightClickEt;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        mRightClickEt.setOnRightPicClickListener(this);
+    }
+
+    @Override
+    public void rightPicClick(EditText editText) {
+        Toast.makeText(this, &quot;点击了搜索按钮&quot;, Toast.LENGTH_SHORT).show();
+    }
+}
+</code></pre><p>实现这样一个功能，我们除了像上面这样干之外，还可以直接使用布局包裹一个EditText和一个ImageView，然后给ImageView设置点击事件即可，这种方法稍微简单点。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2016/11/20/android-floatingactionbutton-custom-size/" class="prev">prev_post</a><a href="/2016/07/01/resolve-camera-is-being-used-after-camera-release()-was-called/" class="next">next_post</a></div><div class="copyright"><p>© 2014 - 2019 <a href="http://jackro.cn">JackRo</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>

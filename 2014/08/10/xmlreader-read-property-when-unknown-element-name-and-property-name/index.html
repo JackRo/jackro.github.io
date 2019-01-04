@@ -1,0 +1,118 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> XmlReader在未知元素的名称和属性的名称的情况下读取属性 · JackRo 的个人博客</title><meta name="description" content="XmlReader在未知元素的名称和属性的名称的情况下读取属性 - JackRo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://jackro.cn/atom.xml" title="JackRo 的个人博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">HOME</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/JackRo" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">XmlReader在未知元素的名称和属性的名称的情况下读取属性</h1><div class="post-info">Aug 10, 2014</div><div class="post-content"><p>经过努力，终于解决了XmlReader在未知元素的名称和属性的名称的情况下读取属性的方法。在没有解决前，我的代码如下：</p>
+<pre><code>    using System; 
+    using System.Collections.Generic; 
+    using System.Linq; 
+    using System.Text; 
+    using System.Xml; 
+
+    namespace ReadAttribute 
+    { 
+        class Program
+         {
+             static void Main(string[] args)
+             {
+                 string path = @&quot;e:\testfile\myMail.xml&quot;;
+
+                 #region 读取属性的第一种方法
+                 //string date;
+                 //try
+                 //{
+                 //    XmlReader xr = XmlReader.Create(path);
+                 //    xr.ReadToFollowing(&quot;mail&quot;);
+                 //    date = xr.GetAttribute(&quot;date&quot;);
+                 //    Console.Write(&quot;信件的日期为：&quot;);
+                 //    Console.WriteLine(date);
+                 //}
+                 //catch (Exception ex)
+                 //{
+                 //    Console.WriteLine(ex.Message);
+                 //} 
+                 #endregion
+
+                 #region 读取属性的第二种方法
+                 try
+                 {
+                     XmlReader xr = XmlReader.Create(path);
+                     while (xr.Read())
+                     {
+                         if (xr.HasAttributes)
+                         {
+                             //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
+                             //for (int i = 0; i &lt; xr.AttributeCount; i++)
+                             //{                            
+                             //xr.MoveToAttribute(i);                            
+                             Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
+                             Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
+                             //}                                                                  
+                         }
+                     }
+                 }
+                 catch (Exception ex)
+                 {
+                     Console.WriteLine(ex.Message);
+                 } 
+                 #endregion
+                 Console.ReadKey();
+             }
+         }
+     }
+</code></pre><p>解决后，我的代码如下：</p>
+<pre><code>     using System; 
+    using System.Collections.Generic; 
+    using System.Linq; 
+    using System.Text; 
+    using System.Xml; 
+
+     namespace ReadAttribute 
+    { 
+        class Program
+         {
+             static void Main(string[] args)
+             {
+                 string path = @&quot;e:\testfile\myMail.xml&quot;;
+
+                 #region 读取属性的第一种方法
+                 //string date;
+                 //try
+                 //{
+                 //    XmlReader xr = XmlReader.Create(path);
+                 //    xr.ReadToFollowing(&quot;mail&quot;);
+                 //    date = xr.GetAttribute(&quot;date&quot;);
+                 //    Console.Write(&quot;信件的日期为：&quot;);
+                 //    Console.WriteLine(date);
+                 //}
+                 //catch (Exception ex)
+                 //{
+                 //    Console.WriteLine(ex.Message);
+                 //} 
+                 #endregion
+
+                 #region 读取属性的第二种方法
+                 try
+                 {
+                     XmlReader xr = XmlReader.Create(path);
+                     while (xr.Read())
+                     {
+                         if (xr.HasAttributes)
+                         {
+                             Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
+                             for (int i = 0; i &lt; xr.AttributeCount; i++)
+                             {                            
+                             xr.MoveToAttribute(i);                              
+
+                             //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
+                             Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
+                             }                                                                                                     }
+                    }
+                 }
+                 catch (Exception ex)
+                 {
+                     Console.WriteLine(ex.Message);
+                 } 
+                 #endregion
+                 Console.ReadKey();
+             }
+         }
+     }
+</code></pre><p>解决后，上面的代码可以不用知道元素的名称和属性的名称的情况下读取XML文件中的所有属性名及其值。这种方法有点像迭代器遍历数组，只不过这里的元素变成了XML的节点和元素，而且这里可以把XML的属性也可以看成是XML的节点（”可以看成XML元素的子节点“），这样元素看成是节点，属性也看成是节点，都当做节点处理，也就是说这个遍历可以看成是遍历XML的节点。这样也就可以解释上面代码中的 xr.Name、xr.Value了，他们分别可以看成是XML的节点名和节点值（即属性名和属性值）。如此，这样的方法便不难理解了！</p>
+</div></article></div></main><footer><div class="paginator"><a href="/2014/08/12/streamreader-read-file-encoding-error-resolve/" class="prev">prev_post</a></div><div class="copyright"><p>© 2014 - 2019 <a href="http://jackro.cn">JackRo</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>
