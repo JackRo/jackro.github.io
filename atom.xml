@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jackro.cn/"/>
-  <updated>2018-11-14T14:30:41.994Z</updated>
+  <updated>2018-09-03T10:14:59.882Z</updated>
   <id>http://jackro.cn/</id>
   
   <author>
@@ -15,27 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>关于亲情，友情的想法</title>
-    <link href="http://jackro.cn/2018/11/14/about-family-and-friend-thinking/"/>
-    <id>http://jackro.cn/2018/11/14/about-family-and-friend-thinking/</id>
-    <published>2018-11-13T16:00:00.000Z</published>
-    <updated>2018-11-14T14:30:41.994Z</updated>
-    
-    <content type="html"><![CDATA[<p>嗯，自从我工作之后，我发现我爸非常幽默，经常“套路”我帮家里买一些家用电器啥的。我爸经常会这样跟我说，家里啥啥坏了，要换了；我的手机坏了，要换了。昨天，他就在微信里这样跟我说，先把净水器的照片拍给我，然后我问这是干嘛的，他就说家里新装了净水器，我没钱了。我一想，我有钱呀，好嘛，我给您。</p><p>今天和朋友聊到我给家里买小米电视（当时我爸说家里客厅缺一个电视，亲戚朋友来家里了，还可以看看电视）的事，朋友说我还挺孝顺的，这个价格在当时也是高价了。嗯，当时关于孝顺，自当是朋友夸我了，夸我嘛，挺高兴的，没啥其他想法，但后来我有一些想法。</p><p>我认为这不单单是孝顺。还未工作之前，我都是拿爸妈的钱。大学那会，我贪玩，不学习，因此挂科太多导致留级，系主任叫我爸去学校说留级的事，那天，我爸晚上就跟我说了很多，鼓励我还是要好好学习，嗯，虽然我当时没听进去，但是后来还是想通了。我爸当时的意思其实很简单，该玩的时候玩，该学习的时候还得学。在当时，我留级算是人生遭遇了挫折吧，我爸仍然给我鼓励，帮助我向好的方向发展。</p><p>现在的情况是，我妈下岗在家，我爸身体不好，干不了重活，家里经济来源很微薄，我爸妈需要一些物质上的帮助，我理应尽我所能，帮助我爸妈。这不只是尽孝心，我们是一家人嘛，一家人就该互相帮助。</p><p>然后，关于朋友、友情。我记得我看过关于朋友的一些话，像朋友之间不该有经济往来，还有啥大俗话说的，谈钱伤感情，这些我都认为不对，钱是必需品，没钱是没法在现在的社会上生存的。我认为，朋友，也是像亲人一样，应该互相帮助，彼此给予对方物质上的帮助和精神上的帮助。所以，既然需要物质上的帮助，经济往来就是必须的。</p><p>我记得我来上海之后，开始租的房子不好（很贵而且房子很小），想换个房子，然后换好房子之后，发现没钱交房租了（刚好够押金，不够房租），因为钱都交给了第一家的房东，然后我就只能跟朋友借钱了。嗯，这就是朋友之间的经济往来呀。</p><p>以前看过的电影《喋血双雄》里有一句话是这么说的，朋友无所谓谁欠谁的，不然要朋友来干嘛呢。我认为这句话诠释的应该就是朋友的真谛：彼此在物质上和精神上互相帮助，互相鼓励。《喋血双雄》里的主角小宝、四哥和毛头就是这样子的朋友，他们都是彼此拼了命的互相帮助。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;嗯，自从我工作之后，我发现我爸非常幽默，经常“套路”我帮家里买一些家用电器啥的。我爸经常会这样跟我说，家里啥啥坏了，要换了；我的手机坏了，要换了。昨天，他就在微信里这样跟我说，先把净水器的照片拍给我，然后我问这是干嘛的，他就说家里新装了净水器，我没钱了。我一想，我有钱呀，好
-      
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>Android面试展示iOS debug app时闪退</title>
@@ -455,6 +434,27 @@ Jack
       
       
         &lt;p&gt;当Fragment和ViewPager一起使用时，某个Fragment中含有百度地图MapView时，当你从其他Fragment切换到含有百度地图MapView的Fragment时，会有卡顿闪屏的效果。解决方法是把百度地图的MapView替换成TextureMapView，
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Activity中开启轮询服务当Activity异常destroy时</title>
+    <link href="http://jackro.cn/2016/05/30/open-polling-service-when-activity-exception-destroy/"/>
+    <id>http://jackro.cn/2016/05/30/open-polling-service-when-activity-exception-destroy/</id>
+    <published>2016-05-29T16:00:00.000Z</published>
+    <updated>2018-04-03T05:48:56.051Z</updated>
+    
+    <content type="html"><![CDATA[<p>当你点击系统的back键，当前Activity开启的轮询服务刚好此时开启运行，即走onStartCommand，这里Activity用Intent传递给该服务的所有参数会为null。Activity此时已经异常destroy了，此时传递给Service的Intent的参数不会传递成功。所以这里如果你在Service的onStartCommand里用到了Intent传递过来的参数，则需要先判空，否则可能出现空指针异常。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;当你点击系统的back键，当前Activity开启的轮询服务刚好此时开启运行，即走onStartCommand，这里Activity用Intent传递给该服务的所有参数会为null。Activity此时已经异常destroy了，此时传递给Service的Intent的参数不
       
     
     </summary>
