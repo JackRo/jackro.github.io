@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -121,11 +129,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>Mac 环境下 Android Studio 创建的 Android 项目，在项目目录下执行 ./gradlew clean，提示 Permission denied，看到这个提示，自然想到的是 sudo 执行，然而 sudo 执行并不能解决问题，反而会提示command not found。万般无奈，只能百度，发现执行以下命令即可解决问题。</p>
-<pre><code class="language-plain_text">//为gradlew文件添加可执行属性
-chmod +x gradlew
-</code></pre>
-<p>chmod命令是修改文件访问权限的命令，文件访问权限包括只读、只写、可执行三种，其实最开始的提示Permission denied（权限拒绝）已经告诉了我们是android项目目录下可执行文件gradlew的访问权限的问题。因此需要为该文件添加可执行权限，所以执行以上命令即可解决该问题。</p>
+                        	<p>Mac 环境下 Android Studio 创建的 Android 项目，在项目目录下执行 ./gradlew clean，提示 Permission denied，看到这个提示，自然想到的是 sudo 执行，然而 sudo 执行并不能解决问题，反而会提示command not found。</p>
 
                         
                       </div>
@@ -133,7 +137,7 @@ chmod +x gradlew
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553060398.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/04/10</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -159,122 +163,6 @@ chmod +x gradlew
                       <div class="a-content-text">
                         
                         	<p>最近在项目中使用了<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> ，但是为了让UI看起来留白不是那么多，需要对<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> 进行自定义大小。</p>
-<p>根据官方文档的说明，<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> 仅仅支持设置app:fabSize=&quot;normal&quot;来改变fab的大小，并且这个fabSize的大小提供了三个可选项（normal，mini和auto）来设置，可以在布局里设置也可以在代码里调用setSize方法进行设置。</p>
-<p>这里一开始是想到通过在布局里改变layout_width和layout_height来改变控件的大小的，但是设置之后（两者均设置为100dp，fabSize设置为normal），效果如下所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112001.png" alt="jackro_blog2016112001" /></p>
-<p>并且当设置了fab的固定宽高再来改变它的fabSize属性（改为mini或auto）时，效果会是fab的图标被撑的很大，甚至边缘都看不到了，显然这样通过固定fab的宽高属性来改变其大小是行不通的。</p>
-<p>翻阅FloatingActionButton的源码，其第三个构造函数如下</p>
-<pre><code class="language-java">
-    public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-
-        ThemeUtils.checkAppCompatTheme(context);
-
-        TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.FloatingActionButton, defStyleAttr,
-                R.style.Widget_Design_FloatingActionButton);
-        mBackgroundTint = a.getColorStateList(R.styleable.FloatingActionButton_backgroundTint);
-        mBackgroundTintMode = ViewUtils.parseTintMode(a.getInt(
-                R.styleable.FloatingActionButton_backgroundTintMode, -1), null);
-        mRippleColor = a.getColor(R.styleable.FloatingActionButton_rippleColor, 0);
-        mSize = a.getInt(R.styleable.FloatingActionButton_fabSize, SIZE_AUTO);
-        mBorderWidth = a.getDimensionPixelSize(R.styleable.FloatingActionButton_borderWidth, 0);
-        final float elevation = a.getDimension(R.styleable.FloatingActionButton_elevation, 0f);
-        final float pressedTranslationZ = a.getDimension(
-                R.styleable.FloatingActionButton_pressedTranslationZ, 0f);
-        mCompatPadding = a.getBoolean(R.styleable.FloatingActionButton_useCompatPadding, false);
-        a.recycle();
-
-        mImageHelper = new AppCompatImageHelper(this);
-        mImageHelper.loadFromAttributes(attrs, defStyleAttr);
-
-        mMaxImageSize = (int) getResources().getDimension(R.dimen.design_fab_image_size);
-
-        getImpl().setBackgroundDrawable(mBackgroundTint, mBackgroundTintMode,
-                mRippleColor, mBorderWidth);
-        getImpl().setElevation(elevation);
-        getImpl().setPressedTranslationZ(pressedTranslationZ);
-    }
-</code></pre>
-<p>都是读取属性来设置一些自定义属性，看到最后三行，发现getImpl方法的调用，它的返回值是FloatingActionButtonImpl，原来fab都是通过FloatingActionButtonImpl来实现其自定义属性的，找到getImpl这个方法，源码如下：</p>
-<pre><code class="language-java">    private FloatingActionButtonImpl getImpl() {
-        if (mImpl == null) {
-            mImpl = createImpl();
-        }
-        return mImpl;
-    }
-
-    private FloatingActionButtonImpl createImpl() {
-        final int sdk = Build.VERSION.SDK_INT;
-        if (sdk &gt;= 21) {
-            return new FloatingActionButtonLollipop(this, new ShadowDelegateImpl(),
-                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);
-        } else if (sdk &gt;= 14) {
-            return new FloatingActionButtonIcs(this, new ShadowDelegateImpl(),
-                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);
-        } else {
-            return new FloatingActionButtonGingerbread(this, new ShadowDelegateImpl(),
-                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);
-        }
-    }
-</code></pre>
-<p>上面创建FloatingActionButtonImpl每种情况都传递了ShadowDelegateImpl的一个实例，说明这个类对创建FloatingActionButtonImpl很重要，往下看这个类的源码，如下所示：</p>
-<pre><code class="language-java">    private class ShadowDelegateImpl implements ShadowViewDelegate {
-        ShadowDelegateImpl() {
-        }
-
-        @Override
-        public float getRadius() {
-            return getSizeDimension() / 2f;
-        }
-
-        @Override
-        public void setShadowPadding(int left, int top, int right, int bottom) {
-            mShadowPadding.set(left, top, right, bottom);
-            setPadding(left + mImagePadding, top + mImagePadding,
-                    right + mImagePadding, bottom + mImagePadding);
-        }
-
-        @Override
-        public void setBackgroundDrawable(Drawable background) {
-            FloatingActionButton.super.setBackgroundDrawable(background);
-        }
-
-        @Override
-        public boolean isCompatPaddingEnabled() {
-            return mCompatPadding;
-        }
-    }
-</code></pre>
-<p>这个类里有一个getRadius方法，字面意思理解就是获取半径的，终于柳暗花明，原来fab的大小（即半径）是这个方法来获取的，可以看到它调用了getSizeDimension，下面看这个getSizeDimension方法，源码如下：</p>
-<pre><code class="language-java">    int getSizeDimension() {
-        return getSizeDimension(mSize);
-    }
-
-    private int getSizeDimension(@Size final int size) {
-        final Resources res = getResources();
-        switch (size) {
-            case SIZE_AUTO:
-                // If we're set to auto, grab the size from resources and refresh
-                final int width = ConfigurationHelper.getScreenWidthDp(res);
-                final int height = ConfigurationHelper.getScreenHeightDp(res);
-                return Math.max(width, height) &lt; AUTO_MINI_LARGEST_SCREEN_WIDTH
-                        ? getSizeDimension(SIZE_MINI)
-                        : getSizeDimension(SIZE_NORMAL);
-            case SIZE_MINI:
-                return res.getDimensionPixelSize(R.dimen.design_fab_size_mini);
-            case SIZE_NORMAL:
-            default:
-                return res.getDimensionPixelSize(R.dimen.design_fab_size_normal);
-        }
-    }
-</code></pre>
-<p>原来这里google做的控件也是通过获取资源文件dimens.xml来获取dimen值的（废话，当然是了）。终于看到这里，我才恍然大悟，我可以通过自定义这个design_fab_size_normal来实现覆盖默认的dimen值呀（因为我的布局里是设置fabSize为normal的），自定义代码如下所示：</p>
-<pre><code class="language-xml">&lt;dimen name=&quot;design_fab_size_normal&quot; tools:ignore=&quot;PrivateResource&quot;&gt;80dp&lt;/dimen&gt;
-</code></pre>
-<p>这样即完美搞定我的fab自定义大小的需求。上张效果图，如下所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112002.jpg" alt="jackro_blog2016112002" /></p>
-<p>和之前那个设置fab的固定宽高的效果比好多了。</p>
 
                         
                       </div>
@@ -282,7 +170,7 @@ chmod +x gradlew
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058651.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2016/11/20</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -307,113 +195,7 @@ chmod +x gradlew
                       
                       <div class="a-content-text">
                         
-                        	<p>这里自定义了一个RightPicClickEditText，继承AppCompatEditText，并且在其三个构造函数中调用父组件的相应构造函数，是为了适配5.0以下应用MD风格，代码如下：</p>
-<pre><code class="language-plain_text">public RightPicClickEditText(Context context) {
-    super(context);
-    init();
-}
-
-public RightPicClickEditText(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    init();
-}
-
-public RightPicClickEditText(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
-    init();
-}
-</code></pre>
-<p>我们或许还需要定义一个右侧图标变量的引用，你可以对这个右侧图标干些自定义的事，代码如下：</p>
-<pre><code class="language-plain_text">/**
- * EditText右侧的图标
- */
-protected Drawable mRightDrawable;
-
-private void init() {
-    mRightDrawable = getCompoundDrawables()[2];
-
-    if (mRightDrawable == null) {
-//这里当没有设置右侧图标时你可以给它设置个默认的右侧图标，当然根据你的项目需求来
-        return;
-    }
-
-//这里当设置了右侧图标时，我们对图标做了一些自定义设置，你也可以做其他设置
-    mRightDrawable.setBounds(0, 0, mRightDrawable.getIntrinsicWidth(), mRightDrawable.getIntrinsicHeight());
-}
-</code></pre>
-<p>最关键的来了，我们需要重写自定义EditText的触摸事件onTouchEvent，这里我们通过判断触摸的坐标位置是否在右侧图标范围内来模拟右侧图标的点击事件。如果在这个范围内，则证明点击了右侧图标，为了方便外部调用处理，我们定义了一个接口在这里回调，一旦点击了右侧图标，则触发接口回调。代码如下：</p>
-<pre><code class="language-plain_text">public void setRightPicOnclickListener(RightPicOnclickListener rightPicOnclickListener) {
-    this.rightPicOnclickListener = rightPicOnclickListener;
-}
-
-public interface RightPicOnclickListener {
-    void rightPicClick();
-}
-
-private RightPicOnclickListener rightPicOnclickListener;
-
-@Override
-public boolean onTouchEvent(MotionEvent event) {
-    if (event.getAction() == MotionEvent.ACTION_UP) {
-        if (mRightDrawable != null) {
-            boolean touchable = event.getX() &gt; (getWidth() - getTotalPaddingRight())
-                    &amp;&amp; (event.getX() &lt; ((getWidth() - getPaddingRight())));
-            if (touchable) {
-
-                //设置点击EditText右侧图标EditText失去焦点，
-                // 防止点击EditText右侧图标EditText获得焦点，软键盘弹出
-                setFocusableInTouchMode(false);
-                setFocusable(false);
-
-                //点击EditText右侧图标事件接口回调
-                if (onRightPicClickListener != null) {
-                    onRightPicClickListener.rightPicClick(this);
-                }
-            } else {
-                //设置点击EditText输入区域，EditText请求焦点，软键盘弹出，EditText可编辑
-                //setFocusableInTouchMode(true);
-                //setFocusable(true);
-                //设置点击EditText输入区域，EditText不请求焦点，软键盘不弹出，EditText不可编辑
-                setFocusableInTouchMode(false);
-                setFocusable(false);
-            }
-        }
-    }
-    return super.onTouchEvent(event);
-}
-</code></pre>
-<p>外部应用就简单了，示例代码如下：</p>
-<pre><code class="language-plain_text">&lt;cn.jackro.rightpicclickedittext.RightPicClickEditText
-    android:id=&quot;@+id/right_click_et&quot;
-    android:layout_width=&quot;wrap_content&quot;
-    android:layout_height=&quot;wrap_content&quot;
-    android:layout_gravity=&quot;center&quot;
-    android:drawableRight=&quot;@android:drawable/ic_menu_search&quot;
-    android:hint=&quot;@string/click_hint&quot;
-    android:inputType=&quot;text&quot;
-    android:maxLines=&quot;1&quot;
-    tools:ignore=&quot;RtlHardcoded&quot;/&gt;
-
-public class MainActivity extends AppCompatActivity implements RightPicClickEditText.OnRightPicClickListener {
-
-    @BindView(R.id.right_click_et)
-    RightPicClickEditText mRightClickEt;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        mRightClickEt.setOnRightPicClickListener(this);
-    }
-
-    @Override
-    public void rightPicClick(EditText editText) {
-        Toast.makeText(this, &quot;点击了搜索按钮&quot;, Toast.LENGTH_SHORT).show();
-    }
-}
-</code></pre>
-<p>实现这样一个功能，我们除了像上面这样干之外，还可以直接使用布局包裹一个EditText和一个ImageView，然后给ImageView设置点击事件即可，这种方法稍微简单点。</p>
+                        	<p>这里自定义了一个 RightPicClickEditText，继承 AppCompatEditText，并且在其三个构造函数中调用父组件的相应构造函数，是为了适配 5.0 以下应用 MD 风格.</p>
 
                         
                       </div>
@@ -421,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements RightPicClickEdit
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058494.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2016/10/10</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -441,305 +223,13 @@ public class MainActivity extends AppCompatActivity implements RightPicClickEdit
 			<div class="article">
                 <a class="clearlink" href="16496553060889.html">
                 
-                  <h1>解决Camera is being used after Camera.release() was called</h1>
+                  <h1>解决 Camera is being used after Camera.release() was called</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<pre><code class="language-plain_text">java.lang.RuntimeException: Camera is being used after Camera.release() was called
-</code></pre>
-<p>在相机开发中，打开相机后点返回，偶尔会出现如上所示的异常，解决代码如下：</p>
-<pre><code class="language-plain_text">@BindView(R.id.sv_preview)
-SurfaceView mSvPreview;
-
-private BaseCameraManager cameraManager;
-
-@Override
-protected void onResume() {
-    super.onResume();
-
-    int hasCameraPermission = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
-    if (hasCameraPermission != PackageManager.PERMISSION_GRANTED) {
-        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA},
-                MY_PERMISSIONS_REQUEST_CAMERA);
-    }
-
-    //region 这里调用初始化照相机并设置SurfaceHolder的回调以解决按下home键或者按下最近应用菜单键再返回扫码界面时相机不显示的问题
-
-    cameraManager = new CameraManager(getApplication());
-
-    setSurfaceViewVisible(true);
-
-    cameraManager.setOnResultListener(this);
-
-    mSvPreview.getHolder().addCallback(this);
-    //endregion
-}
-
-@Override
-public void surfaceDestroyed(SurfaceHolder holder) {        
-
-    setEmptyViewVisible(true);    
-    //解决java.lang.RuntimeException: Camera is being used after Camera.release() was called异常    
-    holder.removeCallback(this);    
-
-    cameraManager.releaseCamera();
-}
-</code></pre>
-<p>BaseCameraManager源码如下：</p>
-<pre><code class="language-plain_text">/**
- * CameraManager的基类
- * Created by Jack on 2016/7/1 12:55
- * Email: zhuochangjing@foxmail.com
- */
-public abstract class BaseCameraManager {
-    private Point qrBoxSize;
-
-    boolean hook = false;
-    int rotate;
-    int count = 0;
-    boolean isRelease = true;
-    ExecutorService executor;
-    int displayOrientation;
-    private MultiFormatReader reader;
-    OnResultListener onResultListener;
-    protected Context context;
-
-    BaseCameraManager(Context context) {
-        this.context = context;
-        executor = Executors.newSingleThreadExecutor();
-        reader = new MultiFormatReader();
-        qrBoxSize = new Point();
-        qrBoxSize.x = (int) context.getResources().getDimension(R.dimen.width_qr_box_view);
-        qrBoxSize.y = (int) context.getResources().getDimension(R.dimen.height_qr_box_view);
-    }
-
-    QRResult getCodeValue(byte[] data, Point previewSize) {
-        Bitmap bitmap = null;
-        ByteArrayOutputStream stream = new ByteArrayOutputStream(data.length);
-        YuvImage image = new YuvImage(data, ImageFormat.NV21, previewSize.x, previewSize.y, null);
-        int left = previewSize.x - qrBoxSize.x &gt;&gt; 1;
-        int right = previewSize.x + qrBoxSize.x &gt;&gt; 1;
-        int top = previewSize.y - qrBoxSize.y &gt;&gt; 1;
-        int bottom = previewSize.y + qrBoxSize.y &gt;&gt; 1;
-        Rect rect = new Rect(left, top, right, bottom);
-        if (image.compressToJpeg(rect, 100, stream)) {
-            byte[] bytes = stream.toByteArray();
-            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        }
-        try {
-            stream.close();
-        } catch (IOException e) {
-            Log.e(&quot;onPreviewFrame&quot;, e.toString());
-        }
-
-        if (displayOrientation &gt; 0) {
-            Matrix matrix = new Matrix();
-            matrix.postRotate(displayOrientation);
-            assert bitmap != null;
-            Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
-            bitmap.recycle();
-            bitmap = newBitmap;
-        }
-
-        assert bitmap != null;
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-        int[] pixels = new int[width * height];
-        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
-        Result result = QRUtils.decode(new RGBLuminanceSource(width, height, pixels), reader);
-        if (result != null) {
-            return new QRResult(bitmap, result);
-        } else {
-            bitmap.recycle();
-            return null;
-        }
-    }
-
-    public void setHook(boolean hook) {
-        this.hook = hook;
-    }
-
-    public void setOnResultListener(OnResultListener onResultListener) {
-        this.onResultListener = onResultListener;
-    }
-
-    public void shutdownExecutor() {
-        executor.shutdown();
-    }
-
-    public ExecutorService getExecutor() {
-        return executor;
-    }
-
-    public void setRotate(int rotate) {
-        this.rotate = rotate;
-    }
-
-    public abstract void connectCamera(SurfaceHolder surfaceHolder);
-
-    public abstract void setCameraParameter();
-
-    public abstract void startCapture();
-
-    public abstract void releaseCamera();
-
-    public interface OnResultListener {
-        void onResult(QRResult qrResult);
-    }
-}
-</code></pre>
-<p>CameraManager源码如下：</p>
-<pre><code class="language-plain_text">/**
- * This class is for android targets below android 5.0 and it uses old camera api
- * Created by Jack on 2016/7/1 12:55
- * Email: zhuochangjing@foxmail.com
- */
-@SuppressWarnings(&quot;deprecation&quot;)
-public class CameraManager extends BaseCameraManager implements Camera.AutoFocusCallback, Camera.PreviewCallback {
-
-    private Camera camera;
-
-    public CameraManager(Context context) {
-        super(context);
-    }
-
-    @Override
-    public void onAutoFocus(boolean success, Camera camera) {
-        if (hook || isRelease) return;
-        camera.setOneShotPreviewCallback(this);
-    }
-
-    @Override
-    public void connectCamera(SurfaceHolder surfaceHolder) {
-        if (!isRelease) return;
-        try {
-            camera = Camera.open();
-            isRelease = false;
-            camera.setPreviewDisplay(surfaceHolder);
-            setCameraParameter();
-            camera.startPreview();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void releaseCamera() {
-        if (isRelease) return;
-        isRelease = true;
-        camera.setPreviewCallback(null);
-        camera.cancelAutoFocus();
-        camera.stopPreview();
-        try {
-            camera.setPreviewDisplay(null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        camera.release();
-        camera = null;
-    }
-
-    @Override
-    public void startCapture() {
-        if (hook || isRelease || executor.isShutdown()) return;
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                camera.autoFocus(CameraManager.this);
-            }
-        });
-    }
-
-    @Override
-    public void setCameraParameter() {
-        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
-        Camera.getCameraInfo(0, cameraInfo);
-        int degrees = 0;
-        switch (rotate) {
-            case Surface.ROTATION_0: {
-                degrees = 0;
-                break;
-            }
-            case Surface.ROTATION_90: {
-                degrees = 90;
-                break;
-            }
-            case Surface.ROTATION_180: {
-                degrees = 180;
-                break;
-            }
-            case Surface.ROTATION_270: {
-                degrees = 270;
-                break;
-            }
-        }
-
-        if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            displayOrientation = (cameraInfo.orientation + degrees) % 360;
-            displayOrientation = (360 - displayOrientation) % 360;
-        } else {
-            displayOrientation = (cameraInfo.orientation - degrees + 360) % 360;
-        }
-
-        /** Warning : may throw exception with parameters not supported */
-        Camera.Parameters parameters = camera.getParameters();
-        List&lt;Camera.Size&gt; previewSizes = parameters.getSupportedPreviewSizes();
-        Camera.Size bestSize = previewSizes.get(0);
-        for (int i = 1; i &lt; previewSizes.size(); i++) {
-            if (previewSizes.get(i).width * previewSizes.get(i).height &gt; bestSize.width * bestSize.height) {
-                bestSize = previewSizes.get(i);
-            }
-        }
-        parameters.setPreviewSize(bestSize.width, bestSize.height);
-
-        List&lt;Camera.Size&gt; pictureSizes = parameters.getSupportedPictureSizes();
-        bestSize = pictureSizes.get(0);
-        for (int i = 1; i &lt; pictureSizes.size(); i++) {
-            if (pictureSizes.get(i).width * pictureSizes.get(i).height &gt; bestSize.width * bestSize.height) {
-                bestSize = pictureSizes.get(i);
-            }
-        }
-        parameters.setPictureSize(bestSize.width, bestSize.height);
-        camera.setParameters(parameters);
-        camera.setDisplayOrientation(displayOrientation);
-    }
-
-    @Override
-    public void onPreviewFrame(final byte[] data, final Camera camera) {
-        if (hook || executor.isShutdown()) return;
-        Observable
-                .just(camera.getParameters().getPreviewSize())
-                .subscribeOn(Schedulers.from(executor))
-                .map(new Func1&lt;Camera.Size, QRResult&gt;() {
-                    @Override
-                    public QRResult call(Camera.Size size) {
-                        return getCodeValue(data, new Point(size.width, size.height));
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1&lt;QRResult&gt;() {
-                    @Override
-                    public void call(QRResult qrResult) {
-                        if (qrResult == null) {
-                            count++;
-                            startCapture();
-                            return;
-                        }
-                        QRUtils.vibrate(context);
-                        if (onResultListener != null) {
-                            onResultListener.onResult(qrResult);
-                        }
-                        count = 0;
-                    }
-                }, new Action1&lt;Throwable&gt;() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        Log.e(&quot;CameraManager&quot;, &quot;getCodeValue() failed .&quot;);
-                    }
-                });
-    }
-}
+                        	<p>在相机开发中, 打开相机后点返回, 偶尔会出现如下所示的异常.</p>
+<pre><code class="language-plain_text">java.lang.RuntimeException: Camera is being used after Camera.release() was called
 </code></pre>
 
                         
@@ -748,7 +238,7 @@ public class CameraManager extends BaseCameraManager implements Camera.AutoFocus
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553060889.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2016/07/01</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -773,7 +263,7 @@ public class CameraManager extends BaseCameraManager implements Camera.AutoFocus
                       
                       <div class="a-content-text">
                         
-                        	<p>当Fragment和ViewPager一起使用时，某个Fragment中含有百度地图MapView时，当你从其他Fragment切换到含有百度地图MapView的Fragment时，会有卡顿闪屏的效果。解决方法是把百度地图的MapView替换成TextureMapView，卡顿闪屏问题完美解决。</p>
+                        	<p>当Fragment和ViewPager一起使用时，某个Fragment中含有百度地图MapView时，当你从其他Fragment切换到含有百度地图MapView的Fragment时，会有卡顿闪屏的效果。</p>
 
                         
                       </div>
@@ -781,7 +271,7 @@ public class CameraManager extends BaseCameraManager implements Camera.AutoFocus
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553061410.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2016/06/15</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -821,6 +311,8 @@ public class CameraManager extends BaseCameraManager implements Camera.AutoFocus
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -833,7 +325,7 @@ public class CameraManager extends BaseCameraManager implements Camera.AutoFocus
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -121,125 +129,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>经过努力，终于解决了XmlReader在未知元素的名称和属性的名称的情况下读取属性的方法。在没有解决前，我的代码如下：</p>
-<pre><code class="language-plain_text">	using System; 
-	using System.Collections.Generic; 
-	using System.Linq; 
-	using System.Text; 
-	using System.Xml; 
-	
-	namespace ReadAttribute 
-	{ 
-	    class Program
-	     {
-	         static void Main(string[] args)
-	         {
-	             string path = @&quot;e:\testfile\myMail.xml&quot;;
-	             
-	             #region 读取属性的第一种方法
-	             //string date;
-	             //try
-	             //{
-	             //    XmlReader xr = XmlReader.Create(path);
-	             //    xr.ReadToFollowing(&quot;mail&quot;);
-	             //    date = xr.GetAttribute(&quot;date&quot;);
-	             //    Console.Write(&quot;信件的日期为：&quot;);
-	             //    Console.WriteLine(date);
-	             //}
-	             //catch (Exception ex)
-	             //{
-	             //    Console.WriteLine(ex.Message);
-	             //} 
-	             #endregion
-	 
-	             #region 读取属性的第二种方法
-	             try
-	             {
-	                 XmlReader xr = XmlReader.Create(path);
-	                 while (xr.Read())
-	                 {
-	                     if (xr.HasAttributes)
-	                     {
-	                         //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         //for (int i = 0; i &lt; xr.AttributeCount; i++)
-	                         //{                            
-	                         //xr.MoveToAttribute(i);                            
-	                         Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
-	                         //}                                                                  
-	                     }
-	                 }
-	             }
-	             catch (Exception ex)
-	             {
-	                 Console.WriteLine(ex.Message);
-	             } 
-	             #endregion
-	             Console.ReadKey();
-	         }
-	     }
-	 }
-</code></pre>
-<p>解决后，我的代码如下：</p>
-<pre><code class="language-plain_text">	using System; 
-	using System.Collections.Generic; 
-	using System.Linq; 
-	using System.Text; 
-	using System.Xml; 
-	
- 	namespace ReadAttribute 
-	{ 
-	    class Program
-	     {
-	         static void Main(string[] args)
-	         {
-	             string path = @&quot;e:\testfile\myMail.xml&quot;;
-	             
-	             #region 读取属性的第一种方法
-	             //string date;
-	             //try
-	             //{
-	             //    XmlReader xr = XmlReader.Create(path);
-	             //    xr.ReadToFollowing(&quot;mail&quot;);
-	             //    date = xr.GetAttribute(&quot;date&quot;);
-	             //    Console.Write(&quot;信件的日期为：&quot;);
-	             //    Console.WriteLine(date);
-	             //}
-	             //catch (Exception ex)
-	             //{
-	             //    Console.WriteLine(ex.Message);
-	             //} 
-	             #endregion
-	 
-	             #region 读取属性的第二种方法
-	             try
-	             {
-	                 XmlReader xr = XmlReader.Create(path);
-	                 while (xr.Read())
-	                 {
-	                     if (xr.HasAttributes)
-	                     {
-	                         Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         for (int i = 0; i &lt; xr.AttributeCount; i++)
-	                         {                            
-	                         xr.MoveToAttribute(i);                              
-	                         
-	                         //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
-	                         }                                                                     								}
-	                }
-	             }
-	             catch (Exception ex)
-	             {
-	                 Console.WriteLine(ex.Message);
-	             } 
-	             #endregion
-	             Console.ReadKey();
-	         }
-	     }
-	 }
-</code></pre>
-<p>解决后，上面的代码可以不用知道元素的名称和属性的名称的情况下读取XML文件中的所有属性名及其值。这种方法有点像迭代器遍历数组，只不过这里的元素变成了XML的节点和元素，而且这里可以把XML的属性也可以看成是XML的节点（”可以看成XML元素的子节点“），这样元素看成是节点，属性也看成是节点，都当做节点处理，也就是说这个遍历可以看成是遍历XML的节点。这样也就可以解释上面代码中的 xr.Name、xr.Value了，他们分别可以看成是XML的节点名和节点值（即属性名和属性值）。如此，这样的方法便不难理解了！</p>
+                        	<p>经过努力，终于解决了XmlReader在未知元素的名称和属性的名称的情况下读取属性的方法。</p>
 
                         
                       </div>
@@ -247,7 +137,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553061843.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2014/08/10</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -287,6 +177,8 @@
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -299,7 +191,7 @@
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

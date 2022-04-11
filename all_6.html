@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -116,21 +124,12 @@
 			<div class="article">
                 <a class="clearlink" href="16496553060303.html">
                 
-                  <h1>LinearLayout按下或获取焦点时设置不同颜色或图片</h1>
+                  <h1>LinearLayout 按下或获取焦点时设置不同颜色或图片</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<p>在Android项目中有这样一个需求，画了几个LinearLayout布局做成ListView的样式，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2015062901.png" alt="jackro_blog2015062901" /></p>
-<p>当点击每个LinearLayout项时想改变其背景颜色，准备了如下背景图片XML文件：</p>
-<pre><code class="language-plain_text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
-    &lt;item android:drawable=&quot;@color/gray_background&quot; android:state_pressed=&quot;true&quot; /&gt;
-    &lt;item android:drawable=&quot;@color/white_background&quot; /&gt;
-&lt;/selector&gt;
-</code></pre>
-<p>但是当我每次运行点击每一项LinearLayout时，其背景颜色毫无变化。后来发现在每个LinearLayout项加入属性android:clickable=&quot;true&quot;点击LinearLayout才会出现背景颜色的变化。</p>
+                        	<p>在 Android 项目中有这样一个需求, LinearLayout 按下或获取焦点时设置不同颜色或图片.</p>
 
                         
                       </div>
@@ -138,7 +137,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553060303.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/06/29</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -164,14 +163,8 @@
                       <div class="a-content-text">
                         
                         	<p>把 Github 上的一个 <a href="https://github.com/facebook/fresco.git">Fresco</a> 的 Demo 源码 clone 到本地, 导入这个 Fresco 项目编译报了如所示的错:</p>
-<p>unable to expand TAR 'imagepipeline\build\downloads\libjpeg-turbo-1.3.1.tar.gz'</p>
-<p>经过网上搜索解决方案，只找到了下面链接给的解决方案：</p>
-<p><a href="http://www.2cto.com/kf/201504/391278.html">unable to expand TAR 'imagepipeline\build\downloads\libjpeg-turbo-1.3.1.tar.gz解决</a></p>
-<p>按照上面链接给的方法试了一下，结果无法解决。还是报同样的错误。然后我试着去看了一下项目下的imagepipeline\build\downloads目录，发现每次编译之后libjpeg-turbo-1.3.1.tar.gz文件都不会被解压，仍然是压缩文件，而这个目录下的另一个压缩文件giflib-5.1.1.tar.gz每次编译后都会被解压到当前目录下。我猜测应该是解压出现了问题，果然当我手动去解压这个libjpeg-turbo-1.3.1.tar.gz文件时，解压不成功，说是压缩文件末端缺失。然后我试着去网上下载libjpeg-turbo-1.3.1.tar.gz这个压缩文件，果然下过来的文件比之前目录下的文件大了一点，然后我把下过来的文件复制到imagepipeline\build\downloads下覆盖原文件，再次编译，经过漫长的等待，终于BUILD SUCCESSFUL。<br />
-我不知道是不是android studio在下载这个压缩文件的时候出了问题还是我电脑的问题。　　<br />
-毕竟Fresco也是新东西，希望知道原因的大猿们不吝赐教。<br />
-另外附上下载libjpeg-turbo-1.3.1.tar.gz文件的地址，我也是从官网下载的，或许今后版本更新了，还是得去官网下。</p>
-<p><a href="http://download.csdn.net/detail/jack_leonardo/8808211">下载libjpeg-turbo-1.3.1.tar.gz文件的地址</a></p>
+<pre><code class="language-plain_text">unable to expand TAR &amp;#39;imagepipeline\build\downloads\libjpeg-turbo-1.3.1.tar.gz&amp;#39;
+</code></pre>
 
                         
                       </div>
@@ -179,7 +172,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553059326.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/06/15</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -204,16 +197,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>setHomeButtonEnabled这个方法在小于4.0版本的默认值是true，但是在4.0及其以上是false，该方法的作用：决定左上角的图标是否可以点击，没有向左的小图标。true则图标可以点击，false则不可以点击。</p>
-<pre><code class="language-plain_text">	actionBar.setDisplayHomeAsUpEnabled(true)    // 给左上角图标的左边加上一个返回的图标 。对应ActionBar.DISPLAY_HOME_AS_UP。
-
-	actionBar.setDisplayShowHomeEnabled(true)   //使左上角图标是否显示，如果设成false，则没有程序图标，仅仅就个标题，否则，显示应用程序图标。
-
-	actionBar.setDisplayShowCustomEnabled(true)  // 使自定义的普通View能在title栏显示，即actionBar.setCustomView能起作用，对应ActionBar.DISPLAY_SHOW_CUSTOM。
-
-	actionBar.setDisplayShowTitleEnabled(true)   //对应ActionBar.DISPLAY_SHOW_TITLE。
-</code></pre>
-<p>其中setHomeButtonEnabled和setDisplayShowHomeEnabled共同起作用，如果setHomeButtonEnabled设成false，即使setDisplayShowHomeEnabled设成true，图标也不能点击。</p>
+                        	<p>setHomeButtonEnabled 这个方法在小于4.0版本的默认值是true，但是在4.0及其以上是false，该方法的作用：决定左上角的图标是否可以点击，没有向左的小图标。true则图标可以点击，false则不可以点击。</p>
 
                         
                       </div>
@@ -221,7 +205,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058247.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/06/14</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -246,9 +230,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>今天使用 Fresco 的一个 demo, 但是 build 失败, 去网上搜了一下, 发现是 NDK 环境没配置好, 见如下链接: <a href="http://www.bubuko.com/infodetail-790190.html">导入Fresco后build失败</a></p>
-<p>配置 NDK 见如下链接:<br />
-<a href="http://www.shangxueba.com/jingyan/2901837.html">配置NDK环境</a></p>
+                        	<p>今天使用 Fresco 的一个 demo, 但是 build 失败, 去网上搜了一下, 发现是 NDK 环境没配置好.</p>
 
                         
                       </div>
@@ -256,7 +238,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553059242.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/06/13</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -281,50 +263,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>给GridView设置单元格分割线有两种方法，一种是设置背景图片设置分割线，另外一种是自定义GridView重绘视图设置分割线。重绘方法代码如下：</p>
-<pre><code class="language-plain_text">public class LineGridView extends GridView{
-    public LineGridView(Context context) {
-        super(context);
-        // TODO Auto-generated constructor stub
-    }
-    public LineGridView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-    public LineGridView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
-    @Override
-    protected void dispatchDraw(Canvas canvas){
-        super.dispatchDraw(canvas);
-        View localView1 = getChildAt(0);
-        int column = getWidth() / localView1.getWidth();
-        int childCount = getChildCount();
-        Paint localPaint;
-        localPaint = new Paint();
-        localPaint.setStyle(Paint.Style.STROKE);
-        localPaint.setColor(getContext().getResources().getColor(R.color.grid_line));
-        for(int i = 0;i &lt; childCount;i++){
-            View cellView = getChildAt(i);
-            if((i + 1) % column == 0){
-                canvas.drawLine(cellView.getLeft(), cellView.getBottom(), cellView.getRight(), cellView.getBottom(), localPaint);
-            }else if((i + 1) &gt; (childCount - (childCount % column))){
-                canvas.drawLine(cellView.getRight(), cellView.getTop(), cellView.getRight(), cellView.getBottom(), localPaint);
-            }else{
-                canvas.drawLine(cellView.getRight(), cellView.getTop(), cellView.getRight(), cellView.getBottom(), localPaint);
-                canvas.drawLine(cellView.getLeft(), cellView.getBottom(), cellView.getRight(), cellView.getBottom(), localPaint);
-            }
-        }
-        if(childCount % column != 0){
-            for(int j = 0 ;j &lt; (column-childCount % column) ; j++){
-                View lastView = getChildAt(childCount - 1);
-                canvas.drawLine(lastView.getRight() + lastView.getWidth() * j, lastView.getTop(), lastView.getRight() + lastView.getWidth()* j, lastView.getBottom(), localPaint);
-            }
-        }
-    }
-}
-</code></pre>
-<p>在<code>dispatchDraw</code>方法中，我们对每一个子view的边界按照一定的方式绘上了边框，一般一个格子只需绘制其中两条边，需要注意的是最边上的格子需要特殊处理。<code>super.dispatchDraw(canvas);</code>一定要调用，不然格子中的内容（子view）就得不到绘制的机会。<br />
-仔细看代码你会发现这个实现方式是很好的，但是代码并不完美，因为每条线的绘制我们都是以第一个子view 的宽高为基准的，如果某个格子的高度和第一个格子不一致，那么可能出现错位。如果你能确保每个格子大小均匀，直接拿来用，否则还需要些修改。这里是重写的<code>dispatchDraw</code>，其实我我们重写onDraw方法也可以得到相同的结果。要完全弄明白的话，就得看看FrameWork中GridView的源码了。</p>
+                        	<p>给GridView设置单元格分割线有两种方法，一种是设置背景图片设置分割线，另外一种是自定义GridView重绘视图设置分割线。</p>
 
                         
                       </div>
@@ -332,7 +271,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058730.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/06/12</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -372,6 +311,8 @@
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -384,7 +325,7 @@
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

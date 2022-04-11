@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -121,41 +129,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<pre><code class="language-plain_text">//        viewHolder复用了item，持有的position是会随着listView的滑动变化的
-//        if ((viewHolder.getPosition() + 1) % 2 == 0) {
-//            int color = Color.argb(255, 101, 181, 109);
-//            viewHolder.getConvertView().setBackgroundColor(color);
-//        } else {
-//            int color = Color.argb(255, 255, 255, 255);
-//            viewHolder.getConvertView().setBackgroundColor(color);
-//        }
-
-    /*
-    * position参数是不会随着listView的滑动而变化的，即使viewHolder复用的item发生了变化，
-    * 设置颜色的那个item的position是不会变的，所以可以这么来设置item的颜色相间排列
-    * */
-//        if (position % 2 == 0) {
-//            int color = Color.argb(255, 255, 255, 255);
-//            viewHolder.getConvertView().setBackgroundColor(color);
-//        } else {
-//            int color = Color.argb(255, 101, 181, 109);
-//            viewHolder.getConvertView().setBackgroundColor(color);
-//        }
-
-//        这里不用循环也可以的，因为getView方法本身就会去循环listView来画item，这里的
-//        循环i和position是等价的，i的 值就是position的值
-//        for (int i = 0; i &lt; getCount(); i++) {
-//            if (position == i) {
-//                if (i % 2 == 0){
-//                    int color = Color.argb(255, 255, 255, 255);
-//                    viewHolder.getConvertView().setBackgroundColor(color);
-//                } else {
-//                    int color = Color.argb(255, 101, 181, 109);
-//                    viewHolder.getConvertView().setBackgroundColor(color);
-//                }
-//            }
-//        }
-</code></pre>
+                        	<p>Android 项目中需要设置 ListView的 Item 颜色相间排列关键代码</p>
 
                         
                       </div>
@@ -163,7 +137,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553059162.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2016/01/29</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -189,9 +163,6 @@
                       <div class="a-content-text">
                         
                         	<p>这是天朝墙高的问题, 只要修改一下 DNS 服务器就好了.</p>
-<pre><code class="language-plain_text">DNS：8.8.8.8
-</code></pre>
-<p>再安装, OK</p>
 
                         
                       </div>
@@ -199,7 +170,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553059851.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2016/01/14</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -219,29 +190,14 @@
 			<div class="article">
                 <a class="clearlink" href="16496553059763.html">
                 
-                  <h1>类型转换异常com.sun.proxy.$Proxy0 cannot be cast to java.sql.Connection</h1>
+                  <h1>类型转换异常 com.sun.proxy.$Proxy0 cannot be cast to java.sql.Connection</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<p>代码如下：</p>
-<pre><code class="language-plain_text">	Connection proxy = (Connection) Proxy.newProxyInstance(Connection.class.getClassLoader(),
-			Connection.class.getInterfaces(), new InvocationHandler() {
-
-				@Override
-				public Object invoke(Object proxy, Method method,
-						Object[] args) throws Throwable {
-					if (&quot;close&quot;.equals(method.getName())) {
-						returnConn(conn);
-						return null;
-					} else {
-						return method.invoke(conn, args);
-					}
-				}
-			});
+                        	<p>在使用动态代理增强 Connection 连接对象的 close 方法时, 我碰到了如下异常:</p>
+<pre><code class="language-plain_text">com.sun.proxy.$Proxy0 cannot be cast to java.sql.Connection
 </code></pre>
-<p>在使用动态代理增强Connection连接对象的close方法时，我碰到了如题所示的异常。通过搜索我发现这个异常出现的原因在于我使用的mysql数据库驱动的问题，由于数据库驱动不同，Connection.class.getInterfaces()返回的结果也不同，它返回的是一个Class[]数组，然而此数组的第一个元素必须是Connection才能把创建的代理类转为Connection对象，否则就会报错。<br />
-所以这里我们可以采取一个替代方式替换Connection.class.getInterfaces()，即new Class[] { Connection.class }，这样无论数据库驱动是什么版本的驱动，都能保证这个类型转换不出错。</p>
 
                         
                       </div>
@@ -249,7 +205,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553059763.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/11/18</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -274,12 +230,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>　　Windows xp 下让 jar 文件双击可以运行的解决办法很简单，只要打开我的电脑在工具的文件夹选项中找到文件类型，配置注册一下jar文件的open操作就可以了，这个过程是界面操作，非常的简单易接受。但是到了windows 10，笔者愚笨，找不到文件夹选项的文件类型，无法通过界面操作，因此，只能想办法通过注册表来注册jar文件的open操作类型，如果你知道windows xp下的操作，这个注册表过程的操作其实不难理解的。</p>
-<p>　　操作步骤如下：</p>
-<p>　　1.打开注册表；</p>
-<p>　　2.找到HKEY_CLASSES_ROOT/Applications /javaw.exe，一开始没有找到javaw.exe的话，就在jre或者jdk文件中找到javaw.exe（如我的电脑中为D:\Java\jre1.8.0_60\bin\javaw.exe），运行一下，或者找一个jar文件，选择打开方式，找到javaw.exe，打开一下</p>
-<p>　　3.进入HKEY_CLASSES_ROOT/Applications/javaw.exe/shell/open/command，修改默认的键值为&quot;D:\Java\jre1.8.0_60\bin\javaw.exe&quot; -jar &quot;%1&quot;<br />
-java环境安装在其他地方也类似，修改一下路径就可以了</p>
+                        	<p>　　Windows xp 下让 jar 文件双击可以运行的解决办法很简单，只要打开我的电脑在工具的文件夹选项中找到文件类型，配置注册一下jar文件的open操作就可以了，这个过程是界面操作，非常的简单易接受。但是到了windows 10，找不到文件夹选项的文件类型，无法通过界面操作。</p>
 
                         
                       </div>
@@ -287,7 +238,7 @@ java环境安装在其他地方也类似，修改一下路径就可以了</p>
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553061515.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/10/28</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -313,18 +264,7 @@ java环境安装在其他地方也类似，修改一下路径就可以了</p>
                       <div class="a-content-text">
                         
                         	<p>Android SDK更新大连东软镜像地址: mirrors.neusoft.edu.cn, 端口: 80<br />
-镜像地址列表URL:</p>
-<pre><code class="language-plain_text">http://mirrors.neusoft.edu.cn/android/repository/addon-6.xml 
-http://mirrors.neusoft.edu.cn/android/repository/addon.xml 
-http://mirrors.neusoft.edu.cn/android/repository/extras/intel/addon.xml 
-http://mirrors.neusoft.edu.cn/android/repository/sys-img/android-tv/sys-img.xml 
-http://mirrors.neusoft.edu.cn/android/repository/sys-img/android-wear/sys-img.xml 
-http://mirrors.neusoft.edu.cn/android/repository/sys-img/android/sys-img.xml 
-http://mirrors.neusoft.edu.cn/android/repository/sys-img/google_apis/sys-img.xml 
-http://mirrors.neusoft.edu.cn/android/repository/sys-img/x86/addon-x86.xml 
-http://mirrors.neusoft.edu.cn/android/repository/addons_list-2.xml 
-http://mirrors.neusoft.edu.cn/android/repository/repository-10.xml
-</code></pre>
+镜像地址列表URL</p>
 
                         
                       </div>
@@ -332,7 +272,7 @@ http://mirrors.neusoft.edu.cn/android/repository/repository-10.xml
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058997.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/09/07</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -372,6 +312,8 @@ http://mirrors.neusoft.edu.cn/android/repository/repository-10.xml
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -384,7 +326,7 @@ http://mirrors.neusoft.edu.cn/android/repository/repository-10.xml
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

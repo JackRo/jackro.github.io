@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -134,7 +142,8 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>setHomeButtonEnabled这个方法在小于4.0版本的默认值是true，但是在4.0及其以上是false，该方法的作用：决定左上角的图标是否可以点击，没有向左的小图标。true则图标可以点击，false则不可以点击。</p>
+      <p>setHomeButtonEnabled 这个方法在小于4.0版本的默认值是true，但是在4.0及其以上是false，该方法的作用：决定左上角的图标是否可以点击，没有向左的小图标。true则图标可以点击，false则不可以点击。</p>
+<span id="more"></span><!-- more -->
 <pre><code class="language-plain_text">	actionBar.setDisplayHomeAsUpEnabled(true)    // 给左上角图标的左边加上一个返回的图标 。对应ActionBar.DISPLAY_HOME_AS_UP。
 
 	actionBar.setDisplayShowHomeEnabled(true)   //使左上角图标是否显示，如果设成false，则没有程序图标，仅仅就个标题，否则，显示应用程序图标。
@@ -188,6 +197,8 @@
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -200,7 +211,7 @@
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

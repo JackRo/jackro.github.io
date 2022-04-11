@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -134,7 +142,9 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>今天面试展示 iOS debug app 时不断闪退，无法打开应用，车祸现场相当尴尬。面试结束回到家后打开Xcode重新部署debug app到真机上，报错，无法部署。根据提示，换了下bundle ID，卸载真机上已安装的app，重新部署安装，仍然报错，无法部署。于是去看了下配置文件，发现provisioning profile报错，需要重新登录Apple ID，重新登录后，再次部署，并在真机上设置信任当前Apple ID，问题解决。</p>
+      <p>今天面试展示 iOS debug app 时不断闪退，无法打开应用，车祸现场相当尴尬。面试结束回到家后打开Xcode重新部署debug app到真机上，报错，无法部署。</p>
+<span id="more"></span><!-- more -->
+<p>根据提示，换了下bundle ID，卸载真机上已安装的app，重新部署安装，仍然报错，无法部署。于是去看了下配置文件，发现provisioning profile报错，需要重新登录Apple ID，重新登录后，再次部署，并在真机上设置信任当前Apple ID，问题解决。</p>
 <p>但是问题真的解决了吗？然后我仔细去看了下配置文件，终于找到问题原因，原来debug app的Provisioning profile是有过期时间的。如下图所示：</p>
 <p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2018051401.jpg" alt="jackro_blog2018051401" /></p>
 
@@ -178,6 +188,8 @@
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -190,7 +202,7 @@
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

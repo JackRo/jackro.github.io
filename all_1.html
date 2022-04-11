@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -116,28 +124,12 @@
 			<div class="article">
                 <a class="clearlink" href="16496553058327.html">
                 
-                  <h1>Android项目CMake构建脚本放置在项目根目录下导致build失败的问题</h1>
+                  <h1>Android 项目 CMake 构建脚本放置在项目根目录下导致 build 失败的问题</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<p>在现有Android项目中做JNI配置时，碰到了CMake构建脚本放置在项目中的位置的问题。当放置在项目的根目录下，app的build.gradle文件中配置（该配置是通过右键项目的app模块选择 Link C++ Project with Gradle后自动生成的）如下：</p>
-<pre><code class="language-plain_text"> externalNativeBuild {
-    cmake {
-        path '../CMakeLists.txt'
-    }
-}
-</code></pre>
-<p>此时对项目进行build操作时，build会失败。</p>
-<p>当尝试把CMake构建脚本放置在项目的app目录下，build就可以成功，此时app的build.gradle文件中配置如下：</p>
-<pre><code class="language-plain_text"> externalNativeBuild {
-    cmake {
-        path 'CMakeLists.txt'
-    }
-}
-</code></pre>
-<p>解决该问题参考了官方文档，参考链接如下：<br />
-<a href="https://developer.android.com/studio/projects/add-native-code.html">https://developer.android.com/studio/projects/add-native-code.html</a></p>
+                        	<p>在现有 Android 项目中做 JNI 配置时, 碰到了CMake构建脚本放置在项目中的位置的问题。</p>
 
                         
                       </div>
@@ -145,7 +137,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058327.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/09/20</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -170,28 +162,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>如题。该问题很简单，使用一个嵌套循环即可解决，代码如下所示：</p>
-<pre><code class="language-plain_text">/**
- * judge that a String Array whether or not contained equal String
- * 
- * @param strings
- *            a string Array
- * @return return true, contained; return false, not contained
- */
-public static boolean judgeStrArrayContainsSameStr(String[] strings) {
-	int len = strings.length;
-	for (int i = 0; i &lt; len; i++) {
-		String temp = strings[i];
-		for (int j = i + 1; j &lt; len; j++) {
-			String string = strings[j];
-			if (string.equals(temp)) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-</code></pre>
+                        	<p>如题。该问题很简单，使用一个嵌套循环即可解决.</p>
 
                         
                       </div>
@@ -199,7 +170,7 @@ public static boolean judgeStrArrayContainsSameStr(String[] strings) {
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553060211.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/09/11</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -225,10 +196,6 @@ public static boolean judgeStrArrayContainsSameStr(String[] strings) {
                       <div class="a-content-text">
                         
                         	<p>我的服务器是阿里云的ubuntu 16.04，电脑是Mac os。上传文件到Linux服务器可以在终端中采用如下命令上传：</p>
-<pre><code class="language-plain_text">//filename是你要上传的文件名，username是服务器主机用户名，x.x.x.x是服务器IP地址，directory是要将文件上传到服务器的directory目录下
-scp [filename] [username]@x.x.x.x:[dirctory]
-</code></pre>
-<p>命令scp基于ssh协议，可以将文件拷贝到远程服务器上的指定目录，Mac os自带，使用很方便。当然还可以使用ftp/sftp方式上传。</p>
 
                         
                       </div>
@@ -236,7 +203,7 @@ scp [filename] [username]@x.x.x.x:[dirctory]
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553061305.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/06/23</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -261,19 +228,7 @@ scp [filename] [username]@x.x.x.x:[dirctory]
                       
                       <div class="a-content-text">
                         
-                        	<p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。但是SQLite可以通过如下方式来实现：</p>
-<p>1）先清空表数据：</p>
-<pre><code class="language-plain_text">    delete from [tablename];
-</code></pre>
-<p>2）当数据库中包含自增列时，会自动建立一个名为 sqlite_sequence 的表。这个表包含两个列：name和seq。name记录自增列所在的表（即tablename），seq记录当前序号（下一条记录的编号就是当前序号加1）。你可以通过如下方式将自增量归零：</p>
-<pre><code class="language-plain_text">    //1. 将表名为tablename的自增量置0
-    update sqlite_sequence set seq = 0 where name = 'tablename'
-    //2. 将表名为tablename的记录删除
-    delete from sqlite_sequence where name = 'tablename'
-    //3. 将sqlite_sequence表清空数据
-    delete from sqlite_sequence
-</code></pre>
-<p>虽然在普通的DBMS中，用delete不如用truncate快，但是SQLite对delete做了优化，这个优化也可以使它运行的很快。</p>
+                        	<p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。</p>
 
                         
                       </div>
@@ -281,7 +236,7 @@ scp [filename] [username]@x.x.x.x:[dirctory]
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553061097.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/06/16</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -308,24 +263,7 @@ scp [filename] [username]@x.x.x.x:[dirctory]
                       
                       <div class="a-content-text">
                         
-                        	<p>在Android开发中，如果需要查看本地数据库，可以在adb shell中查看（当然前提条件是真机root或者使用模拟器），输入下面的命令可以查看：</p>
-<pre><code class="language-plain_text">Last login: Thu Jun 15 10:02:21 on ttys000
-JackRodeMacBook-Pro:~ jack$ adb shell
-generic_x86_64:/ $ cd /data/data/cn.jackro.databasedemo/databases/
-/system/bin/sh: cd: /data/data/cn.jackro.databasedemo/databases:     Permission denied
-2|generic_x86_64:/ $ 
-</code></pre>
-<p>但是当执行cd命令切换到应用的数据库目录时，却提示Permission denied（权限拒绝），经查，可以执行su命令切换到超级用户来提高权限，访问该文件。命令如下所示：</p>
-<pre><code class="language-plain_text">Last login: Thu Jun 15 10:09:58 on ttys000
-JackRodeMacBook-Pro:~ jack$ adb shell
-generic_x86_64:/ $ cd /data/data/cn.jackro.databasedemo/databases
-/system/bin/sh: cd: /data/data/cn.jackro.databasedemo/databases: Permission denied
-2|generic_x86_64:/ $ su
-generic_x86_64:/ # cd /data/data/cn.jackro.databasedemo/databases
-generic_x86_64:/data/data/cn.jackro.databasedemo/databases # ls
-BookStore.db BookStore.db-journal 
-generic_x86_64:/data/data/cn.jackro.databasedemo/databases #
-</code></pre>
+                        	<p>在Android开发中，如果需要查看本地数据库，可以在adb shell中查看(当然前提条件是真机root或者使用模拟器).</p>
 
                         
                       </div>
@@ -333,7 +271,7 @@ generic_x86_64:/data/data/cn.jackro.databasedemo/databases #
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553060790.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/06/15</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -373,6 +311,8 @@ generic_x86_64:/data/data/cn.jackro.databasedemo/databases #
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -385,7 +325,7 @@ generic_x86_64:/data/data/cn.jackro.databasedemo/databases #
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

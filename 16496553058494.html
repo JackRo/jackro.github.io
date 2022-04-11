@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -134,7 +142,9 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>这里自定义了一个RightPicClickEditText，继承AppCompatEditText，并且在其三个构造函数中调用父组件的相应构造函数，是为了适配5.0以下应用MD风格，代码如下：</p>
+      <p>这里自定义了一个 RightPicClickEditText，继承 AppCompatEditText，并且在其三个构造函数中调用父组件的相应构造函数，是为了适配 5.0 以下应用 MD 风格.</p>
+<span id="more"></span><!-- more -->
+<p>代码如下：</p>
 <pre><code class="language-plain_text">public RightPicClickEditText(Context context) {
     super(context);
     init();
@@ -260,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements RightPicClickEdit
       <p class="text-right" style="padding:15px 0px;">
       
           <a  href="16496553060889.html" 
-          title="Next Post: 解决Camera is being used after Camera.release() was called">解决Camera is being used after Camera.release() was called &raquo;</a>
+          title="Next Post: 解决 Camera is being used after Camera.release() was called">解决 Camera is being used after Camera.release() was called &raquo;</a>
       
       </p>
         </div>
@@ -285,6 +295,8 @@ public class MainActivity extends AppCompatActivity implements RightPicClickEdit
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -297,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements RightPicClickEdit
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

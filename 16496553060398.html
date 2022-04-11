@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -134,7 +142,9 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>Mac 环境下 Android Studio 创建的 Android 项目，在项目目录下执行 ./gradlew clean，提示 Permission denied，看到这个提示，自然想到的是 sudo 执行，然而 sudo 执行并不能解决问题，反而会提示command not found。万般无奈，只能百度，发现执行以下命令即可解决问题。</p>
+      <p>Mac 环境下 Android Studio 创建的 Android 项目，在项目目录下执行 ./gradlew clean，提示 Permission denied，看到这个提示，自然想到的是 sudo 执行，然而 sudo 执行并不能解决问题，反而会提示command not found。</p>
+<span id="more"></span><!-- more -->
+<p>万般无奈，只能百度，发现执行以下命令即可解决问题。</p>
 <pre><code class="language-plain_text">//为gradlew文件添加可执行属性
 chmod +x gradlew
 </code></pre>
@@ -183,6 +193,8 @@ chmod +x gradlew
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -195,7 +207,7 @@ chmod +x gradlew
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

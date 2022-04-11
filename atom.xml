@@ -4,7 +4,7 @@
   <title><![CDATA[JackRo's Blog]]></title>
   <link href="https://jackro.cn/atom.xml" rel="self"/>
   <link href="https://jackro.cn/"/>
-  <updated>2022-04-11T16:03:57+08:00</updated>
+  <updated>2022-04-11T17:54:27+08:00</updated>
   <id>https://jackro.cn/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -18,7 +18,9 @@
     <updated>2022-04-11T13:35:05+08:00</updated>
     <id>https://jackro.cn/16496553059675.html</id>
     <content type="html"><![CDATA[
-<p>今天面试展示 iOS debug app 时不断闪退，无法打开应用，车祸现场相当尴尬。面试结束回到家后打开Xcode重新部署debug app到真机上，报错，无法部署。根据提示，换了下bundle ID，卸载真机上已安装的app，重新部署安装，仍然报错，无法部署。于是去看了下配置文件，发现provisioning profile报错，需要重新登录Apple ID，重新登录后，再次部署，并在真机上设置信任当前Apple ID，问题解决。</p>
+<p>今天面试展示 iOS debug app 时不断闪退，无法打开应用，车祸现场相当尴尬。面试结束回到家后打开Xcode重新部署debug app到真机上，报错，无法部署。</p>
+<span id="more"></span><!-- more -->
+<p>根据提示，换了下bundle ID，卸载真机上已安装的app，重新部署安装，仍然报错，无法部署。于是去看了下配置文件，发现provisioning profile报错，需要重新登录Apple ID，重新登录后，再次部署，并在真机上设置信任当前Apple ID，问题解决。</p>
 <p>但是问题真的解决了吗？然后我仔细去看了下配置文件，终于找到问题原因，原来debug app的Provisioning profile是有过期时间的。如下图所示：</p>
 <p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2018051401.jpg" alt="jackro_blog2018051401" /></p>
 
@@ -32,6 +34,7 @@
     <id>https://jackro.cn/16496553060588.html</id>
     <content type="html"><![CDATA[
 <p>最近公司生产环境的系统有个需求，需要往mysql数据库的一张表里批量添加数据，业务部门给的数据大致如下：</p>
+<span id="more"></span><!-- more -->
 <table>
 <thead>
 <tr>
@@ -147,7 +150,9 @@ SELECT addData(29, 20, 'X025714', 78);
     <updated>2022-04-11T13:35:05+08:00</updated>
     <id>https://jackro.cn/16496553059414.html</id>
     <content type="html"><![CDATA[
-<p>当我使用Android Studio（macOS 10.12.6系统，Android Studio 3.0）进行Android项目开发时，我经常会使用鼠标悬停的方式去查看类、方法和字段的文档注释。但当我这样做时，我发现一个非常让我懊恼的问题，当我鼠标悬停时，出现的弹框中显示Fetching Documentation...，并且它会显示很长一段时间。</p>
+<p>当我使用 Android Studio(macOS 10.12.6 系统, Android Studio 3.0)做 Android 项目开发时, 我经常会使用鼠标悬停的方式去查看类, 方法和字段的文档注释.</p>
+<span id="more"></span><!-- more -->
+<p>但当我这样做时, 我发现一个非常让我懊恼的问题, 当我鼠标悬停时, 出现的弹框中显示 Fetching Documentation..., 并且它会显示很长一段时间.</p>
 <p>问题总是得解决的，经过一番搜索，我找到了问题的解决方法：修改配置文件。修改方法如下：</p>
 <ol>
 <li>找到AS的配置文件目录，我的是在~/Library/Preferences下</li>
@@ -192,6 +197,7 @@ SELECT addData(29, 20, 'X025714', 78);
     <id>https://jackro.cn/16496553060491.html</id>
     <content type="html"><![CDATA[
 <p>在 macOS 中是存在 .DS_Store 文件的，在使用git对项目进行版本控制时，该文件如果不加入 .gitignore 中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p>
+<span id="more"></span><!-- more -->
 <p>经过一番搜索，我找到了解决方法，我们可以先在.gitignore中加入该文件的忽略规则，如下所示：</p>
 <pre><code class="language-plain_text">.DS_Store
 </code></pre>
@@ -213,7 +219,9 @@ SELECT addData(29, 20, 'X025714', 78);
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553060993.html</id>
     <content type="html"><![CDATA[
-<p>今天碰到一个公司的项目连接服务器的页面在浏览器中打开需要安装JDK并打开浏览器Java支持的问题。经过一番搜索发现，Java官网的帮助中心中介绍推荐使用IE（windows）和Safari（Mac os）（参见链接：<a href="https://www.java.com/zh_CN/download/faq/chrome.xml">https://www.java.com/zh_CN/download/faq/chrome.xml</a>），由于自己家里电脑是Mac os（Mac OS 10.12.6），所以使用Safari（自己电脑当前版本是11.0）来打开浏览器Java支持。</p>
+<p>今天碰到一个公司的项目连接服务器的页面在浏览器中打开需要安装JDK并打开浏览器Java支持的问题。</p>
+<span id="more"></span><!-- more -->
+<p>经过一番搜索发现，Java官网的帮助中心中介绍推荐使用IE（windows）和Safari（Mac os）（参见链接：<a href="https://www.java.com/zh_CN/download/faq/chrome.xml">https://www.java.com/zh_CN/download/faq/chrome.xml</a>），由于自己家里电脑是Mac os（Mac OS 10.12.6），所以使用Safari（自己电脑当前版本是11.0）来打开浏览器Java支持。</p>
 <p>在Safari中如何打开浏览器Java支持呢？经过一番搜索，发现可以在Safari的偏好设置中的网站选项去打开Java支持，针对某个网站去打开即可，如下图所示：</p>
 <p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017092101.jpg" alt="jackro_blog2017092101" /></p>
 
@@ -221,12 +229,14 @@ SELECT addData(29, 20, 'X025714', 78);
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Android项目CMake构建脚本放置在项目根目录下导致build失败的问题]]></title>
+    <title type="html"><![CDATA[Android 项目 CMake 构建脚本放置在项目根目录下导致 build 失败的问题]]></title>
     <link href="https://jackro.cn/16496553058327.html"/>
     <updated>2022-04-11T13:35:05+08:00</updated>
     <id>https://jackro.cn/16496553058327.html</id>
     <content type="html"><![CDATA[
-<p>在现有Android项目中做JNI配置时，碰到了CMake构建脚本放置在项目中的位置的问题。当放置在项目的根目录下，app的build.gradle文件中配置（该配置是通过右键项目的app模块选择 Link C++ Project with Gradle后自动生成的）如下：</p>
+<p>在现有 Android 项目中做 JNI 配置时, 碰到了CMake构建脚本放置在项目中的位置的问题。</p>
+<span id="more"></span><!-- more -->
+<p>当放置在项目的根目录下，app的build.gradle文件中配置(该配置是通过右键项目的app模块选择 Link C++ Project with Gradle后自动生成的）如下：</p>
 <pre><code class="language-plain_text"> externalNativeBuild {
     cmake {
         path '../CMakeLists.txt'
@@ -253,7 +263,9 @@ SELECT addData(29, 20, 'X025714', 78);
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553060211.html</id>
     <content type="html"><![CDATA[
-<p>如题。该问题很简单，使用一个嵌套循环即可解决，代码如下所示：</p>
+<p>如题。该问题很简单，使用一个嵌套循环即可解决.</p>
+<span id="more"></span><!-- more -->
+<p>代码如下所示：</p>
 <pre><code class="language-plain_text">/**
  * judge that a String Array whether or not contained equal String
  * 
@@ -286,6 +298,7 @@ public static boolean judgeStrArrayContainsSameStr(String[] strings) {
     <id>https://jackro.cn/16496553061305.html</id>
     <content type="html"><![CDATA[
 <p>我的服务器是阿里云的ubuntu 16.04，电脑是Mac os。上传文件到Linux服务器可以在终端中采用如下命令上传：</p>
+<span id="more"></span><!-- more -->
 <pre><code class="language-plain_text">//filename是你要上传的文件名，username是服务器主机用户名，x.x.x.x是服务器IP地址，directory是要将文件上传到服务器的directory目录下
 scp [filename] [username]@x.x.x.x:[dirctory]
 </code></pre>
@@ -300,7 +313,9 @@ scp [filename] [username]@x.x.x.x:[dirctory]
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553061097.html</id>
     <content type="html"><![CDATA[
-<p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。但是SQLite可以通过如下方式来实现：</p>
+<p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。</p>
+<span id="more"></span><!-- more -->
+<p>但是SQLite可以通过如下方式来实现：</p>
 <p>1）先清空表数据：</p>
 <pre><code class="language-plain_text">    delete from [tablename];
 </code></pre>
@@ -323,7 +338,9 @@ scp [filename] [username]@x.x.x.x:[dirctory]
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553060790.html</id>
     <content type="html"><![CDATA[
-<p>在Android开发中，如果需要查看本地数据库，可以在adb shell中查看（当然前提条件是真机root或者使用模拟器），输入下面的命令可以查看：</p>
+<p>在Android开发中，如果需要查看本地数据库，可以在adb shell中查看(当然前提条件是真机root或者使用模拟器).</p>
+<span id="more"></span><!-- more -->
+<p>输入下面的命令可以查看：</p>
 <pre><code class="language-plain_text">Last login: Thu Jun 15 10:02:21 on ttys000
 JackRodeMacBook-Pro:~ jack$ adb shell
 generic_x86_64:/ $ cd /data/data/cn.jackro.databasedemo/databases/
@@ -352,6 +369,7 @@ generic_x86_64:/data/data/cn.jackro.databasedemo/databases #
     <id>https://jackro.cn/16496553058156.html</id>
     <content type="html"><![CDATA[
 <p>Android 7.0 对系统和API做了一些变更。其中关于隐式广播的移除见官方文档链接：<a href="https://developer.android.com/about/versions/nougat/android-7.0-changes.html#bg-opt">Project Svelte：后台优化</a>，根据官方文档介绍，该变更主要是为了帮助优化内存使用和电量消耗，因为隐式广播会在后台频繁启动已注册侦听这些广播的应用，删除这些广播可以显著提升设备性能和用户体验。</p>
+<span id="more"></span><!-- more -->
 <p>针对这一变更，官方文档也给出了应用开发者如何改写应用的一些建议，官方文档参考：<a href="https://developer.android.com/preview/features/background-optimization.html">后台优化</a>。</p>
 <p>1）<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a></p>
 <p>面向Android 7.0(API 24)及以上的应用如果在应用的AndroidManifest静态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，将不会收到该广播。但是我们可以使用[Context.registerReceiver()](<a href="https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver">https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver</a>, android.content.IntentFilter))动态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，这将会让我们的应用在运行时收到该广播（这样也可以改善内存使用和电量消耗）。</p>
@@ -376,7 +394,9 @@ Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不�
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553060398.html</id>
     <content type="html"><![CDATA[
-<p>Mac 环境下 Android Studio 创建的 Android 项目，在项目目录下执行 ./gradlew clean，提示 Permission denied，看到这个提示，自然想到的是 sudo 执行，然而 sudo 执行并不能解决问题，反而会提示command not found。万般无奈，只能百度，发现执行以下命令即可解决问题。</p>
+<p>Mac 环境下 Android Studio 创建的 Android 项目，在项目目录下执行 ./gradlew clean，提示 Permission denied，看到这个提示，自然想到的是 sudo 执行，然而 sudo 执行并不能解决问题，反而会提示command not found。</p>
+<span id="more"></span><!-- more -->
+<p>万般无奈，只能百度，发现执行以下命令即可解决问题。</p>
 <pre><code class="language-plain_text">//为gradlew文件添加可执行属性
 chmod +x gradlew
 </code></pre>
@@ -392,6 +412,7 @@ chmod +x gradlew
     <id>https://jackro.cn/16496553060120.html</id>
     <content type="html"><![CDATA[
 <p>通知功能是iOS应用开发经常会碰到的需求，iOS应用的通知分为本地通知和远程通知（即消息推送），Apple develop官网的API Guides对通知的开发有详细的介绍。</p>
+<span id="more"></span><!-- more -->
 <p>今天我碰到的问题是模拟器收不到本地通知，按照惯例，先上本地通知的代码：</p>
 <pre><code class="language-plain_text">    UILocalNotification *note = [[UILocalNotification alloc] init];
     note.alertBody = @&quot;Hypnotize&quot;;
@@ -436,7 +457,8 @@ if ([[UIApplication sharedApplication] currentUserNotificationSettings].types !=
     <updated>2022-04-11T13:35:05+08:00</updated>
     <id>https://jackro.cn/16496553059941.html</id>
     <content type="html"><![CDATA[
-<p>iOS开发中会使用到自定义UIView，下面是我在学习过程中写的一个自定义UIView：</p>
+<p>iOS 开发中会使用到自定义 UIView, 下面是我在学习过程中写的一个自定义 UIView.</p>
+<span id="more"></span><!-- more -->
 <pre><code class="language-plain_text">#import &quot;BNRHypnosisView.h&quot;
 
 @interface BNRHypnosisView()
@@ -576,7 +598,9 @@ BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
     <updated>2022-04-11T13:35:05+08:00</updated>
     <id>https://jackro.cn/16496553059586.html</id>
     <content type="html"><![CDATA[
-<p>现阶段的iOS应用开发，我们必须在AppDelegate中设置self.window.rootViewController，但是在以前老版本的xcode中可以不设置，iOS应用也可以照常运行。因此如果一些老的项目或者照一些老的iOS教程书籍敲的代码，运行就可能会出现下面的异常：</p>
+<p>现阶段的iOS应用开发，我们必须在AppDelegate中设置self.window.rootViewController，但是在以前老版本的xcode中可以不设置，iOS应用也可以照常运行。</p>
+<span id="more"></span><!-- more -->
+<p>因此如果一些老的项目或者照一些老的iOS教程书籍敲的代码，运行就可能会出现下面的异常：</p>
 <pre><code class="language-plain_text">*** Terminating app due to uncaught exception 'NSInternalInconsistencyException', 
 reason: 'Application windows are expected to have a root view controller at the end of application launch'
 </code></pre>
@@ -701,6 +725,7 @@ reason: 'Application windows are expected to have a root view controller at the 
     <id>https://jackro.cn/16496553058651.html</id>
     <content type="html"><![CDATA[
 <p>最近在项目中使用了<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> ，但是为了让UI看起来留白不是那么多，需要对<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> 进行自定义大小。</p>
+<span id="more"></span><!-- more -->
 <p>根据官方文档的说明，<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> 仅仅支持设置app:fabSize=&quot;normal&quot;来改变fab的大小，并且这个fabSize的大小提供了三个可选项（normal，mini和auto）来设置，可以在布局里设置也可以在代码里调用setSize方法进行设置。</p>
 <p>这里一开始是想到通过在布局里改变layout_width和layout_height来改变控件的大小的，但是设置之后（两者均设置为100dp，fabSize设置为normal），效果如下所示：</p>
 <p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112001.png" alt="jackro_blog2016112001" /></p>
@@ -827,7 +852,9 @@ reason: 'Application windows are expected to have a root view controller at the 
     <updated>2022-04-11T13:35:05+08:00</updated>
     <id>https://jackro.cn/16496553058494.html</id>
     <content type="html"><![CDATA[
-<p>这里自定义了一个RightPicClickEditText，继承AppCompatEditText，并且在其三个构造函数中调用父组件的相应构造函数，是为了适配5.0以下应用MD风格，代码如下：</p>
+<p>这里自定义了一个 RightPicClickEditText，继承 AppCompatEditText，并且在其三个构造函数中调用父组件的相应构造函数，是为了适配 5.0 以下应用 MD 风格.</p>
+<span id="more"></span><!-- more -->
+<p>代码如下：</p>
 <pre><code class="language-plain_text">public RightPicClickEditText(Context context) {
     super(context);
     init();
@@ -939,14 +966,16 @@ public class MainActivity extends AppCompatActivity implements RightPicClickEdit
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[解决Camera is being used after Camera.release() was called]]></title>
+    <title type="html"><![CDATA[解决 Camera is being used after Camera.release() was called]]></title>
     <link href="https://jackro.cn/16496553060889.html"/>
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553060889.html</id>
     <content type="html"><![CDATA[
+<p>在相机开发中, 打开相机后点返回, 偶尔会出现如下所示的异常.</p>
 <pre><code class="language-plain_text">java.lang.RuntimeException: Camera is being used after Camera.release() was called
 </code></pre>
-<p>在相机开发中，打开相机后点返回，偶尔会出现如上所示的异常，解决代码如下：</p>
+<span id="more"></span><!-- more -->
+<p>解决代码如下：</p>
 <pre><code class="language-plain_text">@BindView(R.id.sv_preview)
 SurfaceView mSvPreview;
 
@@ -1249,7 +1278,9 @@ public class CameraManager extends BaseCameraManager implements Camera.AutoFocus
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553061410.html</id>
     <content type="html"><![CDATA[
-<p>当Fragment和ViewPager一起使用时，某个Fragment中含有百度地图MapView时，当你从其他Fragment切换到含有百度地图MapView的Fragment时，会有卡顿闪屏的效果。解决方法是把百度地图的MapView替换成TextureMapView，卡顿闪屏问题完美解决。</p>
+<p>当Fragment和ViewPager一起使用时，某个Fragment中含有百度地图MapView时，当你从其他Fragment切换到含有百度地图MapView的Fragment时，会有卡顿闪屏的效果。</p>
+<span id="more"></span><!-- more -->
+<p>解决方法是把百度地图的MapView替换成TextureMapView，卡顿闪屏问题完美解决。</p>
 
 ]]></content>
   </entry>
@@ -1260,7 +1291,9 @@ public class CameraManager extends BaseCameraManager implements Camera.AutoFocus
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553060690.html</id>
     <content type="html"><![CDATA[
-<p>当你点击系统的back键，当前Activity开启的轮询服务刚好此时开启运行，即走onStartCommand，这里Activity用Intent传递给该服务的所有参数会为null。Activity此时已经异常destroy了，此时传递给Service的Intent的参数不会传递成功。所以这里如果你在Service的onStartCommand里用到了Intent传递过来的参数，则需要先判空，否则可能出现空指针异常。</p>
+<p>当你点击系统的back键，当前Activity开启的轮询服务刚好此时开启运行，即走onStartCommand，这里Activity用Intent传递给该服务的所有参数会为null。</p>
+<span id="more"></span><!-- more -->
+<p>Activity此时已经异常destroy了，此时传递给Service的Intent的参数不会传递成功。所以这里如果你在Service的onStartCommand里用到了Intent传递过来的参数，则需要先判空，否则可能出现空指针异常。</p>
 
 ]]></content>
   </entry>

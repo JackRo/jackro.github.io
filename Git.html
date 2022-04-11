@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -122,17 +130,6 @@
                       <div class="a-content-text">
                         
                         	<p>在 macOS 中是存在 .DS_Store 文件的，在使用git对项目进行版本控制时，该文件如果不加入 .gitignore 中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p>
-<p>经过一番搜索，我找到了解决方法，我们可以先在.gitignore中加入该文件的忽略规则，如下所示：</p>
-<pre><code class="language-plain_text">.DS_Store
-</code></pre>
-<p>然后删除项目中所有的 .DS_Store，在项目目录下执行如下命令：</p>
-<pre><code class="language-plain_text">find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
-</code></pre>
-<p>然后提交项目即可。</p>
-<p>但是，我发现我的项目是用 WebStorm 打开的，项目目录下自动生成了 .idea 文件，每次提交 .idea 文件也会提交，加入忽略规则也不行，我想到了和上面类似的方法，删除 .idea 目录，然后再提交，即可解决。</p>
-<p>参考链接：</p>
-<p><a href="http://www.jianshu.com/p/fdaa8be7f6c3">如何删除GIT中的.DS_Store</a></p>
-<p><a href="http://www.jianshu.com/p/8c0d262e49a6">Git中全局忽略.DS_Store文件</a></p>
 
                         
                       </div>
@@ -140,7 +137,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553060491.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/09/22</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -180,6 +177,8 @@
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -192,7 +191,7 @@
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -136,7 +144,9 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。但是SQLite可以通过如下方式来实现：</p>
+      <p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。</p>
+<span id="more"></span><!-- more -->
+<p>但是SQLite可以通过如下方式来实现：</p>
 <p>1）先清空表数据：</p>
 <pre><code class="language-plain_text">    delete from [tablename];
 </code></pre>
@@ -193,6 +203,8 @@
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -205,7 +217,7 @@
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

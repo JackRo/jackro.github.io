@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  解决Camera is being used after Camera.release() was called - JackRo's Blog
+  解决 Camera is being used after Camera.release() was called - JackRo's Blog
   
   </title>
   
@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -114,7 +122,7 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>解决Camera is being used after Camera.release() was called</h1>
+          <h1>解决 Camera is being used after Camera.release() was called</h1>
      
         <div class="read-more clearfix">
           <span class="date">2016/07/01</span>
@@ -134,9 +142,11 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <pre><code class="language-plain_text">java.lang.RuntimeException: Camera is being used after Camera.release() was called
+      <p>在相机开发中, 打开相机后点返回, 偶尔会出现如下所示的异常.</p>
+<pre><code class="language-plain_text">java.lang.RuntimeException: Camera is being used after Camera.release() was called
 </code></pre>
-<p>在相机开发中，打开相机后点返回，偶尔会出现如上所示的异常，解决代码如下：</p>
+<span id="more"></span><!-- more -->
+<p>解决代码如下：</p>
 <pre><code class="language-plain_text">@BindView(R.id.sv_preview)
 SurfaceView mSvPreview;
 
@@ -473,6 +483,8 @@ public class CameraManager extends BaseCameraManager implements Camera.AutoFocus
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -485,7 +497,7 @@ public class CameraManager extends BaseCameraManager implements Camera.AutoFocus
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

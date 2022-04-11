@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -121,40 +129,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>当我使用Android Studio（macOS 10.12.6系统，Android Studio 3.0）进行Android项目开发时，我经常会使用鼠标悬停的方式去查看类、方法和字段的文档注释。但当我这样做时，我发现一个非常让我懊恼的问题，当我鼠标悬停时，出现的弹框中显示Fetching Documentation...，并且它会显示很长一段时间。</p>
-<p>问题总是得解决的，经过一番搜索，我找到了问题的解决方法：修改配置文件。修改方法如下：</p>
-<ol>
-<li>找到AS的配置文件目录，我的是在~/Library/Preferences下</li>
-<li>找到AS当前版本的配置文件目录，我的是在~/Library/Preferences/AndroidStudio3.0下</li>
-<li>找到配置文件目录下options/jdk.table.xml文件打开</li>
-<li>找到你当前项目compileSdkVersion对应的版本所对应的jdk节点（当然如果需要的话你也可以修改所有版本的jdk节点）</li>
-<li>再找到roots节点下的javadocPath节点，修改该节点里的的url属性，使之与sourcePath节点里的url属性一致即可</li>
-</ol>
-<p>修改前的节点如下所示：</p>
-<pre><code class="language-plain_text">        &lt;javadocPath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;http://developer.android.com/reference/&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/javadocPath&gt;
-        &lt;sourcePath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/sourcePath&gt;
-</code></pre>
-<p>在上面修改前的节点中，javadocPath在找android developer官网上的doc，由于网络的原因（某墙），肯定很难fetching到documentation。所以将url修改为下载到本地的源码（去本地源码中fetching documentation自然很快），如下所示：</p>
-<pre><code class="language-plain_text">        &lt;javadocPath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/javadocPath&gt;
-        &lt;sourcePath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/sourcePath&gt;
-</code></pre>
-<p>修改完之后，需要重启下AS，fetching documentation就会很快了（不是很快，是非常快！）。</p>
+                        	<p>当我使用 Android Studio(macOS 10.12.6 系统, Android Studio 3.0)做 Android 项目开发时, 我经常会使用鼠标悬停的方式去查看类, 方法和字段的文档注释.</p>
 
                         
                       </div>
@@ -162,7 +137,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553059414.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/11/12</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -182,28 +157,12 @@
 			<div class="article">
                 <a class="clearlink" href="16496553058327.html">
                 
-                  <h1>Android项目CMake构建脚本放置在项目根目录下导致build失败的问题</h1>
+                  <h1>Android 项目 CMake 构建脚本放置在项目根目录下导致 build 失败的问题</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<p>在现有Android项目中做JNI配置时，碰到了CMake构建脚本放置在项目中的位置的问题。当放置在项目的根目录下，app的build.gradle文件中配置（该配置是通过右键项目的app模块选择 Link C++ Project with Gradle后自动生成的）如下：</p>
-<pre><code class="language-plain_text"> externalNativeBuild {
-    cmake {
-        path '../CMakeLists.txt'
-    }
-}
-</code></pre>
-<p>此时对项目进行build操作时，build会失败。</p>
-<p>当尝试把CMake构建脚本放置在项目的app目录下，build就可以成功，此时app的build.gradle文件中配置如下：</p>
-<pre><code class="language-plain_text"> externalNativeBuild {
-    cmake {
-        path 'CMakeLists.txt'
-    }
-}
-</code></pre>
-<p>解决该问题参考了官方文档，参考链接如下：<br />
-<a href="https://developer.android.com/studio/projects/add-native-code.html">https://developer.android.com/studio/projects/add-native-code.html</a></p>
+                        	<p>在现有 Android 项目中做 JNI 配置时, 碰到了CMake构建脚本放置在项目中的位置的问题。</p>
 
                         
                       </div>
@@ -211,7 +170,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058327.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/09/20</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -236,19 +195,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。但是SQLite可以通过如下方式来实现：</p>
-<p>1）先清空表数据：</p>
-<pre><code class="language-plain_text">    delete from [tablename];
-</code></pre>
-<p>2）当数据库中包含自增列时，会自动建立一个名为 sqlite_sequence 的表。这个表包含两个列：name和seq。name记录自增列所在的表（即tablename），seq记录当前序号（下一条记录的编号就是当前序号加1）。你可以通过如下方式将自增量归零：</p>
-<pre><code class="language-plain_text">    //1. 将表名为tablename的自增量置0
-    update sqlite_sequence set seq = 0 where name = 'tablename'
-    //2. 将表名为tablename的记录删除
-    delete from sqlite_sequence where name = 'tablename'
-    //3. 将sqlite_sequence表清空数据
-    delete from sqlite_sequence
-</code></pre>
-<p>虽然在普通的DBMS中，用delete不如用truncate快，但是SQLite对delete做了优化，这个优化也可以使它运行的很快。</p>
+                        	<p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。</p>
 
                         
                       </div>
@@ -256,7 +203,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553061097.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/06/16</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -283,24 +230,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>在Android开发中，如果需要查看本地数据库，可以在adb shell中查看（当然前提条件是真机root或者使用模拟器），输入下面的命令可以查看：</p>
-<pre><code class="language-plain_text">Last login: Thu Jun 15 10:02:21 on ttys000
-JackRodeMacBook-Pro:~ jack$ adb shell
-generic_x86_64:/ $ cd /data/data/cn.jackro.databasedemo/databases/
-/system/bin/sh: cd: /data/data/cn.jackro.databasedemo/databases:     Permission denied
-2|generic_x86_64:/ $ 
-</code></pre>
-<p>但是当执行cd命令切换到应用的数据库目录时，却提示Permission denied（权限拒绝），经查，可以执行su命令切换到超级用户来提高权限，访问该文件。命令如下所示：</p>
-<pre><code class="language-plain_text">Last login: Thu Jun 15 10:09:58 on ttys000
-JackRodeMacBook-Pro:~ jack$ adb shell
-generic_x86_64:/ $ cd /data/data/cn.jackro.databasedemo/databases
-/system/bin/sh: cd: /data/data/cn.jackro.databasedemo/databases: Permission denied
-2|generic_x86_64:/ $ su
-generic_x86_64:/ # cd /data/data/cn.jackro.databasedemo/databases
-generic_x86_64:/data/data/cn.jackro.databasedemo/databases # ls
-BookStore.db BookStore.db-journal 
-generic_x86_64:/data/data/cn.jackro.databasedemo/databases #
-</code></pre>
+                        	<p>在Android开发中，如果需要查看本地数据库，可以在adb shell中查看(当然前提条件是真机root或者使用模拟器).</p>
 
                         
                       </div>
@@ -308,7 +238,7 @@ generic_x86_64:/data/data/cn.jackro.databasedemo/databases #
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553060790.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/06/15</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -334,20 +264,6 @@ generic_x86_64:/data/data/cn.jackro.databasedemo/databases #
                       <div class="a-content-text">
                         
                         	<p>Android 7.0 对系统和API做了一些变更。其中关于隐式广播的移除见官方文档链接：<a href="https://developer.android.com/about/versions/nougat/android-7.0-changes.html#bg-opt">Project Svelte：后台优化</a>，根据官方文档介绍，该变更主要是为了帮助优化内存使用和电量消耗，因为隐式广播会在后台频繁启动已注册侦听这些广播的应用，删除这些广播可以显著提升设备性能和用户体验。</p>
-<p>针对这一变更，官方文档也给出了应用开发者如何改写应用的一些建议，官方文档参考：<a href="https://developer.android.com/preview/features/background-optimization.html">后台优化</a>。</p>
-<p>1）<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a></p>
-<p>面向Android 7.0(API 24)及以上的应用如果在应用的AndroidManifest静态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，将不会收到该广播。但是我们可以使用[Context.registerReceiver()](<a href="https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver">https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver</a>, android.content.IntentFilter))动态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，这将会让我们的应用在运行时收到该广播（这样也可以改善内存使用和电量消耗）。</p>
-<p>Android 7.0(API 24)还为我们提供了<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>（<a href="https://developer.android.com/reference/android/app/job/JobService.html">JobService</a>的回调方法），我们可以使用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html">JobInfo.Builder</a>构建一个在Unmetered Network Connection上的<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>执行这个<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，接下来就可以在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>方法里执行我们自己的逻辑。</p>
-<p>我们还可以使用<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html">ConnectivityManager.NetworkCallback</a>来监听网络变化，比如该接口中的<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html#onAvailable(android.net.Network)">onAvailable()</a>方法。</p>
-<p>2）<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_PICTURE">ACTION_NEW_PICTURE</a>或<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_VIDEO">ACTION_NEW_VIDEO</a></p>
-<p>在Android 7.0(API 24)里，这两个隐式广播被移除了，应用程序不能发送或接受这两个广播来监听系统的照片或者视频的拍摄。但是在Android 8.0(API 26)，这两个广播又被添加回来了，不过也仅仅可以通过动态注册来接收，并且仅仅适用于监听到他们来执行简单的可以立即被执行的任务，执行复杂的繁重的任务仍然需要使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>、<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>，和上面第一点处理方法类似，不同的是，需要调用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html#addTriggerContentUri(android.app.job.JobInfo.TriggerContentUri)">JobInfo.Builder.addTriggerContentUri()</a>构造<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>回调方法里去调用<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentAuthorities()">JobParameters.getTriggeredContentAuthorities()</a>和<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentUris()">JobParameters.getTriggeredContentUris()</a>来获取拍照或摄像时增加的照片或视频的Uri。</p>
-<p>像上面这样优化App可以让App在低内存的设备上改善性能和用户体验（这可以改善Android应用生态环境），移除后台服务（background service）和隐式广播的依赖可以帮助你的App在这样的设备上运行的更好。虽然Android 7.0(API 24)在逐步减少这样的issue，但是我们仍然推荐你通过完全不使用这样的后台进程来优化你的App。<br />
-Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不使用后台进程时是否还能很好的运行。命令如下：</p>
-<pre><code class="language-plain_text">    //模拟隐式广播和后台服务（background service）不可用的条件
-    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND ignore
-    //重新使隐式广播和后台服务（background service）可用
-    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND allow
-</code></pre>
 
                         
                       </div>
@@ -355,7 +271,7 @@ Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不�
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058156.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/06/13</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -395,6 +311,8 @@ Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不�
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -407,7 +325,7 @@ Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不�
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

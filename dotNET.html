@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -121,79 +129,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>在做Winform应用程序处理Image时碰到了这样一个问题。窗体设计如下：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081801.jpg" alt="jackro_blog2014081801" /></p>
-<p>当点击上面窗体中的上一张和下一张时，PictureBox中的图片会跟着切换，但是切换时却抛出了如下图所示的异常：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081802.jpg" alt="jackro_blog2014081802" /></p>
-<p>内存不足！！！<br />
-我一开始的关键代码如下所示：</p>
-<pre><code class="language-plain_text">	private void Form1_Load(object sender, EventArgs e)
-        {
-            pictureBox1.Image = Image.FromFile(@&quot;f:\图片\1.jpg&quot;);
-        }
-
-        string[] path = Directory.GetFiles(@&quot;f:\图片&quot;);
-        
-        int i = 0;
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            i++;
-            if (i == path.Length)
-            {
-                i = 0;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            i--;
-            if (i &lt; 0)
-            {
-                i = path.Length - 1;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-        }
-</code></pre>
-<p>后来，我在博客园里找问题的答案，找到了如下几种解决办法：</p>
-<p><strong>&lt;1&gt;释放内存</strong></p>
-<p>每次在PictureBox中显示完图像时，将其释放掉。释放内存关键代码如下：</p>
-<pre><code class="language-plain_text">	//if (pictureBox1.Image != null)//
-	{//    pictureBox1.Image.Dispose();//}
-	//或者像下面这样回收所有资源// GC.Collect();
-</code></pre>
-<p><strong>&lt;2&gt;双缓冲(类似于GDI+中的双倍缓冲)</strong><br />
-就是创建一个缓冲的“内存库”来存储图像，关键代码如下：</p>
-<pre><code class="language-plain_text">	//Bitmap bmp = new Bitmap(path[i]);  //bmp即相当于一个缓冲的“内存库”
-	//pictureBox1.Image = (Image)bmp;
-</code></pre>
-<p><strong>&lt;3&gt;自己琢磨出来的解决方法</strong><br />
-这种方法也可以释放内存，释放内存通过bmp和Image的Dispose()方法实现。<br />
-上面两种方法我都试了，可是都还是会抛出异常。后来我经过多次的调试，找到了一种解决问题的办法，这种办法我觉得很奇怪，有点匪夷所思。我先把解决问题的代码展示出来供诸君参考吧，希望看到的大猿能帮我解释下其中的道理。<br />
-我只改了我自己写的代码中的“遍历”的范围，修改的关键部分如下所示：</p>
-<pre><code class="language-plain_text">        private void button2_Click(object sender, EventArgs e)
-        {
-            i++;
-            if (i == path.Length - 1)
-            {
-                i = 0;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            i--;
-            if (i &lt; 0)
-            {
-                i = path.Length - 2;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-            GC.Collect();
-        }
-</code></pre>
-<p>这种方法既没有释放内存，也没有做缓冲的“内存库”存图像，可是程序却跑的很正常，实在让人费解其中的道理。希望看到的大猿能给我解释下这其中的道理，感激不尽！</p>
+                        	<p>在做Winform应用程序处理Image时碰到了这样一个问题。</p>
 
                         
                       </div>
@@ -201,7 +137,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553061623.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2014/08/18</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -226,180 +162,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>窗体传值是在学习窗体应用程序时碰到的一类比较常见的问题，现将窗体传值方法做了一点总结，方法如下：</p>
-<p><strong>&lt;1&gt;声明全局变量传值：</strong></p>
-<p>在Form1中声明全局变量，如下所示：</p>
-<pre><code class="language-plain_text">	public static string str = &quot;窗体1的值&quot;;
-</code></pre>
-<p>通过Form1的button1_Click事件即可将此全局变量传递给Form2，Form1的全局变量str在Form2中可以直接访问，代码如下所示：</p>
-<pre><code class="language-plain_text">	private void button1_Click(object sender, EventArgs e)
-	{            
-	      Form2 frm2 = new Form2();
-	      frm2.Show();
-	}
-    private void Form2_Load(object sender, EventArgs e)
-	{   
-	      this.label1.Text = Form1.str;               
-	}
-</code></pre>
-<p><strong>&lt;2&gt;通过构造函数传值：</strong></p>
-<p>重载Form2的构造函数，使其能够接受一个来自Form1的参数，重载代码如下所示：</p>
-<pre><code class="language-plain_text">    private string str;
-    public Form2(string s)
-    {
-        InitializeComponent();
-        this.str = s;        
-    }
-</code></pre>
-<p>上面代码中定义的string变量str用来存储从Form1传递进来的参数。<br />
-在Form1的button1_Click事件中实例化Form2并给其传递Form1的一个参数，代码如下所示：</p>
-<pre><code class="language-plain_text">    private void button1_Click(object sender, EventArgs e)
-    {
-        string s = this.textBox1.Text;
-        Form2 frm2 = new Form2(s);
-        frm2.Show();
-    }
-</code></pre>
-<p>在Form2的Form2_Load中即可接受这个参数，接受这个参数值的代码如下所示：</p>
-<pre><code class="language-plain_text">    private void Form2_Load(object sender, EventArgs e)
-    {
-        this.label1.Text = str;                   
-    }
-</code></pre>
-<p>这样，在单击Form1的button1之后，Form2便会蹦出来，Form2的label1便会显示这个从Form1传进来的值。</p>
-<p><strong>&lt;3&gt;在窗体中声明公共属性进行传值：</strong></p>
-<p>在Form2中声明公共属性，代码如下所示：<br />
-private string username;</p>
-<pre><code class="language-plain_text">    public string Username
-    {
-        get { return username; }
-        set { username = value; }
-    }
-    private string password;
-
-    public string Password
-    {
-        get { return password; }
-        set { password = value; }
-    }
-</code></pre>
-<p>这样，在Form1中即可访问这些属性，也就可以将Form2中这些公共属性的值传递给Form1了，并且也可以从Form1中向Form2的这些公共属性传值。代码如下所示：</p>
-<p>（1）Form1向Form2传值：</p>
-<pre><code class="language-plain_text">    private void button1_Click(object sender, EventArgs e)
-    {
-        Form2 frm2 = new Form2();
-        frm2.Username = &quot;Jack&quot;;  //Form1向Form2传值
-        frm2.Password = &quot;J1234&quot;;
-　　　　frm2.Show(); 
-    }
-    private void Form2_Load(object sender, EventArgs e)
-    {
-        textBox1.Text = username;
-        textBox2.Text = password;
-    }
-</code></pre>
-<p>（2）Form2向Form1传值：</p>
-<pre><code class="language-plain_text">    private void textBox1_TextChanged(object sender, EventArgs e)
-    {
-        this.Username = textBox1.Text;
-    }
-
-    private void textBox2_TextChanged(object sender, EventArgs e)
-    {
-        this.Password = textBox1.Text;
-    }
-    private void button1_Click(object sender, EventArgs e)
-    {
-        Form2 frm2 = new Form2();
-        frm2.Username = &quot;Jack&quot;;  //Form1向Form2传值
-        frm2.Password = &quot;J1234&quot;;            
-        comboBox1.Items.Add(frm2.Username);  //Form2向Form1传值
-        comboBox1.Items.Add(frm2.Password);
-        frm2.Show();
-    }   
-</code></pre>
-<p>声明公共属性传值比较灵活，受限较少，因此比较好用。但是或许这会影响数据的安全性哦。</p>
-<p><strong>&lt;4&gt;传递整个窗体进行传值。</strong></p>
-<p>类似于构造函数传值，将窗体作为构造函数的参数即可传递整个窗体了。代码如下所示：</p>
-<pre><code class="language-plain_text">    private void button1_Click(object sender, EventArgs e)
-    {
-        Form2 f2 = new Form2(this);
-        f2.Show();
-    }   
-    Form1 frm1;
-    public Form2(Form1 f1)
-    {
-        InitializeComponent();
-        this.frm1 = f1;            
-    }
-
-    private void Form2_Load(object sender, EventArgs e)
-    {
-        this.textBox1.Text = frm1.ActiveControl.ToString();
-    }
-</code></pre>
-<p>这样能把Form1整个窗体传递给Form2，在Form2里即可操作Form1的数据及其控件了。</p>
-<p><strong>&lt;5&gt;更改系统文件：</strong></p>
-<p>更改Form1.Designer.cs，譬如要使其控件变为公共可访问的，即找到在此文件中声明的控件，将你需要在Form2里访问的控件的访问修饰符修改为public，如下所示：</p>
-<pre><code class="language-plain_text">    private System.Windows.Forms.Button button1;
-    private System.Windows.Forms.ComboBox comboBox1;
-</code></pre>
-<p>将上面的代码里需要更改的控件的访问修饰符更改后保存即可。这种方法我个人感觉不好，有违C#语言的封装性和数据的安全性，个人建议不提倡使用。</p>
-<p><strong>&lt;6&gt;利用委托进行窗体传值：</strong></p>
-<p>这种方法是我在网上看到的，对原代码做了一点点改进，利用定义委托和事件以及构造函数的方法，实现了Form1和Form2互相传值。废话不多说，请看代码：<br />
-Form1部分的代码：</p>
-<pre><code class="language-plain_text">public partial class Form1 : Form
-{        
-     public Form1()
-     {
-         InitializeComponent();
-     }
-
-     private void button1_Click(object sender, EventArgs e)
-     {
-         string str = textBox1.Text;
-         Form2 f2 = new Form2(str);
-         f2.Translate += new TranslateEventHandler(f2_Translate);            
-         f2.ShowDialog();
-     }
-
-     void f2_Translate(string value)
-     {
-         textBox1.Text = value;
-         //throw new NotImplementedException();
-     }               
-}
-</code></pre>
-<p>Form2部分的代码：</p>
-<pre><code class="language-plain_text"> public delegate void TranslateEventHandler(string value);
- public partial class Form2 : Form
- {
-     string str;
-     public Form2(string s)
-     {
-         InitializeComponent();
-         this.str = s;
-     }
- 
-     public event TranslateEventHandler Translate;
-     
-     private void button1_Click(object sender, EventArgs e)
-     {
-         Translate(textBox1.Text);
-         this.Close();
-     }
- 
-     private void Form2_Load(object sender, EventArgs e)
-     {
-         this.textBox1.Text = str;
-     }            
- }
-</code></pre>
-<p>Form设计如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081301.jpg" alt="jackro_blog2014081301" /> <br />
-      <br />
-<img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081302.jpg" alt="jackro_blog2014081302" /><br />
- </p>
+                        	<p>窗体传值是在学习窗体应用程序时碰到的一类比较常见的问题，现将窗体传值方法做了一点总结.</p>
 
                         
                       </div>
@@ -407,7 +170,7 @@ Form1部分的代码：</p>
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553061730.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2014/08/13</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -432,18 +195,7 @@ Form1部分的代码：</p>
                       
                       <div class="a-content-text">
                         
-                        	<p>今天在做一个打开文件对话框OpenFileDialog时，需要对打开的文件进行读取，显示在在窗体中的RichTextBox中。但是在显示文件时，却发现显示的中文字符串出现乱码。代码的关键部分如下所示：</p>
-<pre><code class="language-plain_text">	1 StreamReader sr = new StreamReader(openFileDialog.OpenFile());      
-	2 string str = sr.ReadToEnd();
-	3 childForm.richTextBox1.Text = str;  
-</code></pre>
-<p>开始我也想到了是字符编码出了问题，于是我在初始化StreamReader时，给它加了字符编码参数，加了好几次，Encoding.Unicode，Encoding.UTF32，Encoding.UTF7，Encoding.UTF8，Encoding.ASCII，这些能加的编码方案我都试过了，结果都不行，还是会乱码。百般无奈之下，我只好在.net爱好者群里问了。然后群里就有好心人给我发了一个链接，点进去看了之后恍然大悟。链接如下所示：<a href="http://www.cnblogs.com/wmw1989/archive/2008/05/19/1202500.html" title="http://www.cnblogs.com/wmw1989/archive/2008/05/19/1202500.html">http://www.cnblogs.com/wmw1989/archive/2008/05/19/1202500.html</a></p>
-<p>原来，中文编码是GB2312，而当前系统的代码页的编码方案采用的是ANSI编码，出现乱码也就不足为奇了。解决方案很简单，就是初始化StreamReader的时候告诉它目前代码页的编码方案。可是由于Encoding类并没有定义ANSI编码方案，所以只能采用Default让系统获取当前操作系统的当前ANSI代码页的编码方案。因此上面的代码换成如下的代码就解决了：</p>
-<pre><code class="language-plain_text">	1 StreamReader sr = new StreamReader(openFileDialog.OpenFile(), Encoding.Default);                
-	2 string str = sr.ReadToEnd();
-	3 childForm.richTextBox1.Text = str;  
-</code></pre>
-<p> </p>
+                        	<p>今天在做一个打开文件对话框OpenFileDialog时，需要对打开的文件进行读取，显示在在窗体中的RichTextBox中。但是在显示文件时，却发现显示的中文字符串出现乱码。</p>
 
                         
                       </div>
@@ -451,7 +203,7 @@ Form1部分的代码：</p>
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553061200.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2014/08/12</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -476,125 +228,7 @@ Form1部分的代码：</p>
                       
                       <div class="a-content-text">
                         
-                        	<p>经过努力，终于解决了XmlReader在未知元素的名称和属性的名称的情况下读取属性的方法。在没有解决前，我的代码如下：</p>
-<pre><code class="language-plain_text">	using System; 
-	using System.Collections.Generic; 
-	using System.Linq; 
-	using System.Text; 
-	using System.Xml; 
-	
-	namespace ReadAttribute 
-	{ 
-	    class Program
-	     {
-	         static void Main(string[] args)
-	         {
-	             string path = @&quot;e:\testfile\myMail.xml&quot;;
-	             
-	             #region 读取属性的第一种方法
-	             //string date;
-	             //try
-	             //{
-	             //    XmlReader xr = XmlReader.Create(path);
-	             //    xr.ReadToFollowing(&quot;mail&quot;);
-	             //    date = xr.GetAttribute(&quot;date&quot;);
-	             //    Console.Write(&quot;信件的日期为：&quot;);
-	             //    Console.WriteLine(date);
-	             //}
-	             //catch (Exception ex)
-	             //{
-	             //    Console.WriteLine(ex.Message);
-	             //} 
-	             #endregion
-	 
-	             #region 读取属性的第二种方法
-	             try
-	             {
-	                 XmlReader xr = XmlReader.Create(path);
-	                 while (xr.Read())
-	                 {
-	                     if (xr.HasAttributes)
-	                     {
-	                         //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         //for (int i = 0; i &lt; xr.AttributeCount; i++)
-	                         //{                            
-	                         //xr.MoveToAttribute(i);                            
-	                         Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
-	                         //}                                                                  
-	                     }
-	                 }
-	             }
-	             catch (Exception ex)
-	             {
-	                 Console.WriteLine(ex.Message);
-	             } 
-	             #endregion
-	             Console.ReadKey();
-	         }
-	     }
-	 }
-</code></pre>
-<p>解决后，我的代码如下：</p>
-<pre><code class="language-plain_text">	using System; 
-	using System.Collections.Generic; 
-	using System.Linq; 
-	using System.Text; 
-	using System.Xml; 
-	
- 	namespace ReadAttribute 
-	{ 
-	    class Program
-	     {
-	         static void Main(string[] args)
-	         {
-	             string path = @&quot;e:\testfile\myMail.xml&quot;;
-	             
-	             #region 读取属性的第一种方法
-	             //string date;
-	             //try
-	             //{
-	             //    XmlReader xr = XmlReader.Create(path);
-	             //    xr.ReadToFollowing(&quot;mail&quot;);
-	             //    date = xr.GetAttribute(&quot;date&quot;);
-	             //    Console.Write(&quot;信件的日期为：&quot;);
-	             //    Console.WriteLine(date);
-	             //}
-	             //catch (Exception ex)
-	             //{
-	             //    Console.WriteLine(ex.Message);
-	             //} 
-	             #endregion
-	 
-	             #region 读取属性的第二种方法
-	             try
-	             {
-	                 XmlReader xr = XmlReader.Create(path);
-	                 while (xr.Read())
-	                 {
-	                     if (xr.HasAttributes)
-	                     {
-	                         Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         for (int i = 0; i &lt; xr.AttributeCount; i++)
-	                         {                            
-	                         xr.MoveToAttribute(i);                              
-	                         
-	                         //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
-	                         }                                                                     								}
-	                }
-	             }
-	             catch (Exception ex)
-	             {
-	                 Console.WriteLine(ex.Message);
-	             } 
-	             #endregion
-	             Console.ReadKey();
-	         }
-	     }
-	 }
-</code></pre>
-<p>解决后，上面的代码可以不用知道元素的名称和属性的名称的情况下读取XML文件中的所有属性名及其值。这种方法有点像迭代器遍历数组，只不过这里的元素变成了XML的节点和元素，而且这里可以把XML的属性也可以看成是XML的节点（”可以看成XML元素的子节点“），这样元素看成是节点，属性也看成是节点，都当做节点处理，也就是说这个遍历可以看成是遍历XML的节点。这样也就可以解释上面代码中的 xr.Name、xr.Value了，他们分别可以看成是XML的节点名和节点值（即属性名和属性值）。如此，这样的方法便不难理解了！</p>
+                        	<p>经过努力，终于解决了XmlReader在未知元素的名称和属性的名称的情况下读取属性的方法。</p>
 
                         
                       </div>
@@ -602,7 +236,7 @@ Form1部分的代码：</p>
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553061843.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2014/08/10</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -642,6 +276,8 @@ Form1部分的代码：</p>
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -654,7 +290,7 @@ Form1部分的代码：</p>
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

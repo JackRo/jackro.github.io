@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -121,9 +129,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>今天面试展示 iOS debug app 时不断闪退，无法打开应用，车祸现场相当尴尬。面试结束回到家后打开Xcode重新部署debug app到真机上，报错，无法部署。根据提示，换了下bundle ID，卸载真机上已安装的app，重新部署安装，仍然报错，无法部署。于是去看了下配置文件，发现provisioning profile报错，需要重新登录Apple ID，重新登录后，再次部署，并在真机上设置信任当前Apple ID，问题解决。</p>
-<p>但是问题真的解决了吗？然后我仔细去看了下配置文件，终于找到问题原因，原来debug app的Provisioning profile是有过期时间的。如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2018051401.jpg" alt="jackro_blog2018051401" /></p>
+                        	<p>今天面试展示 iOS debug app 时不断闪退，无法打开应用，车祸现场相当尴尬。面试结束回到家后打开Xcode重新部署debug app到真机上，报错，无法部署。</p>
 
                         
                       </div>
@@ -131,7 +137,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553059675.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2018/05/14</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -157,111 +163,6 @@
                       <div class="a-content-text">
                         
                         	<p>最近公司生产环境的系统有个需求，需要往mysql数据库的一张表里批量添加数据，业务部门给的数据大致如下：</p>
-<table>
-<thead>
-<tr>
-<th>中心</th>
-<th>3.5L箱子(条码)</th>
-<th>8L箱子(条码)</th>
-<th>15L箱子(条码)</th>
-<th>20L箱子(条码)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>浙江物流一区</td>
-<td>6个(X04571301-X04571306)</td>
-<td>8个(X03571301-X03571308)</td>
-<td>4个(X02571301-X02571304)</td>
-<td>12个(X01571301-X01571312)</td>
-</tr>
-<tr>
-<td>浙江物流二区</td>
-<td>24个(X04571401-X04571424)</td>
-<td>42个(X03571401-X03571442)</td>
-<td>78个(X02571401-X02571478)</td>
-<td>36个(X01571401-X01571436)</td>
-</tr>
-</tbody>
-</table>
-<p>这样的数据，首先想到的是在我的macOS上连上服务器数据库，然后把数据一条一条insert进去。但是我insert了几十条后，我发现业务部门给的数据累计有700多条。我当然不愿意就这样老老实实的一条一条insert了，因为实在是太耗费时间了。</p>
-<p>根据以往的经验，最先想到的是，把表导入到navicat里，然后生成批量sql插入脚本，再传到服务器上去执行。但是，业务部门给的Excel并不是标准的一条一条的数据展示的，而是像上面那样给定箱子条码范围和数量。这样，我还得先给它生成一个标准的Excel，也比较麻烦。</p>
-<p>然后我想到用写程序的方式，写循环，连接数据库插入数据。但是本地环境去连接生产环境的数据库是需要走流程申请权限的，可能流程要走个一两天，业务部门又急着要这个数据，这种方法又要摒弃掉了，只能使用下面一种方案了。</p>
-<h2><a id="mysql%E8%87%AA%E5%AE%9A%E4%B9%89function%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>mysql自定义function实现批量添加数据</h2>
-<h3><a id="mysql%E5%AE%9A%E4%B9%89function%E8%AF%AD%E6%B3%95%E5%A6%82%E4%B8%8B%EF%BC%9A" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>mysql定义function语法如下：</h3>
-<pre><code class="language-plain_text">CREATE FUNCTION func_name ( [func_parameter] ) //括号是必须的，参数是可选的  
-RETURNS type  
-[ characteristic ...] routine_body 
-</code></pre>
-<ul>
-<li>CREATE FUNCTION 用来创建函数的关键字</li>
-<li>func_name 表示函数的名称</li>
-<li>func_parameters为函数的参数列表，参数列表的形式为：[IN|OUT|INOUT] param_name type
-<ol>
-<li>IN：表示输入参数</li>
-<li>OUT：表示输出参数</li>
-<li>INOUT：表示既可以输入也可以输出</li>
-<li>param_name：表示参数的名称</li>
-<li>type：表示参数的类型，该类型可以是MySQL数据库中的任意类型</li>
-</ol>
-</li>
-<li>RETURNS type：语句表示函数返回数据的类型</li>
-<li>characteristic: 指定函数的特性，取值与存储过程的定义相同，可以有以下几种取值方式
-<ol>
-<li>LANGUAGE SQL: 说明routine_body部分由SQL语句组成，当前系统支持的语言为SQL, SQL是LANGUAGE特性的唯一值</li>
-<li>[NOT] DETERMINISTIC: 指明存储过程执行的结果是否正确。DETERMINISTIC表示结果是确定的。每次执行存储过程时，相同的输入会得到相同的输出；<br />
-而NOT DETERMINISTIC表示结果是不确定的，相同的输入可能得到不同的输出。如果没有指定任意一个值，默认为NOT DETERMINISTIC</li>
-<li>{CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA}: 指明子程序使用SQL语句限制
-<ol>
-<li>CONTAINS SQL表明子程序包含SQL语句，但是不包含读写数据的语句</li>
-<li>NO SQL表明子程序不包含SQL语句</li>
-<li>READS SQL DATA说明子程序包含读写数据的语句</li>
-<li>MODIFIES SQL DATA表明子程序包含写数据的语句</li>
-<li>默认情况下，系统会指定为CONTAINS SQL</li>
-</ol>
-</li>
-<li>SQL SECURITY { DEFINER|INVOKER}: 指明谁有权限来执行。DEFINER表示只有定义存储过程者才能执行；INVOKER表示拥有权限的调用者可以执行。<br />
-默认情况下，系统指定为DEFINER</li>
-<li>COMMENT 'string': 注释信息，可以用来描述存储过程或者函数</li>
-</ol>
-</li>
-<li>routine_body是SQL代码内容，可以用BEGIN...END来表示SQL代码的开始与结束</li>
-</ul>
-<h3><a id="%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE%E7%9A%84function%E8%BF%87%E7%A8%8B%E5%A6%82%E4%B8%8B%EF%BC%9A" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实现批量添加数据的function过程如下：</h3>
-<p>首先，我把服务器数据库这张表的表结构拷到了本地，便于本地调试所写function是否正确。该表结构与所需要插入的数据相关的字段有三个:</p>
-<pre><code class="language-plain_text">ybxtm, dept_id, box_size //ybxtm对应箱子条码, dept_id对应上面数据的中心, box_size对应箱子规格(3.5L, 8L, 15L, 20L)
-</code></pre>
-<p>然后，实现function实现及调用：</p>
-<pre><code class="language-plain_text">DELIMITER 
-</code></pre>
-\[ /*定义分隔符，用于在Linux环境下防止function定义的内部分号造成的中途输出*/
-    CREATE FUNCTION addData(deptId INT, boxSize DOUBLE, ybxtm VARCHAR(20), amount INT)
-      RETURNS INT DETERMINISTIC /*该参数需要指定，不指定Linux环境下执行时会提示你需要指定function的characteristic*/
-      BEGIN
-        DECLARE i INT DEFAULT 1;
-        DECLARE result INT DEFAULT 1;
-        DECLARE sampleBoxNum VARCHAR(20) DEFAULT '';
-        myloop: LOOP
-          SET sampleBoxNum = ybxtm;
-          IF i &gt; amount
-          THEN LEAVE myloop;
-          END IF;
-          IF i &lt; 10
-          THEN SET sampleBoxNum = concat(sampleBoxNum, concat('0', i));
-          ELSE
-            SET sampleBoxNum = concat(sampleBoxNum, i);
-          END IF;
-          INSERT INTO lx_ybx (ybxtm, dept_id, box_size) VALUES (sampleBoxNum, deptId, boxSize);
-          SET result = result + 1;
-          SET i = i + 1;
-        END LOOP myloop;
-        RETURN result - 1;
-      END 
-\]
-<p>/<em>结束时需要挂上分隔符，告诉Linux终端，function定义结束</em>/</p>
-<pre><code class="language-plain_text">/*调用function*/  
-SELECT addData(29, 20, 'X025714', 78);
-</code></pre>
 
                         
                       </div>
@@ -269,7 +170,7 @@ SELECT addData(29, 20, 'X025714', 78);
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553060588.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2018/04/03</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -294,40 +195,7 @@ SELECT addData(29, 20, 'X025714', 78);
                       
                       <div class="a-content-text">
                         
-                        	<p>当我使用Android Studio（macOS 10.12.6系统，Android Studio 3.0）进行Android项目开发时，我经常会使用鼠标悬停的方式去查看类、方法和字段的文档注释。但当我这样做时，我发现一个非常让我懊恼的问题，当我鼠标悬停时，出现的弹框中显示Fetching Documentation...，并且它会显示很长一段时间。</p>
-<p>问题总是得解决的，经过一番搜索，我找到了问题的解决方法：修改配置文件。修改方法如下：</p>
-<ol>
-<li>找到AS的配置文件目录，我的是在~/Library/Preferences下</li>
-<li>找到AS当前版本的配置文件目录，我的是在~/Library/Preferences/AndroidStudio3.0下</li>
-<li>找到配置文件目录下options/jdk.table.xml文件打开</li>
-<li>找到你当前项目compileSdkVersion对应的版本所对应的jdk节点（当然如果需要的话你也可以修改所有版本的jdk节点）</li>
-<li>再找到roots节点下的javadocPath节点，修改该节点里的的url属性，使之与sourcePath节点里的url属性一致即可</li>
-</ol>
-<p>修改前的节点如下所示：</p>
-<pre><code class="language-plain_text">        &lt;javadocPath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;http://developer.android.com/reference/&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/javadocPath&gt;
-        &lt;sourcePath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/sourcePath&gt;
-</code></pre>
-<p>在上面修改前的节点中，javadocPath在找android developer官网上的doc，由于网络的原因（某墙），肯定很难fetching到documentation。所以将url修改为下载到本地的源码（去本地源码中fetching documentation自然很快），如下所示：</p>
-<pre><code class="language-plain_text">        &lt;javadocPath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/javadocPath&gt;
-        &lt;sourcePath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/sourcePath&gt;
-</code></pre>
-<p>修改完之后，需要重启下AS，fetching documentation就会很快了（不是很快，是非常快！）。</p>
+                        	<p>当我使用 Android Studio(macOS 10.12.6 系统, Android Studio 3.0)做 Android 项目开发时, 我经常会使用鼠标悬停的方式去查看类, 方法和字段的文档注释.</p>
 
                         
                       </div>
@@ -335,7 +203,7 @@ SELECT addData(29, 20, 'X025714', 78);
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553059414.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/11/12</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -361,17 +229,6 @@ SELECT addData(29, 20, 'X025714', 78);
                       <div class="a-content-text">
                         
                         	<p>在 macOS 中是存在 .DS_Store 文件的，在使用git对项目进行版本控制时，该文件如果不加入 .gitignore 中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p>
-<p>经过一番搜索，我找到了解决方法，我们可以先在.gitignore中加入该文件的忽略规则，如下所示：</p>
-<pre><code class="language-plain_text">.DS_Store
-</code></pre>
-<p>然后删除项目中所有的 .DS_Store，在项目目录下执行如下命令：</p>
-<pre><code class="language-plain_text">find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
-</code></pre>
-<p>然后提交项目即可。</p>
-<p>但是，我发现我的项目是用 WebStorm 打开的，项目目录下自动生成了 .idea 文件，每次提交 .idea 文件也会提交，加入忽略规则也不行，我想到了和上面类似的方法，删除 .idea 目录，然后再提交，即可解决。</p>
-<p>参考链接：</p>
-<p><a href="http://www.jianshu.com/p/fdaa8be7f6c3">如何删除GIT中的.DS_Store</a></p>
-<p><a href="http://www.jianshu.com/p/8c0d262e49a6">Git中全局忽略.DS_Store文件</a></p>
 
                         
                       </div>
@@ -379,7 +236,7 @@ SELECT addData(29, 20, 'X025714', 78);
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553060491.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/09/22</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -404,9 +261,7 @@ SELECT addData(29, 20, 'X025714', 78);
                       
                       <div class="a-content-text">
                         
-                        	<p>今天碰到一个公司的项目连接服务器的页面在浏览器中打开需要安装JDK并打开浏览器Java支持的问题。经过一番搜索发现，Java官网的帮助中心中介绍推荐使用IE（windows）和Safari（Mac os）（参见链接：<a href="https://www.java.com/zh_CN/download/faq/chrome.xml">https://www.java.com/zh_CN/download/faq/chrome.xml</a>），由于自己家里电脑是Mac os（Mac OS 10.12.6），所以使用Safari（自己电脑当前版本是11.0）来打开浏览器Java支持。</p>
-<p>在Safari中如何打开浏览器Java支持呢？经过一番搜索，发现可以在Safari的偏好设置中的网站选项去打开Java支持，针对某个网站去打开即可，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017092101.jpg" alt="jackro_blog2017092101" /></p>
+                        	<p>今天碰到一个公司的项目连接服务器的页面在浏览器中打开需要安装JDK并打开浏览器Java支持的问题。</p>
 
                         
                       </div>
@@ -414,7 +269,7 @@ SELECT addData(29, 20, 'X025714', 78);
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553060993.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2017/09/21</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -454,6 +309,8 @@ SELECT addData(29, 20, 'X025714', 78);
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -466,7 +323,7 @@ SELECT addData(29, 20, 'X025714', 78);
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 

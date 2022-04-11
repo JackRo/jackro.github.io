@@ -40,9 +40,13 @@
       <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
         <ul id="main-menu" class="left">
         
-        <li id=""><a target="self" href="index.html">Home</a></li>
+        <li id=""><a target="_self" href="index.html">Home</a></li>
         
         <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li id=""><a target="_self" href="about.html">About</a></li>
+        
+        <li id=""><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
         </ul>
 
@@ -69,9 +73,13 @@
 <aside class="left-off-canvas-menu">
       <ul class="off-canvas-list">
         
-        <li><a target="self" href="index.html">Home</a></li>
+        <li><a target="_self" href="index.html">Home</a></li>
         
         <li><a target="_self" href="archives.html">Archives</a></li>
+        
+        <li><a target="_self" href="about.html">About</a></li>
+        
+        <li><a target="_self" href="https://github.com/JackRo">Github</a></li>
         
 
     <li><label>Categories</label></li>
@@ -121,16 +129,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>setHomeButtonEnabled这个方法在小于4.0版本的默认值是true，但是在4.0及其以上是false，该方法的作用：决定左上角的图标是否可以点击，没有向左的小图标。true则图标可以点击，false则不可以点击。</p>
-<pre><code class="language-plain_text">	actionBar.setDisplayHomeAsUpEnabled(true)    // 给左上角图标的左边加上一个返回的图标 。对应ActionBar.DISPLAY_HOME_AS_UP。
-
-	actionBar.setDisplayShowHomeEnabled(true)   //使左上角图标是否显示，如果设成false，则没有程序图标，仅仅就个标题，否则，显示应用程序图标。
-
-	actionBar.setDisplayShowCustomEnabled(true)  // 使自定义的普通View能在title栏显示，即actionBar.setCustomView能起作用，对应ActionBar.DISPLAY_SHOW_CUSTOM。
-
-	actionBar.setDisplayShowTitleEnabled(true)   //对应ActionBar.DISPLAY_SHOW_TITLE。
-</code></pre>
-<p>其中setHomeButtonEnabled和setDisplayShowHomeEnabled共同起作用，如果setHomeButtonEnabled设成false，即使setDisplayShowHomeEnabled设成true，图标也不能点击。</p>
+                        	<p>setHomeButtonEnabled 这个方法在小于4.0版本的默认值是true，但是在4.0及其以上是false，该方法的作用：决定左上角的图标是否可以点击，没有向左的小图标。true则图标可以点击，false则不可以点击。</p>
 
                         
                       </div>
@@ -138,7 +137,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058247.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/06/14</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -163,9 +162,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>今天使用 Fresco 的一个 demo, 但是 build 失败, 去网上搜了一下, 发现是 NDK 环境没配置好, 见如下链接: <a href="http://www.bubuko.com/infodetail-790190.html">导入Fresco后build失败</a></p>
-<p>配置 NDK 见如下链接:<br />
-<a href="http://www.shangxueba.com/jingyan/2901837.html">配置NDK环境</a></p>
+                        	<p>今天使用 Fresco 的一个 demo, 但是 build 失败, 去网上搜了一下, 发现是 NDK 环境没配置好.</p>
 
                         
                       </div>
@@ -173,7 +170,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553059242.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/06/13</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -198,50 +195,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>给GridView设置单元格分割线有两种方法，一种是设置背景图片设置分割线，另外一种是自定义GridView重绘视图设置分割线。重绘方法代码如下：</p>
-<pre><code class="language-plain_text">public class LineGridView extends GridView{
-    public LineGridView(Context context) {
-        super(context);
-        // TODO Auto-generated constructor stub
-    }
-    public LineGridView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-    public LineGridView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
-    @Override
-    protected void dispatchDraw(Canvas canvas){
-        super.dispatchDraw(canvas);
-        View localView1 = getChildAt(0);
-        int column = getWidth() / localView1.getWidth();
-        int childCount = getChildCount();
-        Paint localPaint;
-        localPaint = new Paint();
-        localPaint.setStyle(Paint.Style.STROKE);
-        localPaint.setColor(getContext().getResources().getColor(R.color.grid_line));
-        for(int i = 0;i &lt; childCount;i++){
-            View cellView = getChildAt(i);
-            if((i + 1) % column == 0){
-                canvas.drawLine(cellView.getLeft(), cellView.getBottom(), cellView.getRight(), cellView.getBottom(), localPaint);
-            }else if((i + 1) &gt; (childCount - (childCount % column))){
-                canvas.drawLine(cellView.getRight(), cellView.getTop(), cellView.getRight(), cellView.getBottom(), localPaint);
-            }else{
-                canvas.drawLine(cellView.getRight(), cellView.getTop(), cellView.getRight(), cellView.getBottom(), localPaint);
-                canvas.drawLine(cellView.getLeft(), cellView.getBottom(), cellView.getRight(), cellView.getBottom(), localPaint);
-            }
-        }
-        if(childCount % column != 0){
-            for(int j = 0 ;j &lt; (column-childCount % column) ; j++){
-                View lastView = getChildAt(childCount - 1);
-                canvas.drawLine(lastView.getRight() + lastView.getWidth() * j, lastView.getTop(), lastView.getRight() + lastView.getWidth()* j, lastView.getBottom(), localPaint);
-            }
-        }
-    }
-}
-</code></pre>
-<p>在<code>dispatchDraw</code>方法中，我们对每一个子view的边界按照一定的方式绘上了边框，一般一个格子只需绘制其中两条边，需要注意的是最边上的格子需要特殊处理。<code>super.dispatchDraw(canvas);</code>一定要调用，不然格子中的内容（子view）就得不到绘制的机会。<br />
-仔细看代码你会发现这个实现方式是很好的，但是代码并不完美，因为每条线的绘制我们都是以第一个子view 的宽高为基准的，如果某个格子的高度和第一个格子不一致，那么可能出现错位。如果你能确保每个格子大小均匀，直接拿来用，否则还需要些修改。这里是重写的<code>dispatchDraw</code>，其实我我们重写onDraw方法也可以得到相同的结果。要完全弄明白的话，就得看看FrameWork中GridView的源码了。</p>
+                        	<p>给GridView设置单元格分割线有两种方法，一种是设置背景图片设置分割线，另外一种是自定义GridView重绘视图设置分割线。</p>
 
                         
                       </div>
@@ -249,7 +203,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058730.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/06/12</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -274,14 +228,7 @@
                       
                       <div class="a-content-text">
                         
-                        	<p>在检测版本更新时，当下载完以后，安装的时候，系统显示正在安装，然后就没有，回到了主页，没有显示安装成功的界面，让用户不知所措。安装程序的代码如下：</p>
-<pre><code class="language-plain_text">	Intent intent = new Intent(Intent.ACTION_VIEW);  
-	intent.setDataAndType(Uri.parse(&quot;file://xxxx.apk&quot;), &quot;application/vnd.android.package-archive&quot;);  
-	context.startActivity(intent);  
-</code></pre>
-<p>这在android4.0以前的系统中没有什么问题，但是在android4.0及其以后的系统中就不显示安装成功的界面，应该加一行代码：</p>
-<pre><code class="language-plain_text">	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-</code></pre>
+                        	<p>在检测版本更新时，当下载完以后，安装的时候，系统显示正在安装，然后就没有，回到了主页，没有显示安装成功的界面，让用户不知所措。</p>
 
                         
                       </div>
@@ -289,7 +236,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058409.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/06/10</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -317,14 +264,7 @@
                         	<p>当使用android的Drawable时，一开始我是用下面的方法实现的：</p>
 <pre><code class="language-plain_text">Drawable.createFromStream(is, srcName);
 </code></pre>
-<p>但是经过调试每次程序都会crash掉，报OOM错误，错误都会打到上面这行代码，搞了老半天，发现 BitmapFactory.decodeStream比Drawable.createFromStream 好用，后者更占内存。下面是解决后的代码：</p>
-<pre><code class="language-plain_text"> BitmapFactory.Options options = new BitmapFactory.Options();
- options.inPreferredConfig = Config.RGB_565;                
- options.inSampleSize = 2;
- Bitmap bitmap = BitmapFactory.decodeStream(url.openStream(), null, options);                    
- drawable = new BitmapDrawable(bitmap);
-</code></pre>
-<p>当然options.inSampleSize = 2是设置图片显示的尺寸，这个图片尺寸是随意设置的，可以根据手机屏幕的大小来计算图片需要显示的尺寸。</p>
+<p>但是经过调试每次程序都会crash掉，报OOM错误，错误都会打到上面这行代码</p>
 
                         
                       </div>
@@ -332,7 +272,7 @@
                 </a>
                 <div class="read-more clearfix">
                   <div class="more-left left">
-                  
+                   <a href="16496553058836.html">Read more</a>&nbsp;&nbsp; 
                     <span class="date">2015/06/08</span>
                     <span>posted in&nbsp;</span> 
           				  
@@ -372,6 +312,8 @@
     <div id="sidebar" class="sidebar">
           <div id="site-info" class="site-info">
             
+                <div class="site-a-logo"><img src="media/16496656235321/icon.png" /></div>
+            
                 <h1>JackRo's Blog</h1>
                 <div class="site-des"></div>
                 <div class="social">
@@ -384,7 +326,7 @@
 
 
 
-
+<a target="_blank" class="github" target="_blank" href="https://github.com/JackRo" title="GitHub">GitHub</a>
 
   <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
                 
