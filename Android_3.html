@@ -78,6 +78,20 @@
 
         
             <li><a href="Android.html">Android</a></li>
+        
+            <li><a href="iOS.html">iOS</a></li>
+        
+            <li><a href=".NET.html">.NET</a></li>
+        
+            <li><a href="Java.html">Java</a></li>
+        
+            <li><a href="Git.html">Git</a></li>
+        
+            <li><a href="DB.html">DB</a></li>
+        
+            <li><a href="Shell.html">Shell</a></li>
+        
+            <li><a href="PHP.html">PHP</a></li>
          
 
       </ul>
@@ -100,88 +114,17 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
-                <a class="clearlink" href="16496553061623.html">
+                <a class="clearlink" href="16496553059079.html">
                 
-                  <h1>---</h1>
+                  <h1>Android SDK 下载技巧</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-winform%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8Fimage-oom%E5%BC%82%E5%B8%B8%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95-date-2014-08-18" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Winform应用程序Image OOM异常的处理方法<br />
-date: 2014-08-18</h2>
-<p>在做Winform应用程序处理Image时碰到了这样一个问题。窗体设计如下：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081801.jpg" alt="jackro_blog2014081801" /></p>
-<p>当点击上面窗体中的上一张和下一张时，PictureBox中的图片会跟着切换，但是切换时却抛出了如下图所示的异常：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081802.jpg" alt="jackro_blog2014081802" /></p>
-<p>内存不足！！！<br />
-我一开始的关键代码如下所示：</p>
-<pre><code class="language-plain_text">	private void Form1_Load(object sender, EventArgs e)
-        {
-            pictureBox1.Image = Image.FromFile(@&quot;f:\图片\1.jpg&quot;);
-        }
-
-        string[] path = Directory.GetFiles(@&quot;f:\图片&quot;);
-        
-        int i = 0;
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            i++;
-            if (i == path.Length)
-            {
-                i = 0;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            i--;
-            if (i &lt; 0)
-            {
-                i = path.Length - 1;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-        }
-</code></pre>
-<p>后来，我在博客园里找问题的答案，找到了如下几种解决办法：</p>
-<p><strong>&lt;1&gt;释放内存</strong></p>
-<p>每次在PictureBox中显示完图像时，将其释放掉。释放内存关键代码如下：</p>
-<pre><code class="language-plain_text">	//if (pictureBox1.Image != null)//
-	{//    pictureBox1.Image.Dispose();//}
-	//或者像下面这样回收所有资源// GC.Collect();
-</code></pre>
-<p><strong>&lt;2&gt;双缓冲(类似于GDI+中的双倍缓冲)</strong><br />
-就是创建一个缓冲的“内存库”来存储图像，关键代码如下：</p>
-<pre><code class="language-plain_text">	//Bitmap bmp = new Bitmap(path[i]);  //bmp即相当于一个缓冲的“内存库”
-	//pictureBox1.Image = (Image)bmp;
-</code></pre>
-<p><strong>&lt;3&gt;自己琢磨出来的解决方法</strong><br />
-这种方法也可以释放内存，释放内存通过bmp和Image的Dispose()方法实现。<br />
-上面两种方法我都试了，可是都还是会抛出异常。后来我经过多次的调试，找到了一种解决问题的办法，这种办法我觉得很奇怪，有点匪夷所思。我先把解决问题的代码展示出来供诸君参考吧，希望看到的大猿能帮我解释下其中的道理。<br />
-我只改了我自己写的代码中的“遍历”的范围，修改的关键部分如下所示：</p>
-<pre><code class="language-plain_text">        private void button2_Click(object sender, EventArgs e)
-        {
-            i++;
-            if (i == path.Length - 1)
-            {
-                i = 0;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            i--;
-            if (i &lt; 0)
-            {
-                i = path.Length - 2;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-            GC.Collect();
-        }
-</code></pre>
-<p>这种方法既没有释放内存，也没有做缓冲的“内存库”存图像，可是程序却跑的很正常，实在让人费解其中的道理。希望看到的大猿能给我解释下这其中的道理，感激不尽！</p>
+                        	<p>当你使用你的Android Studio更新你的SDK时，比如说你要更新sdk tools，sdk platform，extras里的support library，由于天朝网络原因，Android Studio在更新时会比较慢。为了避开天朝网络的问题，你可以这么干：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016040901.png" alt="jackro_blog2016040901" /></p>
+<p>如上图红色框框中的部分，就是你要下载的包的地址，你可以用这个地址打开迅雷等下载器去下载需要更新的包，下载好后只需要解压到对应的sdk目录中即可。</p>
+<p>本文参考了<a href="http://www.jianshu.com/p/20b0781300ef">http://www.jianshu.com/p/20b0781300ef</a>，如果你是用sdk目录里的SDK Manager更新sdk的，可以参考上面的链接给出的做法来更新sdk。</p>
 
                         
                       </div>
@@ -190,7 +133,7 @@ date: 2014-08-18</h2>
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2016/04/09</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -207,189 +150,48 @@ date: 2014-08-18</h2>
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553061730.html">
+                <a class="clearlink" href="16496553059162.html">
                 
-                  <h1>---</h1>
+                  <h1>Android 设置 ListView的 Item 颜色相间排列</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-winform%E7%AA%97%E4%BD%93%E4%BC%A0%E5%80%BC%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93-date-2014-08-13" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Winform窗体传值方法总结<br />
-date: 2014-08-13</h2>
-<p>窗体传值是在学习窗体应用程序时碰到的一类比较常见的问题，现将窗体传值方法做了一点总结，方法如下：</p>
-<p><strong>&lt;1&gt;声明全局变量传值：</strong></p>
-<p>在Form1中声明全局变量，如下所示：</p>
-<pre><code class="language-plain_text">	public static string str = &quot;窗体1的值&quot;;
-</code></pre>
-<p>通过Form1的button1_Click事件即可将此全局变量传递给Form2，Form1的全局变量str在Form2中可以直接访问，代码如下所示：</p>
-<pre><code class="language-plain_text">	private void button1_Click(object sender, EventArgs e)
-	{            
-	      Form2 frm2 = new Form2();
-	      frm2.Show();
-	}
-    private void Form2_Load(object sender, EventArgs e)
-	{   
-	      this.label1.Text = Form1.str;               
-	}
-</code></pre>
-<p><strong>&lt;2&gt;通过构造函数传值：</strong></p>
-<p>重载Form2的构造函数，使其能够接受一个来自Form1的参数，重载代码如下所示：</p>
-<pre><code class="language-plain_text">    private string str;
-    public Form2(string s)
-    {
-        InitializeComponent();
-        this.str = s;        
-    }
-</code></pre>
-<p>上面代码中定义的string变量str用来存储从Form1传递进来的参数。<br />
-在Form1的button1_Click事件中实例化Form2并给其传递Form1的一个参数，代码如下所示：</p>
-<pre><code class="language-plain_text">    private void button1_Click(object sender, EventArgs e)
-    {
-        string s = this.textBox1.Text;
-        Form2 frm2 = new Form2(s);
-        frm2.Show();
-    }
-</code></pre>
-<p>在Form2的Form2_Load中即可接受这个参数，接受这个参数值的代码如下所示：</p>
-<pre><code class="language-plain_text">    private void Form2_Load(object sender, EventArgs e)
-    {
-        this.label1.Text = str;                   
-    }
-</code></pre>
-<p>这样，在单击Form1的button1之后，Form2便会蹦出来，Form2的label1便会显示这个从Form1传进来的值。</p>
-<p><strong>&lt;3&gt;在窗体中声明公共属性进行传值：</strong></p>
-<p>在Form2中声明公共属性，代码如下所示：<br />
-private string username;</p>
-<pre><code class="language-plain_text">    public string Username
-    {
-        get { return username; }
-        set { username = value; }
-    }
-    private string password;
+                        	<pre><code class="language-plain_text">//        viewHolder复用了item，持有的position是会随着listView的滑动变化的
+//        if ((viewHolder.getPosition() + 1) % 2 == 0) {
+//            int color = Color.argb(255, 101, 181, 109);
+//            viewHolder.getConvertView().setBackgroundColor(color);
+//        } else {
+//            int color = Color.argb(255, 255, 255, 255);
+//            viewHolder.getConvertView().setBackgroundColor(color);
+//        }
 
-    public string Password
-    {
-        get { return password; }
-        set { password = value; }
-    }
-</code></pre>
-<p>这样，在Form1中即可访问这些属性，也就可以将Form2中这些公共属性的值传递给Form1了，并且也可以从Form1中向Form2的这些公共属性传值。代码如下所示：</p>
-<p>（1）Form1向Form2传值：</p>
-<pre><code class="language-plain_text">    private void button1_Click(object sender, EventArgs e)
-    {
-        Form2 frm2 = new Form2();
-        frm2.Username = &quot;Jack&quot;;  //Form1向Form2传值
-        frm2.Password = &quot;J1234&quot;;
-　　　　frm2.Show(); 
-    }
-    private void Form2_Load(object sender, EventArgs e)
-    {
-        textBox1.Text = username;
-        textBox2.Text = password;
-    }
-</code></pre>
-<p>（2）Form2向Form1传值：</p>
-<pre><code class="language-plain_text">    private void textBox1_TextChanged(object sender, EventArgs e)
-    {
-        this.Username = textBox1.Text;
-    }
+    /*
+    * position参数是不会随着listView的滑动而变化的，即使viewHolder复用的item发生了变化，
+    * 设置颜色的那个item的position是不会变的，所以可以这么来设置item的颜色相间排列
+    * */
+//        if (position % 2 == 0) {
+//            int color = Color.argb(255, 255, 255, 255);
+//            viewHolder.getConvertView().setBackgroundColor(color);
+//        } else {
+//            int color = Color.argb(255, 101, 181, 109);
+//            viewHolder.getConvertView().setBackgroundColor(color);
+//        }
 
-    private void textBox2_TextChanged(object sender, EventArgs e)
-    {
-        this.Password = textBox1.Text;
-    }
-    private void button1_Click(object sender, EventArgs e)
-    {
-        Form2 frm2 = new Form2();
-        frm2.Username = &quot;Jack&quot;;  //Form1向Form2传值
-        frm2.Password = &quot;J1234&quot;;            
-        comboBox1.Items.Add(frm2.Username);  //Form2向Form1传值
-        comboBox1.Items.Add(frm2.Password);
-        frm2.Show();
-    }   
+//        这里不用循环也可以的，因为getView方法本身就会去循环listView来画item，这里的
+//        循环i和position是等价的，i的 值就是position的值
+//        for (int i = 0; i &lt; getCount(); i++) {
+//            if (position == i) {
+//                if (i % 2 == 0){
+//                    int color = Color.argb(255, 255, 255, 255);
+//                    viewHolder.getConvertView().setBackgroundColor(color);
+//                } else {
+//                    int color = Color.argb(255, 101, 181, 109);
+//                    viewHolder.getConvertView().setBackgroundColor(color);
+//                }
+//            }
+//        }
 </code></pre>
-<p>声明公共属性传值比较灵活，受限较少，因此比较好用。但是或许这会影响数据的安全性哦。</p>
-<p><strong>&lt;4&gt;传递整个窗体进行传值。</strong></p>
-<p>类似于构造函数传值，将窗体作为构造函数的参数即可传递整个窗体了。代码如下所示：</p>
-<pre><code class="language-plain_text">    private void button1_Click(object sender, EventArgs e)
-    {
-        Form2 f2 = new Form2(this);
-        f2.Show();
-    }   
-    Form1 frm1;
-    public Form2(Form1 f1)
-    {
-        InitializeComponent();
-        this.frm1 = f1;            
-    }
-
-    private void Form2_Load(object sender, EventArgs e)
-    {
-        this.textBox1.Text = frm1.ActiveControl.ToString();
-    }
-</code></pre>
-<p>这样能把Form1整个窗体传递给Form2，在Form2里即可操作Form1的数据及其控件了。</p>
-<p><strong>&lt;5&gt;更改系统文件：</strong></p>
-<p>更改Form1.Designer.cs，譬如要使其控件变为公共可访问的，即找到在此文件中声明的控件，将你需要在Form2里访问的控件的访问修饰符修改为public，如下所示：</p>
-<pre><code class="language-plain_text">    private System.Windows.Forms.Button button1;
-    private System.Windows.Forms.ComboBox comboBox1;
-</code></pre>
-<p>将上面的代码里需要更改的控件的访问修饰符更改后保存即可。这种方法我个人感觉不好，有违C#语言的封装性和数据的安全性，个人建议不提倡使用。</p>
-<p><strong>&lt;6&gt;利用委托进行窗体传值：</strong></p>
-<p>这种方法是我在网上看到的，对原代码做了一点点改进，利用定义委托和事件以及构造函数的方法，实现了Form1和Form2互相传值。废话不多说，请看代码：<br />
-Form1部分的代码：</p>
-<pre><code class="language-plain_text">public partial class Form1 : Form
-{        
-     public Form1()
-     {
-         InitializeComponent();
-     }
-
-     private void button1_Click(object sender, EventArgs e)
-     {
-         string str = textBox1.Text;
-         Form2 f2 = new Form2(str);
-         f2.Translate += new TranslateEventHandler(f2_Translate);            
-         f2.ShowDialog();
-     }
-
-     void f2_Translate(string value)
-     {
-         textBox1.Text = value;
-         //throw new NotImplementedException();
-     }               
-}
-</code></pre>
-<p>Form2部分的代码：</p>
-<pre><code class="language-plain_text"> public delegate void TranslateEventHandler(string value);
- public partial class Form2 : Form
- {
-     string str;
-     public Form2(string s)
-     {
-         InitializeComponent();
-         this.str = s;
-     }
- 
-     public event TranslateEventHandler Translate;
-     
-     private void button1_Click(object sender, EventArgs e)
-     {
-         Translate(textBox1.Text);
-         this.Close();
-     }
- 
-     private void Form2_Load(object sender, EventArgs e)
-     {
-         this.textBox1.Text = str;
-     }            
- }
-</code></pre>
-<p>Form设计如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081301.jpg" alt="jackro_blog2014081301" /> <br />
-      <br />
-<img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081302.jpg" alt="jackro_blog2014081302" /><br />
- </p>
 
                         
                       </div>
@@ -398,7 +200,7 @@ Form1部分的代码：</p>
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2016/01/29</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -415,134 +217,26 @@ Form1部分的代码：</p>
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553061843.html">
+                <a class="clearlink" href="16496553058997.html">
                 
-                  <h1>---</h1>
+                  <h1>Android SDK 大连东软镜像地址及地址列表</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-xmlreader%E5%9C%A8%E6%9C%AA%E7%9F%A5%E5%85%83%E7%B4%A0%E7%9A%84%E5%90%8D%E7%A7%B0%E5%92%8C%E5%B1%9E%E6%80%A7%E7%9A%84%E5%90%8D%E7%A7%B0%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E8%AF%BB%E5%8F%96%E5%B1%9E%E6%80%A7-date-2014-08-10" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: XmlReader在未知元素的名称和属性的名称的情况下读取属性<br />
-date: 2014-08-10</h2>
-<p>经过努力，终于解决了XmlReader在未知元素的名称和属性的名称的情况下读取属性的方法。在没有解决前，我的代码如下：</p>
-<pre><code class="language-plain_text">	using System; 
-	using System.Collections.Generic; 
-	using System.Linq; 
-	using System.Text; 
-	using System.Xml; 
-	
-	namespace ReadAttribute 
-	{ 
-	    class Program
-	     {
-	         static void Main(string[] args)
-	         {
-	             string path = @&quot;e:\testfile\myMail.xml&quot;;
-	             
-	             #region 读取属性的第一种方法
-	             //string date;
-	             //try
-	             //{
-	             //    XmlReader xr = XmlReader.Create(path);
-	             //    xr.ReadToFollowing(&quot;mail&quot;);
-	             //    date = xr.GetAttribute(&quot;date&quot;);
-	             //    Console.Write(&quot;信件的日期为：&quot;);
-	             //    Console.WriteLine(date);
-	             //}
-	             //catch (Exception ex)
-	             //{
-	             //    Console.WriteLine(ex.Message);
-	             //} 
-	             #endregion
-	 
-	             #region 读取属性的第二种方法
-	             try
-	             {
-	                 XmlReader xr = XmlReader.Create(path);
-	                 while (xr.Read())
-	                 {
-	                     if (xr.HasAttributes)
-	                     {
-	                         //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         //for (int i = 0; i &lt; xr.AttributeCount; i++)
-	                         //{                            
-	                         //xr.MoveToAttribute(i);                            
-	                         Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
-	                         //}                                                                  
-	                     }
-	                 }
-	             }
-	             catch (Exception ex)
-	             {
-	                 Console.WriteLine(ex.Message);
-	             } 
-	             #endregion
-	             Console.ReadKey();
-	         }
-	     }
-	 }
+                        	<p>Android SDK更新大连东软镜像地址: mirrors.neusoft.edu.cn, 端口: 80<br />
+镜像地址列表URL:</p>
+<pre><code class="language-plain_text">http://mirrors.neusoft.edu.cn/android/repository/addon-6.xml 
+http://mirrors.neusoft.edu.cn/android/repository/addon.xml 
+http://mirrors.neusoft.edu.cn/android/repository/extras/intel/addon.xml 
+http://mirrors.neusoft.edu.cn/android/repository/sys-img/android-tv/sys-img.xml 
+http://mirrors.neusoft.edu.cn/android/repository/sys-img/android-wear/sys-img.xml 
+http://mirrors.neusoft.edu.cn/android/repository/sys-img/android/sys-img.xml 
+http://mirrors.neusoft.edu.cn/android/repository/sys-img/google_apis/sys-img.xml 
+http://mirrors.neusoft.edu.cn/android/repository/sys-img/x86/addon-x86.xml 
+http://mirrors.neusoft.edu.cn/android/repository/addons_list-2.xml 
+http://mirrors.neusoft.edu.cn/android/repository/repository-10.xml
 </code></pre>
-<p>解决后，我的代码如下：</p>
-<pre><code class="language-plain_text">	using System; 
-	using System.Collections.Generic; 
-	using System.Linq; 
-	using System.Text; 
-	using System.Xml; 
-	
- 	namespace ReadAttribute 
-	{ 
-	    class Program
-	     {
-	         static void Main(string[] args)
-	         {
-	             string path = @&quot;e:\testfile\myMail.xml&quot;;
-	             
-	             #region 读取属性的第一种方法
-	             //string date;
-	             //try
-	             //{
-	             //    XmlReader xr = XmlReader.Create(path);
-	             //    xr.ReadToFollowing(&quot;mail&quot;);
-	             //    date = xr.GetAttribute(&quot;date&quot;);
-	             //    Console.Write(&quot;信件的日期为：&quot;);
-	             //    Console.WriteLine(date);
-	             //}
-	             //catch (Exception ex)
-	             //{
-	             //    Console.WriteLine(ex.Message);
-	             //} 
-	             #endregion
-	 
-	             #region 读取属性的第二种方法
-	             try
-	             {
-	                 XmlReader xr = XmlReader.Create(path);
-	                 while (xr.Read())
-	                 {
-	                     if (xr.HasAttributes)
-	                     {
-	                         Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         for (int i = 0; i &lt; xr.AttributeCount; i++)
-	                         {                            
-	                         xr.MoveToAttribute(i);                              
-	                         
-	                         //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
-	                         }                                                                     								}
-	                }
-	             }
-	             catch (Exception ex)
-	             {
-	                 Console.WriteLine(ex.Message);
-	             } 
-	             #endregion
-	             Console.ReadKey();
-	         }
-	     }
-	 }
-</code></pre>
-<p>解决后，上面的代码可以不用知道元素的名称和属性的名称的情况下读取XML文件中的所有属性名及其值。这种方法有点像迭代器遍历数组，只不过这里的元素变成了XML的节点和元素，而且这里可以把XML的属性也可以看成是XML的节点（”可以看成XML元素的子节点“），这样元素看成是节点，属性也看成是节点，都当做节点处理，也就是说这个遍历可以看成是遍历XML的节点。这样也就可以解释上面代码中的 xr.Name、xr.Value了，他们分别可以看成是XML的节点名和节点值（即属性名和属性值）。如此，这样的方法便不难理解了！</p>
 
                         
                       </div>
@@ -551,7 +245,7 @@ date: 2014-08-10</h2>
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2015/09/07</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -568,30 +262,23 @@ date: 2014-08-10</h2>
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553058156.html">
+                <a class="clearlink" href="16496553060303.html">
                 
-                  <h1>---</h1>
+                  <h1>LinearLayout按下或获取焦点时设置不同颜色或图片</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-android-7-0%E8%A1%8C%E4%B8%BA%E5%8F%98%E6%9B%B4%E4%B9%8B%E5%90%8E%E5%8F%B0%E4%BC%98%E5%8C%96-date-2017-06-13" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android 7.0行为变更之后台优化<br />
-date: 2017-06-13</h2>
-<p>Android 7.0 对系统和API做了一些变更。其中关于隐式广播的移除见官方文档链接：<a href="https://developer.android.com/about/versions/nougat/android-7.0-changes.html#bg-opt">Project Svelte：后台优化</a>，根据官方文档介绍，该变更主要是为了帮助优化内存使用和电量消耗，因为隐式广播会在后台频繁启动已注册侦听这些广播的应用，删除这些广播可以显著提升设备性能和用户体验。</p>
-<p>针对这一变更，官方文档也给出了应用开发者如何改写应用的一些建议，官方文档参考：<a href="https://developer.android.com/preview/features/background-optimization.html">后台优化</a>。</p>
-<p>1）<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a></p>
-<p>面向Android 7.0(API 24)及以上的应用如果在应用的AndroidManifest静态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，将不会收到该广播。但是我们可以使用[Context.registerReceiver()](<a href="https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver">https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver</a>, android.content.IntentFilter))动态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，这将会让我们的应用在运行时收到该广播（这样也可以改善内存使用和电量消耗）。</p>
-<p>Android 7.0(API 24)还为我们提供了<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>（<a href="https://developer.android.com/reference/android/app/job/JobService.html">JobService</a>的回调方法），我们可以使用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html">JobInfo.Builder</a>构建一个在Unmetered Network Connection上的<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>执行这个<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，接下来就可以在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>方法里执行我们自己的逻辑。</p>
-<p>我们还可以使用<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html">ConnectivityManager.NetworkCallback</a>来监听网络变化，比如该接口中的<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html#onAvailable(android.net.Network)">onAvailable()</a>方法。</p>
-<p>2）<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_PICTURE">ACTION_NEW_PICTURE</a>或<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_VIDEO">ACTION_NEW_VIDEO</a></p>
-<p>在Android 7.0(API 24)里，这两个隐式广播被移除了，应用程序不能发送或接受这两个广播来监听系统的照片或者视频的拍摄。但是在Android 8.0(API 26)，这两个广播又被添加回来了，不过也仅仅可以通过动态注册来接收，并且仅仅适用于监听到他们来执行简单的可以立即被执行的任务，执行复杂的繁重的任务仍然需要使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>、<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>，和上面第一点处理方法类似，不同的是，需要调用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html#addTriggerContentUri(android.app.job.JobInfo.TriggerContentUri)">JobInfo.Builder.addTriggerContentUri()</a>构造<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>回调方法里去调用<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentAuthorities()">JobParameters.getTriggeredContentAuthorities()</a>和<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentUris()">JobParameters.getTriggeredContentUris()</a>来获取拍照或摄像时增加的照片或视频的Uri。</p>
-<p>像上面这样优化App可以让App在低内存的设备上改善性能和用户体验（这可以改善Android应用生态环境），移除后台服务（background service）和隐式广播的依赖可以帮助你的App在这样的设备上运行的更好。虽然Android 7.0(API 24)在逐步减少这样的issue，但是我们仍然推荐你通过完全不使用这样的后台进程来优化你的App。<br />
-Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不使用后台进程时是否还能很好的运行。命令如下：</p>
-<pre><code class="language-plain_text">    //模拟隐式广播和后台服务（background service）不可用的条件
-    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND ignore
-    //重新使隐式广播和后台服务（background service）可用
-    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND allow
+                        	<p>在Android项目中有这样一个需求，画了几个LinearLayout布局做成ListView的样式，如下图所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2015062901.png" alt="jackro_blog2015062901" /></p>
+<p>当点击每个LinearLayout项时想改变其背景颜色，准备了如下背景图片XML文件：</p>
+<pre><code class="language-plain_text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+    &lt;item android:drawable=&quot;@color/gray_background&quot; android:state_pressed=&quot;true&quot; /&gt;
+    &lt;item android:drawable=&quot;@color/white_background&quot; /&gt;
+&lt;/selector&gt;
 </code></pre>
+<p>但是当我每次运行点击每一项LinearLayout时，其背景颜色毫无变化。后来发现在每个LinearLayout项加入属性android:clickable=&quot;true&quot;点击LinearLayout才会出现背景颜色的变化。</p>
 
                         
                       </div>
@@ -600,7 +287,7 @@ Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不�
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2015/06/29</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -617,25 +304,22 @@ Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不�
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553058247.html">
+                <a class="clearlink" href="16496553059326.html">
                 
-                  <h1>---</h1>
+                  <h1>Android Studio 导入 Fresco 项目编译报错解决</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-android%E4%B8%ADactionbar%E7%9A%84setxxxenabled%E6%96%B9%E6%B3%95%E7%9A%84%E7%90%86%E8%A7%A3-date-2015-06-14" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android中ActionBar的setXXXEnabled方法的理解<br />
-date: 2015-06-14</h2>
-<p>setHomeButtonEnabled这个方法在小于4.0版本的默认值是true，但是在4.0及其以上是false，该方法的作用：决定左上角的图标是否可以点击，没有向左的小图标。true则图标可以点击，false则不可以点击。</p>
-<pre><code class="language-plain_text">	actionBar.setDisplayHomeAsUpEnabled(true)    // 给左上角图标的左边加上一个返回的图标 。对应ActionBar.DISPLAY_HOME_AS_UP。
-
-	actionBar.setDisplayShowHomeEnabled(true)   //使左上角图标是否显示，如果设成false，则没有程序图标，仅仅就个标题，否则，显示应用程序图标。
-
-	actionBar.setDisplayShowCustomEnabled(true)  // 使自定义的普通View能在title栏显示，即actionBar.setCustomView能起作用，对应ActionBar.DISPLAY_SHOW_CUSTOM。
-
-	actionBar.setDisplayShowTitleEnabled(true)   //对应ActionBar.DISPLAY_SHOW_TITLE。
-</code></pre>
-<p>其中setHomeButtonEnabled和setDisplayShowHomeEnabled共同起作用，如果setHomeButtonEnabled设成false，即使setDisplayShowHomeEnabled设成true，图标也不能点击。</p>
+                        	<p>把 Github 上的一个 <a href="https://github.com/facebook/fresco.git">Fresco</a> 的 Demo 源码 clone 到本地, 导入这个 Fresco 项目编译报了如所示的错:</p>
+<p>unable to expand TAR 'imagepipeline\build\downloads\libjpeg-turbo-1.3.1.tar.gz'</p>
+<p>经过网上搜索解决方案，只找到了下面链接给的解决方案：</p>
+<p><a href="http://www.2cto.com/kf/201504/391278.html">unable to expand TAR 'imagepipeline\build\downloads\libjpeg-turbo-1.3.1.tar.gz解决</a></p>
+<p>按照上面链接给的方法试了一下，结果无法解决。还是报同样的错误。然后我试着去看了一下项目下的imagepipeline\build\downloads目录，发现每次编译之后libjpeg-turbo-1.3.1.tar.gz文件都不会被解压，仍然是压缩文件，而这个目录下的另一个压缩文件giflib-5.1.1.tar.gz每次编译后都会被解压到当前目录下。我猜测应该是解压出现了问题，果然当我手动去解压这个libjpeg-turbo-1.3.1.tar.gz文件时，解压不成功，说是压缩文件末端缺失。然后我试着去网上下载libjpeg-turbo-1.3.1.tar.gz这个压缩文件，果然下过来的文件比之前目录下的文件大了一点，然后我把下过来的文件复制到imagepipeline\build\downloads下覆盖原文件，再次编译，经过漫长的等待，终于BUILD SUCCESSFUL。<br />
+我不知道是不是android studio在下载这个压缩文件的时候出了问题还是我电脑的问题。　　<br />
+毕竟Fresco也是新东西，希望知道原因的大猿们不吝赐教。<br />
+另外附上下载libjpeg-turbo-1.3.1.tar.gz文件的地址，我也是从官网下载的，或许今后版本更新了，还是得去官网下。</p>
+<p><a href="http://download.csdn.net/detail/jack_leonardo/8808211">下载libjpeg-turbo-1.3.1.tar.gz文件的地址</a></p>
 
                         
                       </div>
@@ -644,7 +328,7 @@ date: 2015-06-14</h2>
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2015/06/15</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -713,6 +397,20 @@ date: 2015-06-14</h2>
       	<p class="cat-list">
         
             <a href="Android.html"><strong>Android</strong></a>
+        
+            <a href="iOS.html"><strong>iOS</strong></a>
+        
+            <a href=".NET.html"><strong>.NET</strong></a>
+        
+            <a href="Java.html"><strong>Java</strong></a>
+        
+            <a href="Git.html"><strong>Git</strong></a>
+        
+            <a href="DB.html"><strong>DB</strong></a>
+        
+            <a href="Shell.html"><strong>Shell</strong></a>
+        
+            <a href="PHP.html"><strong>PHP</strong></a>
          
         </p>
 
@@ -729,31 +427,31 @@ date: 2015-06-14</h2>
 	      
 		      
 			      <li class="post">
-			        <a href="16496553060120.html">---</a>
+			        <a href="16496553059675.html">Android 面试展示 iOS debug app 时闪退</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060211.html">---</a>
+			        <a href="16496553060588.html">mysql自定义function问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060303.html">---</a>
+			        <a href="16496553059414.html">Android Studio 中鼠标悬停 Fetching Documentation 很长时间</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060398.html">---</a>
+			        <a href="16496553060491.html">macOS 中 git 提交操作 .DS_Store 文件引发的问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060491.html">---</a>
+			        <a href="16496553060993.html">Safari 浏览器设置 Java 支持</a>
 			      </li>
 		     
 		  

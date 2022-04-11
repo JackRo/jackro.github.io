@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  --- - JackRo's Blog
+  Android 处理图片报 OOM 的问题解决 - JackRo's Blog
   
   </title>
   
@@ -78,6 +78,20 @@
 
         
             <li><a href="Android.html">Android</a></li>
+        
+            <li><a href="iOS.html">iOS</a></li>
+        
+            <li><a href=".NET.html">.NET</a></li>
+        
+            <li><a href="Java.html">Java</a></li>
+        
+            <li><a href="Git.html">Git</a></li>
+        
+            <li><a href="DB.html">DB</a></li>
+        
+            <li><a href="Shell.html">Shell</a></li>
+        
+            <li><a href="PHP.html">PHP</a></li>
          
 
       </ul>
@@ -100,10 +114,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>---</h1>
+          <h1>Android 处理图片报 OOM 的问题解决</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2022/04/11</span>
+          <span class="date">2015/06/08</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -120,12 +134,10 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <h2><a id="title-android%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87%E6%8A%A5oom%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-date-2015-06-08" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android处理图片报OOM的问题解决<br />
-date: 2015-06-08</h2>
-<p>当使用android的Drawable时，一开始我是用下面的方法实现的：</p>
+      <p>当使用android的Drawable时，一开始我是用下面的方法实现的：</p>
 <pre><code class="language-plain_text">Drawable.createFromStream(is, srcName);
 </code></pre>
-<p>但是经过调试每次程序都会crash掉，报OOM错误，错误都会打到上面这行代码，搞了老半天，发现BitmapFactory.decodeStream比Drawable.createFromStream好用，后者更占内存。下面是解决后的代码：</p>
+<p>但是经过调试每次程序都会crash掉，报OOM错误，错误都会打到上面这行代码，搞了老半天，发现 BitmapFactory.decodeStream比Drawable.createFromStream 好用，后者更占内存。下面是解决后的代码：</p>
 <pre><code class="language-plain_text"> BitmapFactory.Options options = new BitmapFactory.Options();
  options.inPreferredConfig = Config.RGB_565;                
  options.inSampleSize = 2;
@@ -143,16 +155,16 @@ date: 2015-06-08</h2>
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="16496553058730.html" 
-          title="Previous Post: ---">&laquo; ---</a>
+          <a href="16496553058409.html" 
+          title="Previous Post: Android做检测版本更新安装完以后直接退出，没有出现安装成功的界面">&laquo; Android做检测版本更新安装完以后直接退出，没有出现安装成功的界面</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="16496553058915.html" 
-          title="Next Post: ---">--- &raquo;</a>
+          <a  href="16496553061623.html" 
+          title="Next Post: Winform 应用程序 Image OOM 异常的处理方法">Winform 应用程序 Image OOM 异常的处理方法 &raquo;</a>
       
       </p>
         </div>
@@ -207,6 +219,20 @@ date: 2015-06-08</h2>
       	<p class="cat-list">
         
             <a href="Android.html"><strong>Android</strong></a>
+        
+            <a href="iOS.html"><strong>iOS</strong></a>
+        
+            <a href=".NET.html"><strong>.NET</strong></a>
+        
+            <a href="Java.html"><strong>Java</strong></a>
+        
+            <a href="Git.html"><strong>Git</strong></a>
+        
+            <a href="DB.html"><strong>DB</strong></a>
+        
+            <a href="Shell.html"><strong>Shell</strong></a>
+        
+            <a href="PHP.html"><strong>PHP</strong></a>
          
         </p>
 
@@ -223,31 +249,31 @@ date: 2015-06-08</h2>
 	      
 		      
 			      <li class="post">
-			        <a href="16496553060120.html">---</a>
+			        <a href="16496553059675.html">Android 面试展示 iOS debug app 时闪退</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060211.html">---</a>
+			        <a href="16496553060588.html">mysql自定义function问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060303.html">---</a>
+			        <a href="16496553059414.html">Android Studio 中鼠标悬停 Fetching Documentation 很长时间</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060398.html">---</a>
+			        <a href="16496553060491.html">macOS 中 git 提交操作 .DS_Store 文件引发的问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060491.html">---</a>
+			        <a href="16496553060993.html">Safari 浏览器设置 Java 支持</a>
 			      </li>
 		     
 		  

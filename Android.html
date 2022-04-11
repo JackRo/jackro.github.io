@@ -78,6 +78,20 @@
 
         
             <li><a href="Android.html">Android</a></li>
+        
+            <li><a href="iOS.html">iOS</a></li>
+        
+            <li><a href=".NET.html">.NET</a></li>
+        
+            <li><a href="Java.html">Java</a></li>
+        
+            <li><a href="Git.html">Git</a></li>
+        
+            <li><a href="DB.html">DB</a></li>
+        
+            <li><a href="Shell.html">Shell</a></li>
+        
+            <li><a href="PHP.html">PHP</a></li>
          
 
       </ul>
@@ -100,106 +114,96 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
-                <a class="clearlink" href="16496553060120.html">
+                <a class="clearlink" href="16496553059414.html">
                 
-                  <h1>---</h1>
+                  <h1>Android Studio 中鼠标悬停 Fetching Documentation 很长时间</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%94%B6%E4%B8%8D%E5%88%B0-uilocalnotification%E6%9C%AC%E5%9C%B0%E9%80%9A%E7%9F%A5-date-2017-02-24" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: 模拟器收不到UILocalNotification本地通知<br />
-date: 2017-02-24</h2>
-<p>通知功能是iOS应用开发经常会碰到的需求，iOS应用的通知分为本地通知和远程通知（即消息推送），Apple develop官网的API Guides对通知的开发有详细的介绍。</p>
-<p>今天我碰到的问题是模拟器收不到本地通知，按照惯例，先上本地通知的代码：</p>
-<pre><code class="language-plain_text">    UILocalNotification *note = [[UILocalNotification alloc] init];
-    note.alertBody = @&quot;Hypnotize&quot;;
-    note.fireDate = date; //这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
-    note.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:note];
+                        	<p>当我使用Android Studio（macOS 10.12.6系统，Android Studio 3.0）进行Android项目开发时，我经常会使用鼠标悬停的方式去查看类、方法和字段的文档注释。但当我这样做时，我发现一个非常让我懊恼的问题，当我鼠标悬停时，出现的弹框中显示Fetching Documentation...，并且它会显示很长一段时间。</p>
+<p>问题总是得解决的，经过一番搜索，我找到了问题的解决方法：修改配置文件。修改方法如下：</p>
+<ol>
+<li>找到AS的配置文件目录，我的是在~/Library/Preferences下</li>
+<li>找到AS当前版本的配置文件目录，我的是在~/Library/Preferences/AndroidStudio3.0下</li>
+<li>找到配置文件目录下options/jdk.table.xml文件打开</li>
+<li>找到你当前项目compileSdkVersion对应的版本所对应的jdk节点（当然如果需要的话你也可以修改所有版本的jdk节点）</li>
+<li>再找到roots节点下的javadocPath节点，修改该节点里的的url属性，使之与sourcePath节点里的url属性一致即可</li>
+</ol>
+<p>修改前的节点如下所示：</p>
+<pre><code class="language-plain_text">        &lt;javadocPath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;http://developer.android.com/reference/&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/javadocPath&gt;
+        &lt;sourcePath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/sourcePath&gt;
 </code></pre>
-<p>原本以为这样就可以接收到通知了，结果一运行，始终看不到通知，过了通知的设定时间好久了，也看不到通知。查阅了下通知的用法文档，才知道需要去申请发送通知的授权。修正后的代码如下所示：</p>
-<pre><code class="language-plain_text">//判断是否已经授权用户发送通知
-if ([[UIApplication sharedApplication] currentUserNotificationSettings].types != UIUserNotificationTypeNone) {
-    UILocalNotification *note = [[UILocalNotification alloc] init];
-    note.alertBody = @&quot;Hypnotize&quot;;
-    note.fireDate = date;//这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
-    note.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:note];
-} else{
-    //用户注册通知，注册后才能收到通知，这会给用户一个弹框，提示用户选择是否允许发送通知
-    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound   categories:nil]];
-}
+<p>在上面修改前的节点中，javadocPath在找android developer官网上的doc，由于网络的原因（某墙），肯定很难fetching到documentation。所以将url修改为下载到本地的源码（去本地源码中fetching documentation自然很快），如下所示：</p>
+<pre><code class="language-plain_text">        &lt;javadocPath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/javadocPath&gt;
+        &lt;sourcePath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/sourcePath&gt;
 </code></pre>
-<p>用户注册通知后，会收到一个回调函数，一般如果未授权，创建通知就在这个回调函数里进行。</p>
-<pre><code class="language-plain_text">//用户注册通知回调函数
-- (void)application:(UIApplication *) application
-    didRegisterUserNotificationSettings:(UIUserNotificationSettings   *)notificationSettings {
-     if (notificationSettings.types != UIUserNotificationTypeNone) {
-         NSLog(@&quot;haha&quot;);
-        UILocalNotification *note = [[UILocalNotification alloc] init];
-        note.alertBody = @&quot;Hypnotize&quot;;
-        note.fireDate = rvc.selectDate;
-        note.applicationIconBadgeNumber = 1;
-        [[UIApplication sharedApplication] scheduleLocalNotification:note];
+<p>修改完之后，需要重启下AS，fetching documentation就会很快了（不是很快，是非常快！）。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/11/12</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553058327.html">
+                
+                  <h1>Android项目CMake构建脚本放置在项目根目录下导致build失败的问题</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>在现有Android项目中做JNI配置时，碰到了CMake构建脚本放置在项目中的位置的问题。当放置在项目的根目录下，app的build.gradle文件中配置（该配置是通过右键项目的app模块选择 Link C++ Project with Gradle后自动生成的）如下：</p>
+<pre><code class="language-plain_text"> externalNativeBuild {
+    cmake {
+        path '../CMakeLists.txt'
     }
 }
 </code></pre>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2022/04/11</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="16496553060211.html">
-                
-                  <h1>---</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2><a id="title-java%E4%B8%AD%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E7%9B%B8%E5%90%8C%E5%AD%97%E7%AC%A6%E4%B8%B2-date-2017-09-11" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Java中判断一个字符串数组是否包含相同字符串<br />
-date: 2017-09-11</h2>
-<p>如题。该问题很简单，使用一个嵌套循环即可解决，代码如下所示：</p>
-<pre><code class="language-plain_text">/**
- * judge that a String Array whether or not contained equal String
- * 
- * @param strings
- *            a string Array
- * @return return true, contained; return false, not contained
- */
-public static boolean judgeStrArrayContainsSameStr(String[] strings) {
-	int len = strings.length;
-	for (int i = 0; i &lt; len; i++) {
-		String temp = strings[i];
-		for (int j = i + 1; j &lt; len; j++) {
-			String string = strings[j];
-			if (string.equals(temp)) {
-				return true;
-			}
-		}
-	}
-	return false;
+<p>此时对项目进行build操作时，build会失败。</p>
+<p>当尝试把CMake构建脚本放置在项目的app目录下，build就可以成功，此时app的build.gradle文件中配置如下：</p>
+<pre><code class="language-plain_text"> externalNativeBuild {
+    cmake {
+        path 'CMakeLists.txt'
+    }
 }
 </code></pre>
+<p>解决该问题参考了官方文档，参考链接如下：<br />
+<a href="https://developer.android.com/studio/projects/add-native-code.html">https://developer.android.com/studio/projects/add-native-code.html</a></p>
 
                         
                       </div>
@@ -208,7 +212,7 @@ public static boolean judgeStrArrayContainsSameStr(String[] strings) {
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2017/09/20</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -225,25 +229,26 @@ public static boolean judgeStrArrayContainsSameStr(String[] strings) {
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553060303.html">
+                <a class="clearlink" href="16496553061097.html">
                 
-                  <h1>---</h1>
+                  <h1>SQLite 清空表数据并将自增量归零</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-linearlayout%E6%8C%89%E4%B8%8B%E6%88%96%E8%8E%B7%E5%8F%96%E7%84%A6%E7%82%B9%E6%97%B6%E8%AE%BE%E7%BD%AE%E4%B8%8D%E5%90%8C%E9%A2%9C%E8%89%B2%E6%88%96%E5%9B%BE%E7%89%87-date-2015-06-29" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: LinearLayout按下或获取焦点时设置不同颜色或图片<br />
-date: 2015-06-29</h2>
-<p>在Android项目中有这样一个需求，画了几个LinearLayout布局做成ListView的样式，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2015062901.png" alt="jackro_blog2015062901" /></p>
-<p>当点击每个LinearLayout项时想改变其背景颜色，准备了如下背景图片XML文件：</p>
-<pre><code class="language-plain_text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
-    &lt;item android:drawable=&quot;@color/gray_background&quot; android:state_pressed=&quot;true&quot; /&gt;
-    &lt;item android:drawable=&quot;@color/white_background&quot; /&gt;
-&lt;/selector&gt;
+                        	<p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。但是SQLite可以通过如下方式来实现：</p>
+<p>1）先清空表数据：</p>
+<pre><code class="language-plain_text">    delete from [tablename];
 </code></pre>
-<p>但是当我每次运行点击每一项LinearLayout时，其背景颜色毫无变化。后来发现在每个LinearLayout项加入属性android:clickable=&quot;true&quot;点击LinearLayout才会出现背景颜色的变化。</p>
+<p>2）当数据库中包含自增列时，会自动建立一个名为 sqlite_sequence 的表。这个表包含两个列：name和seq。name记录自增列所在的表（即tablename），seq记录当前序号（下一条记录的编号就是当前序号加1）。你可以通过如下方式将自增量归零：</p>
+<pre><code class="language-plain_text">    //1. 将表名为tablename的自增量置0
+    update sqlite_sequence set seq = 0 where name = 'tablename'
+    //2. 将表名为tablename的记录删除
+    delete from sqlite_sequence where name = 'tablename'
+    //3. 将sqlite_sequence表清空数据
+    delete from sqlite_sequence
+</code></pre>
+<p>虽然在普通的DBMS中，用delete不如用truncate快，但是SQLite对delete做了优化，这个优化也可以使它运行的很快。</p>
 
                         
                       </div>
@@ -252,7 +257,59 @@ date: 2015-06-29</h2>
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2017/06/16</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				  
+          					    <span class="posted-in"><a href='DB.html'>DB</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553060790.html">
+                
+                  <h1>adb shell 中提示 Permission denied</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>在Android开发中，如果需要查看本地数据库，可以在adb shell中查看（当然前提条件是真机root或者使用模拟器），输入下面的命令可以查看：</p>
+<pre><code class="language-plain_text">Last login: Thu Jun 15 10:02:21 on ttys000
+JackRodeMacBook-Pro:~ jack$ adb shell
+generic_x86_64:/ $ cd /data/data/cn.jackro.databasedemo/databases/
+/system/bin/sh: cd: /data/data/cn.jackro.databasedemo/databases:     Permission denied
+2|generic_x86_64:/ $ 
+</code></pre>
+<p>但是当执行cd命令切换到应用的数据库目录时，却提示Permission denied（权限拒绝），经查，可以执行su命令切换到超级用户来提高权限，访问该文件。命令如下所示：</p>
+<pre><code class="language-plain_text">Last login: Thu Jun 15 10:09:58 on ttys000
+JackRodeMacBook-Pro:~ jack$ adb shell
+generic_x86_64:/ $ cd /data/data/cn.jackro.databasedemo/databases
+/system/bin/sh: cd: /data/data/cn.jackro.databasedemo/databases: Permission denied
+2|generic_x86_64:/ $ su
+generic_x86_64:/ # cd /data/data/cn.jackro.databasedemo/databases
+generic_x86_64:/data/data/cn.jackro.databasedemo/databases # ls
+BookStore.db BookStore.db-journal 
+generic_x86_64:/data/data/cn.jackro.databasedemo/databases #
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/06/15</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -269,20 +326,28 @@ date: 2015-06-29</h2>
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553060398.html">
+                <a class="clearlink" href="16496553058156.html">
                 
-                  <h1>---</h1>
+                  <h1>Android 7.0 行为变更之后台优化</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-mac-android%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%89%A7%E8%A1%8C-gradlew-clean%E6%8F%90%E7%A4%BA-permission-denied-date-2017-04-10" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Mac Android项目目录下执行./gradlew clean 提示Permission denied<br />
-date: 2017-04-10</h2>
-<p>Mac环境下Android Studio创建的android项目，在项目目录下执行./gradlew clean，提示Permission denied，看到这个提示，自然想到的是sudo执行，然而sudo执行并不能解决问题，反而会提示command not found。万般无奈，只能百度，发现执行以下命令即可解决问题。</p>
-<pre><code class="language-plain_text">//为gradlew文件添加可执行属性
-chmod +x gradlew
+                        	<p>Android 7.0 对系统和API做了一些变更。其中关于隐式广播的移除见官方文档链接：<a href="https://developer.android.com/about/versions/nougat/android-7.0-changes.html#bg-opt">Project Svelte：后台优化</a>，根据官方文档介绍，该变更主要是为了帮助优化内存使用和电量消耗，因为隐式广播会在后台频繁启动已注册侦听这些广播的应用，删除这些广播可以显著提升设备性能和用户体验。</p>
+<p>针对这一变更，官方文档也给出了应用开发者如何改写应用的一些建议，官方文档参考：<a href="https://developer.android.com/preview/features/background-optimization.html">后台优化</a>。</p>
+<p>1）<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a></p>
+<p>面向Android 7.0(API 24)及以上的应用如果在应用的AndroidManifest静态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，将不会收到该广播。但是我们可以使用[Context.registerReceiver()](<a href="https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver">https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver</a>, android.content.IntentFilter))动态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，这将会让我们的应用在运行时收到该广播（这样也可以改善内存使用和电量消耗）。</p>
+<p>Android 7.0(API 24)还为我们提供了<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>（<a href="https://developer.android.com/reference/android/app/job/JobService.html">JobService</a>的回调方法），我们可以使用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html">JobInfo.Builder</a>构建一个在Unmetered Network Connection上的<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>执行这个<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，接下来就可以在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>方法里执行我们自己的逻辑。</p>
+<p>我们还可以使用<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html">ConnectivityManager.NetworkCallback</a>来监听网络变化，比如该接口中的<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html#onAvailable(android.net.Network)">onAvailable()</a>方法。</p>
+<p>2）<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_PICTURE">ACTION_NEW_PICTURE</a>或<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_VIDEO">ACTION_NEW_VIDEO</a></p>
+<p>在Android 7.0(API 24)里，这两个隐式广播被移除了，应用程序不能发送或接受这两个广播来监听系统的照片或者视频的拍摄。但是在Android 8.0(API 26)，这两个广播又被添加回来了，不过也仅仅可以通过动态注册来接收，并且仅仅适用于监听到他们来执行简单的可以立即被执行的任务，执行复杂的繁重的任务仍然需要使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>、<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>，和上面第一点处理方法类似，不同的是，需要调用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html#addTriggerContentUri(android.app.job.JobInfo.TriggerContentUri)">JobInfo.Builder.addTriggerContentUri()</a>构造<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>回调方法里去调用<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentAuthorities()">JobParameters.getTriggeredContentAuthorities()</a>和<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentUris()">JobParameters.getTriggeredContentUris()</a>来获取拍照或摄像时增加的照片或视频的Uri。</p>
+<p>像上面这样优化App可以让App在低内存的设备上改善性能和用户体验（这可以改善Android应用生态环境），移除后台服务（background service）和隐式广播的依赖可以帮助你的App在这样的设备上运行的更好。虽然Android 7.0(API 24)在逐步减少这样的issue，但是我们仍然推荐你通过完全不使用这样的后台进程来优化你的App。<br />
+Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不使用后台进程时是否还能很好的运行。命令如下：</p>
+<pre><code class="language-plain_text">    //模拟隐式广播和后台服务（background service）不可用的条件
+    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND ignore
+    //重新使隐式广播和后台服务（background service）可用
+    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND allow
 </code></pre>
-<p>chmod命令是修改文件访问权限的命令，文件访问权限包括只读、只写、可执行三种，其实最开始的提示Permission denied（权限拒绝）已经告诉了我们是android项目目录下可执行文件gradlew的访问权限的问题。因此需要为该文件添加可执行权限，所以执行以上命令即可解决该问题。</p>
 
                         
                       </div>
@@ -291,53 +356,7 @@ chmod +x gradlew
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="16496553060491.html">
-                
-                  <h1>---</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2><a id="title-mac-os%E4%B8%ADgit%E6%8F%90%E4%BA%A4%E6%93%8D%E4%BD%9C-ds-store%E6%96%87%E4%BB%B6%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-date-2017-09-22" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Mac os中git提交操作.DS_Store文件引发的问题解决<br />
-date: 2017-09-22</h2>
-<p>在Mac os中是存在.DS_Store文件的，在使用git对项目进行版本控制时，该文件如果不加入.gitignore中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p>
-<p>经过一番搜索，我找到了解决方法，我们可以先在.gitignore中加入该文件的忽略规则，如下所示：</p>
-<pre><code class="language-plain_text">.DS_Store
-</code></pre>
-<p>然后删除项目中所有的.DS_Store，在项目目录下执行如下命令：</p>
-<pre><code class="language-plain_text">find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
-</code></pre>
-<p>然后提交项目即可。</p>
-<p>但是，我发现我的项目是用webstorm打开的，项目目录下自动生成了.idea文件，每次提交.idea文件也会提交，加入忽略规则也不行，我想到了和上面类似的方法，删除.idea目录，然后再提交，即可解决。</p>
-<p>参考链接：</p>
-<p><a href="http://www.jianshu.com/p/fdaa8be7f6c3">如何删除GIT中的.DS_Store</a></p>
-<p><a href="http://www.jianshu.com/p/8c0d262e49a6">Git中全局忽略.DS_Store文件</a></p>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2017/06/13</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -406,6 +425,20 @@ date: 2017-09-22</h2>
       	<p class="cat-list">
         
             <a href="Android.html"><strong>Android</strong></a>
+        
+            <a href="iOS.html"><strong>iOS</strong></a>
+        
+            <a href=".NET.html"><strong>.NET</strong></a>
+        
+            <a href="Java.html"><strong>Java</strong></a>
+        
+            <a href="Git.html"><strong>Git</strong></a>
+        
+            <a href="DB.html"><strong>DB</strong></a>
+        
+            <a href="Shell.html"><strong>Shell</strong></a>
+        
+            <a href="PHP.html"><strong>PHP</strong></a>
          
         </p>
 
@@ -422,31 +455,31 @@ date: 2017-09-22</h2>
 	      
 		      
 			      <li class="post">
-			        <a href="16496553060120.html">---</a>
+			        <a href="16496553059675.html">Android 面试展示 iOS debug app 时闪退</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060211.html">---</a>
+			        <a href="16496553060588.html">mysql自定义function问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060303.html">---</a>
+			        <a href="16496553059414.html">Android Studio 中鼠标悬停 Fetching Documentation 很长时间</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060398.html">---</a>
+			        <a href="16496553060491.html">macOS 中 git 提交操作 .DS_Store 文件引发的问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060491.html">---</a>
+			        <a href="16496553060993.html">Safari 浏览器设置 Java 支持</a>
 			      </li>
 		     
 		  

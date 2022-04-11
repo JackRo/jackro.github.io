@@ -78,6 +78,20 @@
 
         
             <li><a href="Android.html">Android</a></li>
+        
+            <li><a href="iOS.html">iOS</a></li>
+        
+            <li><a href=".NET.html">.NET</a></li>
+        
+            <li><a href="Java.html">Java</a></li>
+        
+            <li><a href="Git.html">Git</a></li>
+        
+            <li><a href="DB.html">DB</a></li>
+        
+            <li><a href="Shell.html">Shell</a></li>
+        
+            <li><a href="PHP.html">PHP</a></li>
          
 
       </ul>
@@ -100,50 +114,23 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
-                <a class="clearlink" href="16496553059162.html">
+                <a class="clearlink" href="16496553060303.html">
                 
-                  <h1>---</h1>
+                  <h1>LinearLayout按下或获取焦点时设置不同颜色或图片</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-android%E8%AE%BE%E7%BD%AElistview%E7%9A%84item%E9%A2%9C%E8%89%B2%E7%9B%B8%E9%97%B4%E6%8E%92%E5%88%97-date-2016-01-29" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: android设置listview的item颜色相间排列<br />
-date: 2016-01-29</h2>
-<pre><code class="language-plain_text">//        viewHolder复用了item，持有的position是会随着listView的滑动变化的
-//        if ((viewHolder.getPosition() + 1) % 2 == 0) {
-//            int color = Color.argb(255, 101, 181, 109);
-//            viewHolder.getConvertView().setBackgroundColor(color);
-//        } else {
-//            int color = Color.argb(255, 255, 255, 255);
-//            viewHolder.getConvertView().setBackgroundColor(color);
-//        }
-
-    /*
-    * position参数是不会随着listView的滑动而变化的，即使viewHolder复用的item发生了变化，
-    * 设置颜色的那个item的position是不会变的，所以可以这么来设置item的颜色相间排列
-    * */
-//        if (position % 2 == 0) {
-//            int color = Color.argb(255, 255, 255, 255);
-//            viewHolder.getConvertView().setBackgroundColor(color);
-//        } else {
-//            int color = Color.argb(255, 101, 181, 109);
-//            viewHolder.getConvertView().setBackgroundColor(color);
-//        }
-
-//        这里不用循环也可以的，因为getView方法本身就会去循环listView来画item，这里的
-//        循环i和position是等价的，i的 值就是position的值
-//        for (int i = 0; i &lt; getCount(); i++) {
-//            if (position == i) {
-//                if (i % 2 == 0){
-//                    int color = Color.argb(255, 255, 255, 255);
-//                    viewHolder.getConvertView().setBackgroundColor(color);
-//                } else {
-//                    int color = Color.argb(255, 101, 181, 109);
-//                    viewHolder.getConvertView().setBackgroundColor(color);
-//                }
-//            }
-//        }
+                        	<p>在Android项目中有这样一个需求，画了几个LinearLayout布局做成ListView的样式，如下图所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2015062901.png" alt="jackro_blog2015062901" /></p>
+<p>当点击每个LinearLayout项时想改变其背景颜色，准备了如下背景图片XML文件：</p>
+<pre><code class="language-plain_text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+    &lt;item android:drawable=&quot;@color/gray_background&quot; android:state_pressed=&quot;true&quot; /&gt;
+    &lt;item android:drawable=&quot;@color/white_background&quot; /&gt;
+&lt;/selector&gt;
 </code></pre>
+<p>但是当我每次运行点击每一项LinearLayout时，其背景颜色毫无变化。后来发现在每个LinearLayout项加入属性android:clickable=&quot;true&quot;点击LinearLayout才会出现背景颜色的变化。</p>
 
                         
                       </div>
@@ -152,44 +139,7 @@ date: 2016-01-29</h2>
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="16496553059242.html">
-                
-                  <h1>---</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2><a id="title-android-studio%E5%BC%80%E5%8F%91%E9%85%8D%E7%BD%AEndk%E7%8E%AF%E5%A2%83-date-2015-06-13" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android Studio开发配置NDK环境<br />
-date: 2015-06-13</h2>
-<p>今天使用Fresco的一个demo，但是build失败，去网上搜了一下，发现是NDK环境没配置好，见如下链接：<a href="http://www.bubuko.com/infodetail-790190.html">导入Fresco后build失败</a></p>
-<p>配置NDK见如下链接：<br />
-<a href="http://www.shangxueba.com/jingyan/2901837.html">配置NDK环境</a></p>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2015/06/29</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -208,14 +158,12 @@ date: 2015-06-13</h2>
 			<div class="article">
                 <a class="clearlink" href="16496553059326.html">
                 
-                  <h1>---</h1>
+                  <h1>Android Studio 导入 Fresco 项目编译报错解决</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-android-studio%E5%AF%BC%E5%85%A5fresco%E9%A1%B9%E7%9B%AE%E7%BC%96%E8%AF%91%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3-date-2015-06-15" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android Studio导入Fresco项目编译报错解决<br />
-date: 2015-06-15</h2>
-<p>把github上的一个Fresco的demo源码clone到本地（附clone地址：<a href="https://github.com/facebook/fresco.git%EF%BC%89%EF%BC%8C%E5%AF%BC%E5%85%A5%E8%BF%99%E4%B8%AAfresco%E9%A1%B9%E7%9B%AE%E7%BC%96%E8%AF%91%E6%8A%A5%E4%BA%86%E5%A6%82%E6%89%80%E7%A4%BA%E7%9A%84%E9%94%99">https://github.com/facebook/fresco.git），导入这个fresco项目编译报了如所示的错</a>:</p>
+                        	<p>把 Github 上的一个 <a href="https://github.com/facebook/fresco.git">Fresco</a> 的 Demo 源码 clone 到本地, 导入这个 Fresco 项目编译报了如所示的错:</p>
 <p>unable to expand TAR 'imagepipeline\build\downloads\libjpeg-turbo-1.3.1.tar.gz'</p>
 <p>经过网上搜索解决方案，只找到了下面链接给的解决方案：</p>
 <p><a href="http://www.2cto.com/kf/201504/391278.html">unable to expand TAR 'imagepipeline\build\downloads\libjpeg-turbo-1.3.1.tar.gz解决</a></p>
@@ -232,7 +180,7 @@ date: 2015-06-15</h2>
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2015/06/15</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -249,49 +197,23 @@ date: 2015-06-15</h2>
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553059414.html">
+                <a class="clearlink" href="16496553058247.html">
                 
-                  <h1>---</h1>
+                  <h1>Android 中 ActionBar 的 setXXXEnabled 方法的理解</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-android-studio%E4%B8%AD%E9%BC%A0%E6%A0%87%E6%82%AC%E5%81%9Cfetching-documentation%E5%BE%88%E9%95%BF%E6%97%B6%E9%97%B4-date-2017-11-12" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android Studio中鼠标悬停Fetching Documentation很长时间<br />
-date: 2017-11-12</h2>
-<p>当我使用Android Studio（macOS 10.12.6系统，Android Studio 3.0）进行Android项目开发时，我经常会使用鼠标悬停的方式去查看类、方法和字段的文档注释。但当我这样做时，我发现一个非常让我懊恼的问题，当我鼠标悬停时，出现的弹框中显示Fetching Documentation...，并且它会显示很长一段时间。</p>
-<p>问题总是得解决的，经过一番搜索，我找到了问题的解决方法：修改配置文件。修改方法如下：</p>
-<ol>
-<li>找到AS的配置文件目录，我的是在~/Library/Preferences下</li>
-<li>找到AS当前版本的配置文件目录，我的是在~/Library/Preferences/AndroidStudio3.0下</li>
-<li>找到配置文件目录下options/jdk.table.xml文件打开</li>
-<li>找到你当前项目compileSdkVersion对应的版本所对应的jdk节点（当然如果需要的话你也可以修改所有版本的jdk节点）</li>
-<li>再找到roots节点下的javadocPath节点，修改该节点里的的url属性，使之与sourcePath节点里的url属性一致即可</li>
-</ol>
-<p>修改前的节点如下所示：</p>
-<pre><code class="language-plain_text">        &lt;javadocPath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;http://developer.android.com/reference/&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/javadocPath&gt;
-        &lt;sourcePath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/sourcePath&gt;
+                        	<p>setHomeButtonEnabled这个方法在小于4.0版本的默认值是true，但是在4.0及其以上是false，该方法的作用：决定左上角的图标是否可以点击，没有向左的小图标。true则图标可以点击，false则不可以点击。</p>
+<pre><code class="language-plain_text">	actionBar.setDisplayHomeAsUpEnabled(true)    // 给左上角图标的左边加上一个返回的图标 。对应ActionBar.DISPLAY_HOME_AS_UP。
+
+	actionBar.setDisplayShowHomeEnabled(true)   //使左上角图标是否显示，如果设成false，则没有程序图标，仅仅就个标题，否则，显示应用程序图标。
+
+	actionBar.setDisplayShowCustomEnabled(true)  // 使自定义的普通View能在title栏显示，即actionBar.setCustomView能起作用，对应ActionBar.DISPLAY_SHOW_CUSTOM。
+
+	actionBar.setDisplayShowTitleEnabled(true)   //对应ActionBar.DISPLAY_SHOW_TITLE。
 </code></pre>
-<p>在上面修改前的节点中，javadocPath在找android developer官网上的doc，由于网络的原因（某墙），肯定很难fetching到documentation。所以将url修改为下载到本地的源码（去本地源码中fetching documentation自然很快），如下所示：</p>
-<pre><code class="language-plain_text">        &lt;javadocPath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/javadocPath&gt;
-        &lt;sourcePath&gt;
-          &lt;root type=&quot;composite&quot;&gt;
-            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
-          &lt;/root&gt;
-        &lt;/sourcePath&gt;
-</code></pre>
-<p>修改完之后，需要重启下AS，fetching documentation就会很快了（不是很快，是非常快！）。</p>
+<p>其中setHomeButtonEnabled和setDisplayShowHomeEnabled共同起作用，如果setHomeButtonEnabled设成false，即使setDisplayShowHomeEnabled设成true，图标也不能点击。</p>
 
                         
                       </div>
@@ -300,7 +222,7 @@ date: 2017-11-12</h2>
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2015/06/14</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -317,21 +239,16 @@ date: 2017-11-12</h2>
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553059499.html">
+                <a class="clearlink" href="16496553059242.html">
                 
-                  <h1>---</h1>
+                  <h1>Android Studio 开发配置 NDK 环境</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-android-studio%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E4%B9%8Binstant-run-date-2016-05-22" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android Studio使用问题之Instant Run<br />
-date: 2016-05-22</h2>
-<p>Android Studio的Instant Run是2.0以后的版本新给出的特性，旨在快速运行新修改的程序。可是最近在开发过程中，发现Android 4.4.4的机器运行报以下错误：</p>
-<pre><code class="language-plain_text">Unable to instantiate application com.android.tools.fd.runtime.BootstrapApplication: java.lang.ClassNotFoundException: Didn't find class &quot;com.android.tools.fd.runtime.BootstrapApplication&quot; on path: DexPathList[[zip file &quot;/data/app/com.elitech.rb.debug-1.apk&quot;],nativeLibraryDirectories=[/data/app-lib/com.elitech.rb.debug-1, /system/lib]]
-</code></pre>
-<p>这里只要把Instant Run禁用掉就可以了：Settings--&gt; Build,Execution,Deployment --&gt;Instant Run</p>
-<p>可以参考Android Studio的Instant Run文档进一步了解Instant Run：</p>
-<p><a href="http://tools.android.com/tech-docs/instant-run">Android Studio Instant Run documentation</a></p>
+                        	<p>今天使用 Fresco 的一个 demo, 但是 build 失败, 去网上搜了一下, 发现是 NDK 环境没配置好, 见如下链接: <a href="http://www.bubuko.com/infodetail-790190.html">导入Fresco后build失败</a></p>
+<p>配置 NDK 见如下链接:<br />
+<a href="http://www.shangxueba.com/jingyan/2901837.html">配置NDK环境</a></p>
 
                         
                       </div>
@@ -340,7 +257,83 @@ date: 2016-05-22</h2>
                 <div class="read-more clearfix">
                   <div class="more-left left">
                   
-                    <span class="date">2022/04/11</span>
+                    <span class="date">2015/06/13</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553058730.html">
+                
+                  <h1>Android 给 GridView 设置单元格分割线</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>给GridView设置单元格分割线有两种方法，一种是设置背景图片设置分割线，另外一种是自定义GridView重绘视图设置分割线。重绘方法代码如下：</p>
+<pre><code class="language-plain_text">public class LineGridView extends GridView{
+    public LineGridView(Context context) {
+        super(context);
+        // TODO Auto-generated constructor stub
+    }
+    public LineGridView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+    public LineGridView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+    @Override
+    protected void dispatchDraw(Canvas canvas){
+        super.dispatchDraw(canvas);
+        View localView1 = getChildAt(0);
+        int column = getWidth() / localView1.getWidth();
+        int childCount = getChildCount();
+        Paint localPaint;
+        localPaint = new Paint();
+        localPaint.setStyle(Paint.Style.STROKE);
+        localPaint.setColor(getContext().getResources().getColor(R.color.grid_line));
+        for(int i = 0;i &lt; childCount;i++){
+            View cellView = getChildAt(i);
+            if((i + 1) % column == 0){
+                canvas.drawLine(cellView.getLeft(), cellView.getBottom(), cellView.getRight(), cellView.getBottom(), localPaint);
+            }else if((i + 1) &gt; (childCount - (childCount % column))){
+                canvas.drawLine(cellView.getRight(), cellView.getTop(), cellView.getRight(), cellView.getBottom(), localPaint);
+            }else{
+                canvas.drawLine(cellView.getRight(), cellView.getTop(), cellView.getRight(), cellView.getBottom(), localPaint);
+                canvas.drawLine(cellView.getLeft(), cellView.getBottom(), cellView.getRight(), cellView.getBottom(), localPaint);
+            }
+        }
+        if(childCount % column != 0){
+            for(int j = 0 ;j &lt; (column-childCount % column) ; j++){
+                View lastView = getChildAt(childCount - 1);
+                canvas.drawLine(lastView.getRight() + lastView.getWidth() * j, lastView.getTop(), lastView.getRight() + lastView.getWidth()* j, lastView.getBottom(), localPaint);
+            }
+        }
+    }
+}
+</code></pre>
+<p>在<code>dispatchDraw</code>方法中，我们对每一个子view的边界按照一定的方式绘上了边框，一般一个格子只需绘制其中两条边，需要注意的是最边上的格子需要特殊处理。<code>super.dispatchDraw(canvas);</code>一定要调用，不然格子中的内容（子view）就得不到绘制的机会。<br />
+仔细看代码你会发现这个实现方式是很好的，但是代码并不完美，因为每条线的绘制我们都是以第一个子view 的宽高为基准的，如果某个格子的高度和第一个格子不一致，那么可能出现错位。如果你能确保每个格子大小均匀，直接拿来用，否则还需要些修改。这里是重写的<code>dispatchDraw</code>，其实我我们重写onDraw方法也可以得到相同的结果。要完全弄明白的话，就得看看FrameWork中GridView的源码了。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2015/06/12</span>
                     <span>posted in&nbsp;</span> 
           				  
           					    <span class="posted-in"><a href='Android.html'>Android</a></span>
@@ -409,6 +402,20 @@ date: 2016-05-22</h2>
       	<p class="cat-list">
         
             <a href="Android.html"><strong>Android</strong></a>
+        
+            <a href="iOS.html"><strong>iOS</strong></a>
+        
+            <a href=".NET.html"><strong>.NET</strong></a>
+        
+            <a href="Java.html"><strong>Java</strong></a>
+        
+            <a href="Git.html"><strong>Git</strong></a>
+        
+            <a href="DB.html"><strong>DB</strong></a>
+        
+            <a href="Shell.html"><strong>Shell</strong></a>
+        
+            <a href="PHP.html"><strong>PHP</strong></a>
          
         </p>
 
@@ -425,31 +432,31 @@ date: 2016-05-22</h2>
 	      
 		      
 			      <li class="post">
-			        <a href="16496553060120.html">---</a>
+			        <a href="16496553059675.html">Android 面试展示 iOS debug app 时闪退</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060211.html">---</a>
+			        <a href="16496553060588.html">mysql自定义function问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060303.html">---</a>
+			        <a href="16496553059414.html">Android Studio 中鼠标悬停 Fetching Documentation 很长时间</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060398.html">---</a>
+			        <a href="16496553060491.html">macOS 中 git 提交操作 .DS_Store 文件引发的问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060491.html">---</a>
+			        <a href="16496553060993.html">Safari 浏览器设置 Java 支持</a>
 			      </li>
 		     
 		  

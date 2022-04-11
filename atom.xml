@@ -4,7 +4,7 @@
   <title><![CDATA[JackRo's Blog]]></title>
   <link href="https://jackro.cn/atom.xml" rel="self"/>
   <link href="https://jackro.cn/"/>
-  <updated>2022-04-11T14:02:31+08:00</updated>
+  <updated>2022-04-11T15:54:36+08:00</updated>
   <id>https://jackro.cn/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -13,157 +13,24 @@
   <generator uri="http://www.mweb.im/">MWeb</generator>
   
   <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553060120.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553060120.html</id>
+    <title type="html"><![CDATA[Android 面试展示 iOS debug app 时闪退]]></title>
+    <link href="https://jackro.cn/16496553059675.html"/>
+    <updated>2022-04-11T13:35:05+08:00</updated>
+    <id>https://jackro.cn/16496553059675.html</id>
     <content type="html"><![CDATA[
-<h2><a id="title%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%94%B6%E4%B8%8D%E5%88%B0-uilocalnotification%E6%9C%AC%E5%9C%B0%E9%80%9A%E7%9F%A5-date-2017-02-24" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: 模拟器收不到UILocalNotification本地通知<br />
-date: 2017-02-24</h2>
-<p>通知功能是iOS应用开发经常会碰到的需求，iOS应用的通知分为本地通知和远程通知（即消息推送），Apple develop官网的API Guides对通知的开发有详细的介绍。</p>
-<p>今天我碰到的问题是模拟器收不到本地通知，按照惯例，先上本地通知的代码：</p>
-<pre><code class="language-plain_text">    UILocalNotification *note = [[UILocalNotification alloc] init];
-    note.alertBody = @&quot;Hypnotize&quot;;
-    note.fireDate = date; //这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
-    note.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:note];
-</code></pre>
-<p>原本以为这样就可以接收到通知了，结果一运行，始终看不到通知，过了通知的设定时间好久了，也看不到通知。查阅了下通知的用法文档，才知道需要去申请发送通知的授权。修正后的代码如下所示：</p>
-<pre><code class="language-plain_text">//判断是否已经授权用户发送通知
-if ([[UIApplication sharedApplication] currentUserNotificationSettings].types != UIUserNotificationTypeNone) {
-    UILocalNotification *note = [[UILocalNotification alloc] init];
-    note.alertBody = @&quot;Hypnotize&quot;;
-    note.fireDate = date;//这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
-    note.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:note];
-} else{
-    //用户注册通知，注册后才能收到通知，这会给用户一个弹框，提示用户选择是否允许发送通知
-    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound   categories:nil]];
-}
-</code></pre>
-<p>用户注册通知后，会收到一个回调函数，一般如果未授权，创建通知就在这个回调函数里进行。</p>
-<pre><code class="language-plain_text">//用户注册通知回调函数
-- (void)application:(UIApplication *) application
-    didRegisterUserNotificationSettings:(UIUserNotificationSettings   *)notificationSettings {
-     if (notificationSettings.types != UIUserNotificationTypeNone) {
-         NSLog(@&quot;haha&quot;);
-        UILocalNotification *note = [[UILocalNotification alloc] init];
-        note.alertBody = @&quot;Hypnotize&quot;;
-        note.fireDate = rvc.selectDate;
-        note.applicationIconBadgeNumber = 1;
-        [[UIApplication sharedApplication] scheduleLocalNotification:note];
-    }
-}
-</code></pre>
+<p>今天面试展示 iOS debug app 时不断闪退，无法打开应用，车祸现场相当尴尬。面试结束回到家后打开Xcode重新部署debug app到真机上，报错，无法部署。根据提示，换了下bundle ID，卸载真机上已安装的app，重新部署安装，仍然报错，无法部署。于是去看了下配置文件，发现provisioning profile报错，需要重新登录Apple ID，重新登录后，再次部署，并在真机上设置信任当前Apple ID，问题解决。</p>
+<p>但是问题真的解决了吗？然后我仔细去看了下配置文件，终于找到问题原因，原来debug app的Provisioning profile是有过期时间的。如下图所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2018051401.jpg" alt="jackro_blog2018051401" /></p>
 
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553060211.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553060211.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-java%E4%B8%AD%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E7%9B%B8%E5%90%8C%E5%AD%97%E7%AC%A6%E4%B8%B2-date-2017-09-11" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Java中判断一个字符串数组是否包含相同字符串<br />
-date: 2017-09-11</h2>
-<p>如题。该问题很简单，使用一个嵌套循环即可解决，代码如下所示：</p>
-<pre><code class="language-plain_text">/**
- * judge that a String Array whether or not contained equal String
- * 
- * @param strings
- *            a string Array
- * @return return true, contained; return false, not contained
- */
-public static boolean judgeStrArrayContainsSameStr(String[] strings) {
-	int len = strings.length;
-	for (int i = 0; i &lt; len; i++) {
-		String temp = strings[i];
-		for (int j = i + 1; j &lt; len; j++) {
-			String string = strings[j];
-			if (string.equals(temp)) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-</code></pre>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553060303.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553060303.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-linearlayout%E6%8C%89%E4%B8%8B%E6%88%96%E8%8E%B7%E5%8F%96%E7%84%A6%E7%82%B9%E6%97%B6%E8%AE%BE%E7%BD%AE%E4%B8%8D%E5%90%8C%E9%A2%9C%E8%89%B2%E6%88%96%E5%9B%BE%E7%89%87-date-2015-06-29" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: LinearLayout按下或获取焦点时设置不同颜色或图片<br />
-date: 2015-06-29</h2>
-<p>在Android项目中有这样一个需求，画了几个LinearLayout布局做成ListView的样式，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2015062901.png" alt="jackro_blog2015062901" /></p>
-<p>当点击每个LinearLayout项时想改变其背景颜色，准备了如下背景图片XML文件：</p>
-<pre><code class="language-plain_text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
-    &lt;item android:drawable=&quot;@color/gray_background&quot; android:state_pressed=&quot;true&quot; /&gt;
-    &lt;item android:drawable=&quot;@color/white_background&quot; /&gt;
-&lt;/selector&gt;
-</code></pre>
-<p>但是当我每次运行点击每一项LinearLayout时，其背景颜色毫无变化。后来发现在每个LinearLayout项加入属性android:clickable=&quot;true&quot;点击LinearLayout才会出现背景颜色的变化。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553060398.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553060398.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-mac-android%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%89%A7%E8%A1%8C-gradlew-clean%E6%8F%90%E7%A4%BA-permission-denied-date-2017-04-10" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Mac Android项目目录下执行./gradlew clean 提示Permission denied<br />
-date: 2017-04-10</h2>
-<p>Mac环境下Android Studio创建的android项目，在项目目录下执行./gradlew clean，提示Permission denied，看到这个提示，自然想到的是sudo执行，然而sudo执行并不能解决问题，反而会提示command not found。万般无奈，只能百度，发现执行以下命令即可解决问题。</p>
-<pre><code class="language-plain_text">//为gradlew文件添加可执行属性
-chmod +x gradlew
-</code></pre>
-<p>chmod命令是修改文件访问权限的命令，文件访问权限包括只读、只写、可执行三种，其实最开始的提示Permission denied（权限拒绝）已经告诉了我们是android项目目录下可执行文件gradlew的访问权限的问题。因此需要为该文件添加可执行权限，所以执行以上命令即可解决该问题。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553060491.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553060491.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-mac-os%E4%B8%ADgit%E6%8F%90%E4%BA%A4%E6%93%8D%E4%BD%9C-ds-store%E6%96%87%E4%BB%B6%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-date-2017-09-22" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Mac os中git提交操作.DS_Store文件引发的问题解决<br />
-date: 2017-09-22</h2>
-<p>在Mac os中是存在.DS_Store文件的，在使用git对项目进行版本控制时，该文件如果不加入.gitignore中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p>
-<p>经过一番搜索，我找到了解决方法，我们可以先在.gitignore中加入该文件的忽略规则，如下所示：</p>
-<pre><code class="language-plain_text">.DS_Store
-</code></pre>
-<p>然后删除项目中所有的.DS_Store，在项目目录下执行如下命令：</p>
-<pre><code class="language-plain_text">find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
-</code></pre>
-<p>然后提交项目即可。</p>
-<p>但是，我发现我的项目是用webstorm打开的，项目目录下自动生成了.idea文件，每次提交.idea文件也会提交，加入忽略规则也不行，我想到了和上面类似的方法，删除.idea目录，然后再提交，即可解决。</p>
-<p>参考链接：</p>
-<p><a href="http://www.jianshu.com/p/fdaa8be7f6c3">如何删除GIT中的.DS_Store</a></p>
-<p><a href="http://www.jianshu.com/p/8c0d262e49a6">Git中全局忽略.DS_Store文件</a></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
+    <title type="html"><![CDATA[mysql自定义function问题解决]]></title>
     <link href="https://jackro.cn/16496553060588.html"/>
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553060588.html</id>
     <content type="html"><![CDATA[
-<h2><a id="title-mysql%E8%87%AA%E5%AE%9A%E4%B9%89function%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-date-2018-04-03" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: mysql自定义function问题解决<br />
-date: 2018-04-03</h2>
 <p>最近公司生产环境的系统有个需求，需要往mysql数据库的一张表里批量添加数据，业务部门给的数据大致如下：</p>
 <table>
 <thead>
@@ -275,26 +142,187 @@ SELECT addData(29, 20, 'X025714', 78);
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553060690.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553060690.html</id>
+    <title type="html"><![CDATA[Android Studio 中鼠标悬停 Fetching Documentation 很长时间]]></title>
+    <link href="https://jackro.cn/16496553059414.html"/>
+    <updated>2022-04-11T13:35:05+08:00</updated>
+    <id>https://jackro.cn/16496553059414.html</id>
     <content type="html"><![CDATA[
-<h2><a id="title-activity%E4%B8%AD%E5%BC%80%E5%90%AF%E8%BD%AE%E8%AF%A2%E6%9C%8D%E5%8A%A1%E5%BD%93activity%E5%BC%82%E5%B8%B8destroy%E6%97%B6-date-2016-05-30" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Activity中开启轮询服务当Activity异常destroy时<br />
-date: 2016-05-30</h2>
-<p>当你点击系统的back键，当前Activity开启的轮询服务刚好此时开启运行，即走onStartCommand，这里Activity用Intent传递给该服务的所有参数会为null。Activity此时已经异常destroy了，此时传递给Service的Intent的参数不会传递成功。所以这里如果你在Service的onStartCommand里用到了Intent传递过来的参数，则需要先判空，否则可能出现空指针异常。</p>
+<p>当我使用Android Studio（macOS 10.12.6系统，Android Studio 3.0）进行Android项目开发时，我经常会使用鼠标悬停的方式去查看类、方法和字段的文档注释。但当我这样做时，我发现一个非常让我懊恼的问题，当我鼠标悬停时，出现的弹框中显示Fetching Documentation...，并且它会显示很长一段时间。</p>
+<p>问题总是得解决的，经过一番搜索，我找到了问题的解决方法：修改配置文件。修改方法如下：</p>
+<ol>
+<li>找到AS的配置文件目录，我的是在~/Library/Preferences下</li>
+<li>找到AS当前版本的配置文件目录，我的是在~/Library/Preferences/AndroidStudio3.0下</li>
+<li>找到配置文件目录下options/jdk.table.xml文件打开</li>
+<li>找到你当前项目compileSdkVersion对应的版本所对应的jdk节点（当然如果需要的话你也可以修改所有版本的jdk节点）</li>
+<li>再找到roots节点下的javadocPath节点，修改该节点里的的url属性，使之与sourcePath节点里的url属性一致即可</li>
+</ol>
+<p>修改前的节点如下所示：</p>
+<pre><code class="language-plain_text">        &lt;javadocPath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;http://developer.android.com/reference/&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/javadocPath&gt;
+        &lt;sourcePath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/sourcePath&gt;
+</code></pre>
+<p>在上面修改前的节点中，javadocPath在找android developer官网上的doc，由于网络的原因（某墙），肯定很难fetching到documentation。所以将url修改为下载到本地的源码（去本地源码中fetching documentation自然很快），如下所示：</p>
+<pre><code class="language-plain_text">        &lt;javadocPath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/javadocPath&gt;
+        &lt;sourcePath&gt;
+          &lt;root type=&quot;composite&quot;&gt;
+            &lt;root type=&quot;simple&quot; url=&quot;file://``USER_HOME``/Library/Android/sdk/sources/android-26&quot; /&gt;
+          &lt;/root&gt;
+        &lt;/sourcePath&gt;
+</code></pre>
+<p>修改完之后，需要重启下AS，fetching documentation就会很快了（不是很快，是非常快！）。</p>
 
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[---]]></title>
+    <title type="html"><![CDATA[macOS 中 git 提交操作 .DS_Store 文件引发的问题解决]]></title>
+    <link href="https://jackro.cn/16496553060491.html"/>
+    <updated>2022-04-11T13:35:06+08:00</updated>
+    <id>https://jackro.cn/16496553060491.html</id>
+    <content type="html"><![CDATA[
+<p>在 macOS 中是存在 .DS_Store 文件的，在使用git对项目进行版本控制时，该文件如果不加入 .gitignore 中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p>
+<p>经过一番搜索，我找到了解决方法，我们可以先在.gitignore中加入该文件的忽略规则，如下所示：</p>
+<pre><code class="language-plain_text">.DS_Store
+</code></pre>
+<p>然后删除项目中所有的 .DS_Store，在项目目录下执行如下命令：</p>
+<pre><code class="language-plain_text">find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
+</code></pre>
+<p>然后提交项目即可。</p>
+<p>但是，我发现我的项目是用 WebStorm 打开的，项目目录下自动生成了 .idea 文件，每次提交 .idea 文件也会提交，加入忽略规则也不行，我想到了和上面类似的方法，删除 .idea 目录，然后再提交，即可解决。</p>
+<p>参考链接：</p>
+<p><a href="http://www.jianshu.com/p/fdaa8be7f6c3">如何删除GIT中的.DS_Store</a></p>
+<p><a href="http://www.jianshu.com/p/8c0d262e49a6">Git中全局忽略.DS_Store文件</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Safari 浏览器设置 Java 支持]]></title>
+    <link href="https://jackro.cn/16496553060993.html"/>
+    <updated>2022-04-11T13:35:06+08:00</updated>
+    <id>https://jackro.cn/16496553060993.html</id>
+    <content type="html"><![CDATA[
+<p>今天碰到一个公司的项目连接服务器的页面在浏览器中打开需要安装JDK并打开浏览器Java支持的问题。经过一番搜索发现，Java官网的帮助中心中介绍推荐使用IE（windows）和Safari（Mac os）（参见链接：<a href="https://www.java.com/zh_CN/download/faq/chrome.xml">https://www.java.com/zh_CN/download/faq/chrome.xml</a>），由于自己家里电脑是Mac os（Mac OS 10.12.6），所以使用Safari（自己电脑当前版本是11.0）来打开浏览器Java支持。</p>
+<p>在Safari中如何打开浏览器Java支持呢？经过一番搜索，发现可以在Safari的偏好设置中的网站选项去打开Java支持，针对某个网站去打开即可，如下图所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017092101.jpg" alt="jackro_blog2017092101" /></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android项目CMake构建脚本放置在项目根目录下导致build失败的问题]]></title>
+    <link href="https://jackro.cn/16496553058327.html"/>
+    <updated>2022-04-11T13:35:05+08:00</updated>
+    <id>https://jackro.cn/16496553058327.html</id>
+    <content type="html"><![CDATA[
+<p>在现有Android项目中做JNI配置时，碰到了CMake构建脚本放置在项目中的位置的问题。当放置在项目的根目录下，app的build.gradle文件中配置（该配置是通过右键项目的app模块选择 Link C++ Project with Gradle后自动生成的）如下：</p>
+<pre><code class="language-plain_text"> externalNativeBuild {
+    cmake {
+        path '../CMakeLists.txt'
+    }
+}
+</code></pre>
+<p>此时对项目进行build操作时，build会失败。</p>
+<p>当尝试把CMake构建脚本放置在项目的app目录下，build就可以成功，此时app的build.gradle文件中配置如下：</p>
+<pre><code class="language-plain_text"> externalNativeBuild {
+    cmake {
+        path 'CMakeLists.txt'
+    }
+}
+</code></pre>
+<p>解决该问题参考了官方文档，参考链接如下：<br />
+<a href="https://developer.android.com/studio/projects/add-native-code.html">https://developer.android.com/studio/projects/add-native-code.html</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java中判断一个字符串数组是否包含相同字符串]]></title>
+    <link href="https://jackro.cn/16496553060211.html"/>
+    <updated>2022-04-11T13:35:06+08:00</updated>
+    <id>https://jackro.cn/16496553060211.html</id>
+    <content type="html"><![CDATA[
+<p>如题。该问题很简单，使用一个嵌套循环即可解决，代码如下所示：</p>
+<pre><code class="language-plain_text">/**
+ * judge that a String Array whether or not contained equal String
+ * 
+ * @param strings
+ *            a string Array
+ * @return return true, contained; return false, not contained
+ */
+public static boolean judgeStrArrayContainsSameStr(String[] strings) {
+	int len = strings.length;
+	for (int i = 0; i &lt; len; i++) {
+		String temp = strings[i];
+		for (int j = i + 1; j &lt; len; j++) {
+			String string = strings[j];
+			if (string.equals(temp)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用 scp 上传文件到 Linux 服务器]]></title>
+    <link href="https://jackro.cn/16496553061305.html"/>
+    <updated>2022-04-11T13:35:06+08:00</updated>
+    <id>https://jackro.cn/16496553061305.html</id>
+    <content type="html"><![CDATA[
+<p>我的服务器是阿里云的ubuntu 16.04，电脑是Mac os。上传文件到Linux服务器可以在终端中采用如下命令上传：</p>
+<pre><code class="language-plain_text">//filename是你要上传的文件名，username是服务器主机用户名，x.x.x.x是服务器IP地址，directory是要将文件上传到服务器的directory目录下
+scp [filename] [username]@x.x.x.x:[dirctory]
+</code></pre>
+<p>命令scp基于ssh协议，可以将文件拷贝到远程服务器上的指定目录，Mac os自带，使用很方便。当然还可以使用ftp/sftp方式上传。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SQLite 清空表数据并将自增量归零]]></title>
+    <link href="https://jackro.cn/16496553061097.html"/>
+    <updated>2022-04-11T13:35:06+08:00</updated>
+    <id>https://jackro.cn/16496553061097.html</id>
+    <content type="html"><![CDATA[
+<p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。但是SQLite可以通过如下方式来实现：</p>
+<p>1）先清空表数据：</p>
+<pre><code class="language-plain_text">    delete from [tablename];
+</code></pre>
+<p>2）当数据库中包含自增列时，会自动建立一个名为 sqlite_sequence 的表。这个表包含两个列：name和seq。name记录自增列所在的表（即tablename），seq记录当前序号（下一条记录的编号就是当前序号加1）。你可以通过如下方式将自增量归零：</p>
+<pre><code class="language-plain_text">    //1. 将表名为tablename的自增量置0
+    update sqlite_sequence set seq = 0 where name = 'tablename'
+    //2. 将表名为tablename的记录删除
+    delete from sqlite_sequence where name = 'tablename'
+    //3. 将sqlite_sequence表清空数据
+    delete from sqlite_sequence
+</code></pre>
+<p>虽然在普通的DBMS中，用delete不如用truncate快，但是SQLite对delete做了优化，这个优化也可以使它运行的很快。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[adb shell 中提示 Permission denied]]></title>
     <link href="https://jackro.cn/16496553060790.html"/>
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553060790.html</id>
     <content type="html"><![CDATA[
-<h2><a id="title-adb-shell%E4%B8%AD%E6%8F%90%E7%A4%BApermission-denied-date-2017-06-15" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: adb shell中提示Permission denied<br />
-date: 2017-06-15</h2>
 <p>在Android开发中，如果需要查看本地数据库，可以在adb shell中查看（当然前提条件是真机root或者使用模拟器），输入下面的命令可以查看：</p>
 <pre><code class="language-plain_text">Last login: Thu Jun 15 10:02:21 on ttys000
 JackRodeMacBook-Pro:~ jack$ adb shell
@@ -318,13 +346,604 @@ generic_x86_64:/data/data/cn.jackro.databasedemo/databases #
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[---]]></title>
+    <title type="html"><![CDATA[Android 7.0 行为变更之后台优化]]></title>
+    <link href="https://jackro.cn/16496553058156.html"/>
+    <updated>2022-04-11T13:35:05+08:00</updated>
+    <id>https://jackro.cn/16496553058156.html</id>
+    <content type="html"><![CDATA[
+<p>Android 7.0 对系统和API做了一些变更。其中关于隐式广播的移除见官方文档链接：<a href="https://developer.android.com/about/versions/nougat/android-7.0-changes.html#bg-opt">Project Svelte：后台优化</a>，根据官方文档介绍，该变更主要是为了帮助优化内存使用和电量消耗，因为隐式广播会在后台频繁启动已注册侦听这些广播的应用，删除这些广播可以显著提升设备性能和用户体验。</p>
+<p>针对这一变更，官方文档也给出了应用开发者如何改写应用的一些建议，官方文档参考：<a href="https://developer.android.com/preview/features/background-optimization.html">后台优化</a>。</p>
+<p>1）<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a></p>
+<p>面向Android 7.0(API 24)及以上的应用如果在应用的AndroidManifest静态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，将不会收到该广播。但是我们可以使用[Context.registerReceiver()](<a href="https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver">https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver</a>, android.content.IntentFilter))动态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，这将会让我们的应用在运行时收到该广播（这样也可以改善内存使用和电量消耗）。</p>
+<p>Android 7.0(API 24)还为我们提供了<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>（<a href="https://developer.android.com/reference/android/app/job/JobService.html">JobService</a>的回调方法），我们可以使用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html">JobInfo.Builder</a>构建一个在Unmetered Network Connection上的<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>执行这个<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，接下来就可以在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>方法里执行我们自己的逻辑。</p>
+<p>我们还可以使用<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html">ConnectivityManager.NetworkCallback</a>来监听网络变化，比如该接口中的<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html#onAvailable(android.net.Network)">onAvailable()</a>方法。</p>
+<p>2）<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_PICTURE">ACTION_NEW_PICTURE</a>或<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_VIDEO">ACTION_NEW_VIDEO</a></p>
+<p>在Android 7.0(API 24)里，这两个隐式广播被移除了，应用程序不能发送或接受这两个广播来监听系统的照片或者视频的拍摄。但是在Android 8.0(API 26)，这两个广播又被添加回来了，不过也仅仅可以通过动态注册来接收，并且仅仅适用于监听到他们来执行简单的可以立即被执行的任务，执行复杂的繁重的任务仍然需要使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>、<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>，和上面第一点处理方法类似，不同的是，需要调用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html#addTriggerContentUri(android.app.job.JobInfo.TriggerContentUri)">JobInfo.Builder.addTriggerContentUri()</a>构造<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>回调方法里去调用<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentAuthorities()">JobParameters.getTriggeredContentAuthorities()</a>和<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentUris()">JobParameters.getTriggeredContentUris()</a>来获取拍照或摄像时增加的照片或视频的Uri。</p>
+<p>像上面这样优化App可以让App在低内存的设备上改善性能和用户体验（这可以改善Android应用生态环境），移除后台服务（background service）和隐式广播的依赖可以帮助你的App在这样的设备上运行的更好。虽然Android 7.0(API 24)在逐步减少这样的issue，但是我们仍然推荐你通过完全不使用这样的后台进程来优化你的App。<br />
+Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不使用后台进程时是否还能很好的运行。命令如下：</p>
+<pre><code class="language-plain_text">    //模拟隐式广播和后台服务（background service）不可用的条件
+    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND ignore
+    //重新使隐式广播和后台服务（background service）可用
+    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND allow
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mac Android 项目目录下执行 ./gradlew clean 提示 Permission denied]]></title>
+    <link href="https://jackro.cn/16496553060398.html"/>
+    <updated>2022-04-11T13:35:06+08:00</updated>
+    <id>https://jackro.cn/16496553060398.html</id>
+    <content type="html"><![CDATA[
+<p>Mac 环境下 Android Studio 创建的 Android 项目，在项目目录下执行 ./gradlew clean，提示 Permission denied，看到这个提示，自然想到的是 sudo 执行，然而 sudo 执行并不能解决问题，反而会提示command not found。万般无奈，只能百度，发现执行以下命令即可解决问题。</p>
+<pre><code class="language-plain_text">//为gradlew文件添加可执行属性
+chmod +x gradlew
+</code></pre>
+<p>chmod命令是修改文件访问权限的命令，文件访问权限包括只读、只写、可执行三种，其实最开始的提示Permission denied（权限拒绝）已经告诉了我们是android项目目录下可执行文件gradlew的访问权限的问题。因此需要为该文件添加可执行权限，所以执行以上命令即可解决该问题。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[模拟器收不到UILocalNotification本地通知]]></title>
+    <link href="https://jackro.cn/16496553060120.html"/>
+    <updated>2022-04-11T13:35:06+08:00</updated>
+    <id>https://jackro.cn/16496553060120.html</id>
+    <content type="html"><![CDATA[
+<p>通知功能是iOS应用开发经常会碰到的需求，iOS应用的通知分为本地通知和远程通知（即消息推送），Apple develop官网的API Guides对通知的开发有详细的介绍。</p>
+<p>今天我碰到的问题是模拟器收不到本地通知，按照惯例，先上本地通知的代码：</p>
+<pre><code class="language-plain_text">    UILocalNotification *note = [[UILocalNotification alloc] init];
+    note.alertBody = @&quot;Hypnotize&quot;;
+    note.fireDate = date; //这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
+    note.applicationIconBadgeNumber = 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:note];
+</code></pre>
+<p>原本以为这样就可以接收到通知了，结果一运行，始终看不到通知，过了通知的设定时间好久了，也看不到通知。查阅了下通知的用法文档，才知道需要去申请发送通知的授权。修正后的代码如下所示：</p>
+<pre><code class="language-plain_text">//判断是否已经授权用户发送通知
+if ([[UIApplication sharedApplication] currentUserNotificationSettings].types != UIUserNotificationTypeNone) {
+    UILocalNotification *note = [[UILocalNotification alloc] init];
+    note.alertBody = @&quot;Hypnotize&quot;;
+    note.fireDate = date;//这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
+    note.applicationIconBadgeNumber = 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:note];
+} else{
+    //用户注册通知，注册后才能收到通知，这会给用户一个弹框，提示用户选择是否允许发送通知
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound   categories:nil]];
+}
+</code></pre>
+<p>用户注册通知后，会收到一个回调函数，一般如果未授权，创建通知就在这个回调函数里进行。</p>
+<pre><code class="language-plain_text">//用户注册通知回调函数
+- (void)application:(UIApplication *) application
+    didRegisterUserNotificationSettings:(UIUserNotificationSettings   *)notificationSettings {
+     if (notificationSettings.types != UIUserNotificationTypeNone) {
+         NSLog(@&quot;haha&quot;);
+        UILocalNotification *note = [[UILocalNotification alloc] init];
+        note.alertBody = @&quot;Hypnotize&quot;;
+        note.fireDate = rvc.selectDate;
+        note.applicationIconBadgeNumber = 1;
+        [[UIApplication sharedApplication] scheduleLocalNotification:note];
+    }
+}
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[自定义 UIView 不响应 touchesBegan 事件]]></title>
+    <link href="https://jackro.cn/16496553059941.html"/>
+    <updated>2022-04-11T13:35:05+08:00</updated>
+    <id>https://jackro.cn/16496553059941.html</id>
+    <content type="html"><![CDATA[
+<p>iOS开发中会使用到自定义UIView，下面是我在学习过程中写的一个自定义UIView：</p>
+<pre><code class="language-plain_text">#import &quot;BNRHypnosisView.h&quot;
+
+@interface BNRHypnosisView()
+
+@property(nonatomic, strong) UIColor *circleColor;
+
+@end
+
+@implementation BNRHypnosisView
+
+- (void)setCircleColor:(UIColor *)circleColor {
+    _circleColor = circleColor;
+    [self setNeedsDisplay];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        self.circleColor = [UIColor lightGrayColor];
+        //self.userInteractionEnabled = YES; //开启用户交互仍然不能响应touchesBegan事件
+    }
+    return self;
+}
+
+- (void)drawRect:(CGRect)rect {
+    CGContextRef cgContext = UIGraphicsGetCurrentContext();
+
+    CGRect bounds = self.bounds;
+    CGPoint center;
+    center.x = bounds.origin.x + bounds.size.width / 2.0;
+    center.y = bounds.origin.y + bounds.size.height / 2.0;
+
+    float maxRadius = hypot(bounds.size.width, bounds.size.height) / 2.0;
+
+    UIBezierPath *path = [[UIBezierPath alloc] init];
+    
+   for (float currentRadius = maxRadius; currentRadius &gt; 0; currentRadius -=     20) {
+        [path moveToPoint:CGPointMake(center.x + currentRadius, center.y)];
+        [path addArcWithCenter:center radius:currentRadius startAngle:0.0   endAngle:M_PI*2.0 clockwise:YES];
+    }
+
+    [self.circleColor setStroke];
+
+    path.lineWidth = 10.0;
+
+    [path stroke];
+
+
+    CGContextSaveGState(cgContext);
+    CGContextSetShadow(cgContext, CGSizeMake(4, 7), 3);
+
+    UIImage *logoImage = [UIImage imageNamed:@&quot;logo.png&quot;];
+
+    [logoImage drawInRect:rect];
+
+    CGContextRestoreGState(cgContext);
+}
+
+- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent   *)event {
+
+    NSLog(@&quot;%@ was touched&quot;, self);
+
+    float red = (arc4random() % 100) / 100.0;
+    float green = (arc4random() % 100) / 100.0;
+    float blue = (arc4random() % 100) / 100.0;
+
+    UIColor *randomColor = [UIColor colorWithRed:red
+                                       green:green blue:blue alpha:1.0];
+    self.circleColor = randomColor;
+}
+
+@end
+</code></pre>
+<p>在AppDelegate中使用这个自定义UIView，代码如下所示：</p>
+<pre><code class="language-plain_text">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    NSArray *windows = [[UIApplication sharedApplication] windows];
+    for(UIWindow *window in windows) {
+        if(window.rootViewController == nil){
+            UIViewController *vc = [[UIViewController alloc]initWithNibName:nil
+                                                                 bundle:nil];
+            window.rootViewController = vc;
+        }
+    }
+
+    CGRect firstFrame = self.window.bounds;
+    BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
+
+   [self.window addSubview:firstView];
+
+
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+</code></pre>
+<p>看似很完美的代码，但是一运行，无法响应touchesBegan事件，开始以为是没有开启用户交互，加上开启用户交互self.userInteractionEnabled = YES，仍然没用，后来有人说是这个自定义UIView视图被遮挡，导致无法响应触摸事件，给了我开启视图调试器调试看看的建议，果然，开启视图调试器看到这个自定义UIView确实被遮挡了，如下图所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022301.jpeg" alt="jackro_blog2017022301" /></p>
+<p>该怎么解决呢？有人说是[self.window makeKeyAndVisible]出了问题，他会把window的rootViewController放到最前面，但我想这肯定是没读懂官方文档对makeKeyAndVisible方法的解释，如下图所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022303.png" alt="jackro_blog2017022303" /></p>
+<p>它是UIWindow对象的一个实例方法，是把当前window置于其他window的前面，也就是说是把整个包含了我的自定义UIView的window对象置于最前面，所以，即使注释掉这行代码，仍然无法解决我的自定义UIView被遮挡的问题。</p>
+<p>那么问题出在哪里呢？对，问题就出在AppDelegate的下面这段代码中：</p>
+<pre><code class="language-plain_text">NSArray *windows = [[UIApplication sharedApplication] windows];
+for(UIWindow *window in windows) {
+    if(window.rootViewController == nil){
+        UIViewController *vc = [[UIViewController alloc]initWithNibName:nil
+                                                                 bundle:nil];
+        window.rootViewController = vc; 
+    }
+}
+</code></pre>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022302.jpeg" alt="jackro_blog2017022302" /></p>
+<p>根据上图所示官方文档对rootViewController的说明，可以知道设置了window.rootViewController会给window设定一个content view。根据视图调试器显示出来的内容，这个content view应该也就是一个UIView。所以当这个自定义的UIView添加到self.window上，代码如下所示：</p>
+<pre><code class="language-plain_text">CGRect firstFrame = self.window.bounds;
+BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
+
+[self.window addSubview:firstView];
+</code></pre>
+<p>这个自定义UIView就会被rootViewController设定的content view遮挡，就不能响应触摸事件了。</p>
+<p>因此，解决这个问题修改后的关键代码如下所示：</p>
+<pre><code class="language-plain_text">CGRect firstFrame = self.window.bounds;
+BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
+
+[self.window.rootViewController.view addSubview:firstView];
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Application windows are expected to have a root view controller at the end of application launch]]></title>
+    <link href="https://jackro.cn/16496553059586.html"/>
+    <updated>2022-04-11T13:35:05+08:00</updated>
+    <id>https://jackro.cn/16496553059586.html</id>
+    <content type="html"><![CDATA[
+<p>现阶段的iOS应用开发，我们必须在AppDelegate中设置self.window.rootViewController，但是在以前老版本的xcode中可以不设置，iOS应用也可以照常运行。因此如果一些老的项目或者照一些老的iOS教程书籍敲的代码，运行就可能会出现下面的异常：</p>
+<pre><code class="language-plain_text">*** Terminating app due to uncaught exception 'NSInternalInconsistencyException', 
+reason: 'Application windows are expected to have a root view controller at the end of application launch'
+</code></pre>
+<p>并且app只能打开启动屏，无法进入应用，程序在main函数中停止运行，如下图所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022201.png" alt="jackro_blog2017022201" /></p>
+<p>这里我碰到这个问题的demo是这样的，有一个自定义view，代码如下：</p>
+<pre><code class="language-plain_text">//
+//  BNRHypnosisView.h
+//  Hypnosister
+//
+//  Created by JackRo on 2017/2/21.
+//  Copyright © 2017年 JackRo. All rights reserved.
+//
+#import &lt;UIKit/UIKit.h&gt;
+
+@interface BNRHypnosisView : UIView
+
+@end
+
+
+
+//
+//  BNRHypnosisView.m
+//  Hypnosister
+//
+//  Created by JackRo on 2017/2/21.
+//  Copyright © 2017年 JackRo. All rights reserved.
+//
+
+#import &quot;BNRHypnosisView.h&quot;
+
+@implementation BNRHypnosisView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+    }
+    return self;
+}
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+- (void)drawRect:(CGRect)rect {
+    CGRect bounds = self.bounds;
+    CGPoint center;
+    center.x = bounds.origin.x + bounds.size.width / 2.0;
+    center.y = bounds.origin.y + bounds.size.height / 2.0;
+
+    float radius = (MIN(bounds.size.width, bounds.size.height) / 2.0);
+
+    UIBezierPath *path = [[UIBezierPath alloc] init];
+
+    [path addArcWithCenter:center radius:radius startAngle:0.0 endAngle:M_PI*2.0 clockwise:YES];
+
+    [path stroke];
+}
+
+@end
+</code></pre>
+<p>AppDelegate中代码如下：</p>
+<pre><code class="language-plain_text">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+
+    CGRect firstFrame = self.window.bounds;
+    BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
+    firstView.backgroundColor = [UIColor redColor];
+    [self.window addSubview:firstView];
+
+
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+</code></pre>
+<p>根据异常信息的意思，应用就是缺少一个rootViewController，所以在AppDelegate中给应用设置rootViewController就可以了，所以解决后的代码如下所示：</p>
+<pre><code class="language-plain_text">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    //-----------------------------------------------------------------------------------------
+    //解决该问题的代码
+    NSArray *windows = [[UIApplication sharedApplication] windows];
+    for(UIWindow *window in windows) {
+        if(window.rootViewController == nil){
+            UIViewController *vc = [[UIViewController alloc]initWithNibName:nil
+                                                                 bundle:nil];
+            window.rootViewController = vc;
+        }
+    }
+    //解决该问题的代码
+    //----------------------------------------------------------------------------------------
+
+    CGRect firstFrame = self.window.bounds;
+    BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
+    firstView.backgroundColor = [UIColor redColor];
+    [self.window addSubview:firstView];
+
+
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android 实现 FloatingActionButton 自定义大小]]></title>
+    <link href="https://jackro.cn/16496553058651.html"/>
+    <updated>2022-04-11T13:35:05+08:00</updated>
+    <id>https://jackro.cn/16496553058651.html</id>
+    <content type="html"><![CDATA[
+<p>最近在项目中使用了<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> ，但是为了让UI看起来留白不是那么多，需要对<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> 进行自定义大小。</p>
+<p>根据官方文档的说明，<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> 仅仅支持设置app:fabSize=&quot;normal&quot;来改变fab的大小，并且这个fabSize的大小提供了三个可选项（normal，mini和auto）来设置，可以在布局里设置也可以在代码里调用setSize方法进行设置。</p>
+<p>这里一开始是想到通过在布局里改变layout_width和layout_height来改变控件的大小的，但是设置之后（两者均设置为100dp，fabSize设置为normal），效果如下所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112001.png" alt="jackro_blog2016112001" /></p>
+<p>并且当设置了fab的固定宽高再来改变它的fabSize属性（改为mini或auto）时，效果会是fab的图标被撑的很大，甚至边缘都看不到了，显然这样通过固定fab的宽高属性来改变其大小是行不通的。</p>
+<p>翻阅FloatingActionButton的源码，其第三个构造函数如下</p>
+<pre><code class="language-java">
+    public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        ThemeUtils.checkAppCompatTheme(context);
+
+        TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.FloatingActionButton, defStyleAttr,
+                R.style.Widget_Design_FloatingActionButton);
+        mBackgroundTint = a.getColorStateList(R.styleable.FloatingActionButton_backgroundTint);
+        mBackgroundTintMode = ViewUtils.parseTintMode(a.getInt(
+                R.styleable.FloatingActionButton_backgroundTintMode, -1), null);
+        mRippleColor = a.getColor(R.styleable.FloatingActionButton_rippleColor, 0);
+        mSize = a.getInt(R.styleable.FloatingActionButton_fabSize, SIZE_AUTO);
+        mBorderWidth = a.getDimensionPixelSize(R.styleable.FloatingActionButton_borderWidth, 0);
+        final float elevation = a.getDimension(R.styleable.FloatingActionButton_elevation, 0f);
+        final float pressedTranslationZ = a.getDimension(
+                R.styleable.FloatingActionButton_pressedTranslationZ, 0f);
+        mCompatPadding = a.getBoolean(R.styleable.FloatingActionButton_useCompatPadding, false);
+        a.recycle();
+
+        mImageHelper = new AppCompatImageHelper(this);
+        mImageHelper.loadFromAttributes(attrs, defStyleAttr);
+
+        mMaxImageSize = (int) getResources().getDimension(R.dimen.design_fab_image_size);
+
+        getImpl().setBackgroundDrawable(mBackgroundTint, mBackgroundTintMode,
+                mRippleColor, mBorderWidth);
+        getImpl().setElevation(elevation);
+        getImpl().setPressedTranslationZ(pressedTranslationZ);
+    }
+</code></pre>
+<p>都是读取属性来设置一些自定义属性，看到最后三行，发现getImpl方法的调用，它的返回值是FloatingActionButtonImpl，原来fab都是通过FloatingActionButtonImpl来实现其自定义属性的，找到getImpl这个方法，源码如下：</p>
+<pre><code class="language-java">    private FloatingActionButtonImpl getImpl() {
+        if (mImpl == null) {
+            mImpl = createImpl();
+        }
+        return mImpl;
+    }
+
+    private FloatingActionButtonImpl createImpl() {
+        final int sdk = Build.VERSION.SDK_INT;
+        if (sdk &gt;= 21) {
+            return new FloatingActionButtonLollipop(this, new ShadowDelegateImpl(),
+                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);
+        } else if (sdk &gt;= 14) {
+            return new FloatingActionButtonIcs(this, new ShadowDelegateImpl(),
+                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);
+        } else {
+            return new FloatingActionButtonGingerbread(this, new ShadowDelegateImpl(),
+                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);
+        }
+    }
+</code></pre>
+<p>上面创建FloatingActionButtonImpl每种情况都传递了ShadowDelegateImpl的一个实例，说明这个类对创建FloatingActionButtonImpl很重要，往下看这个类的源码，如下所示：</p>
+<pre><code class="language-java">    private class ShadowDelegateImpl implements ShadowViewDelegate {
+        ShadowDelegateImpl() {
+        }
+
+        @Override
+        public float getRadius() {
+            return getSizeDimension() / 2f;
+        }
+
+        @Override
+        public void setShadowPadding(int left, int top, int right, int bottom) {
+            mShadowPadding.set(left, top, right, bottom);
+            setPadding(left + mImagePadding, top + mImagePadding,
+                    right + mImagePadding, bottom + mImagePadding);
+        }
+
+        @Override
+        public void setBackgroundDrawable(Drawable background) {
+            FloatingActionButton.super.setBackgroundDrawable(background);
+        }
+
+        @Override
+        public boolean isCompatPaddingEnabled() {
+            return mCompatPadding;
+        }
+    }
+</code></pre>
+<p>这个类里有一个getRadius方法，字面意思理解就是获取半径的，终于柳暗花明，原来fab的大小（即半径）是这个方法来获取的，可以看到它调用了getSizeDimension，下面看这个getSizeDimension方法，源码如下：</p>
+<pre><code class="language-java">    int getSizeDimension() {
+        return getSizeDimension(mSize);
+    }
+
+    private int getSizeDimension(@Size final int size) {
+        final Resources res = getResources();
+        switch (size) {
+            case SIZE_AUTO:
+                // If we're set to auto, grab the size from resources and refresh
+                final int width = ConfigurationHelper.getScreenWidthDp(res);
+                final int height = ConfigurationHelper.getScreenHeightDp(res);
+                return Math.max(width, height) &lt; AUTO_MINI_LARGEST_SCREEN_WIDTH
+                        ? getSizeDimension(SIZE_MINI)
+                        : getSizeDimension(SIZE_NORMAL);
+            case SIZE_MINI:
+                return res.getDimensionPixelSize(R.dimen.design_fab_size_mini);
+            case SIZE_NORMAL:
+            default:
+                return res.getDimensionPixelSize(R.dimen.design_fab_size_normal);
+        }
+    }
+</code></pre>
+<p>原来这里google做的控件也是通过获取资源文件dimens.xml来获取dimen值的（废话，当然是了）。终于看到这里，我才恍然大悟，我可以通过自定义这个design_fab_size_normal来实现覆盖默认的dimen值呀（因为我的布局里是设置fabSize为normal的），自定义代码如下所示：</p>
+<pre><code class="language-xml">&lt;dimen name=&quot;design_fab_size_normal&quot; tools:ignore=&quot;PrivateResource&quot;&gt;80dp&lt;/dimen&gt;
+</code></pre>
+<p>这样即完美搞定我的fab自定义大小的需求。上张效果图，如下所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112002.jpg" alt="jackro_blog2016112002" /></p>
+<p>和之前那个设置fab的固定宽高的效果比好多了。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android 实现 EditText 响应 drawableRight 点击事件]]></title>
+    <link href="https://jackro.cn/16496553058494.html"/>
+    <updated>2022-04-11T13:35:05+08:00</updated>
+    <id>https://jackro.cn/16496553058494.html</id>
+    <content type="html"><![CDATA[
+<p>这里自定义了一个RightPicClickEditText，继承AppCompatEditText，并且在其三个构造函数中调用父组件的相应构造函数，是为了适配5.0以下应用MD风格，代码如下：</p>
+<pre><code class="language-plain_text">public RightPicClickEditText(Context context) {
+    super(context);
+    init();
+}
+
+public RightPicClickEditText(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    init();
+}
+
+public RightPicClickEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init();
+}
+</code></pre>
+<p>我们或许还需要定义一个右侧图标变量的引用，你可以对这个右侧图标干些自定义的事，代码如下：</p>
+<pre><code class="language-plain_text">/**
+ * EditText右侧的图标
+ */
+protected Drawable mRightDrawable;
+
+private void init() {
+    mRightDrawable = getCompoundDrawables()[2];
+
+    if (mRightDrawable == null) {
+//这里当没有设置右侧图标时你可以给它设置个默认的右侧图标，当然根据你的项目需求来
+        return;
+    }
+
+//这里当设置了右侧图标时，我们对图标做了一些自定义设置，你也可以做其他设置
+    mRightDrawable.setBounds(0, 0, mRightDrawable.getIntrinsicWidth(), mRightDrawable.getIntrinsicHeight());
+}
+</code></pre>
+<p>最关键的来了，我们需要重写自定义EditText的触摸事件onTouchEvent，这里我们通过判断触摸的坐标位置是否在右侧图标范围内来模拟右侧图标的点击事件。如果在这个范围内，则证明点击了右侧图标，为了方便外部调用处理，我们定义了一个接口在这里回调，一旦点击了右侧图标，则触发接口回调。代码如下：</p>
+<pre><code class="language-plain_text">public void setRightPicOnclickListener(RightPicOnclickListener rightPicOnclickListener) {
+    this.rightPicOnclickListener = rightPicOnclickListener;
+}
+
+public interface RightPicOnclickListener {
+    void rightPicClick();
+}
+
+private RightPicOnclickListener rightPicOnclickListener;
+
+@Override
+public boolean onTouchEvent(MotionEvent event) {
+    if (event.getAction() == MotionEvent.ACTION_UP) {
+        if (mRightDrawable != null) {
+            boolean touchable = event.getX() &gt; (getWidth() - getTotalPaddingRight())
+                    &amp;&amp; (event.getX() &lt; ((getWidth() - getPaddingRight())));
+            if (touchable) {
+
+                //设置点击EditText右侧图标EditText失去焦点，
+                // 防止点击EditText右侧图标EditText获得焦点，软键盘弹出
+                setFocusableInTouchMode(false);
+                setFocusable(false);
+
+                //点击EditText右侧图标事件接口回调
+                if (onRightPicClickListener != null) {
+                    onRightPicClickListener.rightPicClick(this);
+                }
+            } else {
+                //设置点击EditText输入区域，EditText请求焦点，软键盘弹出，EditText可编辑
+                //setFocusableInTouchMode(true);
+                //setFocusable(true);
+                //设置点击EditText输入区域，EditText不请求焦点，软键盘不弹出，EditText不可编辑
+                setFocusableInTouchMode(false);
+                setFocusable(false);
+            }
+        }
+    }
+    return super.onTouchEvent(event);
+}
+</code></pre>
+<p>外部应用就简单了，示例代码如下：</p>
+<pre><code class="language-plain_text">&lt;cn.jackro.rightpicclickedittext.RightPicClickEditText
+    android:id=&quot;@+id/right_click_et&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_gravity=&quot;center&quot;
+    android:drawableRight=&quot;@android:drawable/ic_menu_search&quot;
+    android:hint=&quot;@string/click_hint&quot;
+    android:inputType=&quot;text&quot;
+    android:maxLines=&quot;1&quot;
+    tools:ignore=&quot;RtlHardcoded&quot;/&gt;
+
+public class MainActivity extends AppCompatActivity implements RightPicClickEditText.OnRightPicClickListener {
+
+    @BindView(R.id.right_click_et)
+    RightPicClickEditText mRightClickEt;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        mRightClickEt.setOnRightPicClickListener(this);
+    }
+
+    @Override
+    public void rightPicClick(EditText editText) {
+        Toast.makeText(this, &quot;点击了搜索按钮&quot;, Toast.LENGTH_SHORT).show();
+    }
+}
+</code></pre>
+<p>实现这样一个功能，我们除了像上面这样干之外，还可以直接使用布局包裹一个EditText和一个ImageView，然后给ImageView设置点击事件即可，这种方法稍微简单点。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[解决Camera is being used after Camera.release() was called]]></title>
     <link href="https://jackro.cn/16496553060889.html"/>
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553060889.html</id>
     <content type="html"><![CDATA[
-<h2><a id="title%E8%A7%A3%E5%86%B3-camera-is-being-used-after-camera-release-was-called-date-2016-07-01" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: 解决Camera is being used after Camera.release() was called<br />
-date: 2016-07-01</h2>
 <pre><code class="language-plain_text">java.lang.RuntimeException: Camera is being used after Camera.release() was called
 </code></pre>
 <p>在相机开发中，打开相机后点返回，偶尔会出现如上所示的异常，解决代码如下：</p>
@@ -625,564 +1244,23 @@ public class CameraManager extends BaseCameraManager implements Camera.AutoFocus
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553060993.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553060993.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-safari%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AEjava%E6%94%AF%E6%8C%81-date-2017-09-21" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Safari浏览器设置Java支持<br />
-date: 2017-09-21</h2>
-<p>今天碰到一个公司的项目连接服务器的页面在浏览器中打开需要安装JDK并打开浏览器Java支持的问题。经过一番搜索发现，Java官网的帮助中心中介绍推荐使用IE（windows）和Safari（Mac os）（参见链接：<a href="https://www.java.com/zh_CN/download/faq/chrome.xml">https://www.java.com/zh_CN/download/faq/chrome.xml</a>），由于自己家里电脑是Mac os（Mac OS 10.12.6），所以使用Safari（自己电脑当前版本是11.0）来打开浏览器Java支持。</p>
-<p>在Safari中如何打开浏览器Java支持呢？经过一番搜索，发现可以在Safari的偏好设置中的网站选项去打开Java支持，针对某个网站去打开即可，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017092101.jpg" alt="jackro_blog2017092101" /></p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553061097.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553061097.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-sqlite%E6%B8%85%E7%A9%BA%E8%A1%A8%E6%95%B0%E6%8D%AE%E5%B9%B6%E5%B0%86%E8%87%AA%E5%A2%9E%E9%87%8F%E5%BD%92%E9%9B%B6-date-2017-06-16" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: SQLite清空表数据并将自增量归零<br />
-date: 2017-06-16</h2>
-<p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。但是SQLite可以通过如下方式来实现：</p>
-<p>1）先清空表数据：</p>
-<pre><code class="language-plain_text">    delete from [tablename];
-</code></pre>
-<p>2）当数据库中包含自增列时，会自动建立一个名为 sqlite_sequence 的表。这个表包含两个列：name和seq。name记录自增列所在的表（即tablename），seq记录当前序号（下一条记录的编号就是当前序号加1）。你可以通过如下方式将自增量归零：</p>
-<pre><code class="language-plain_text">    //1. 将表名为tablename的自增量置0
-    update sqlite_sequence set seq = 0 where name = 'tablename'
-    //2. 将表名为tablename的记录删除
-    delete from sqlite_sequence where name = 'tablename'
-    //3. 将sqlite_sequence表清空数据
-    delete from sqlite_sequence
-</code></pre>
-<p>虽然在普通的DBMS中，用delete不如用truncate快，但是SQLite对delete做了优化，这个优化也可以使它运行的很快。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553061200.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553061200.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-streamreader%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E6%97%B6%E5%87%BA%E7%8E%B0%E4%B9%B1%E7%A0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-date-2014-08-12" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: StreamReader读取文件时出现乱码的解决方案<br />
-date: 2014-08-12</h2>
-<p>今天在做一个打开文件对话框OpenFileDialog时，需要对打开的文件进行读取，显示在在窗体中的RichTextBox中。但是在显示文件时，却发现显示的中文字符串出现乱码。代码的关键部分如下所示：</p>
-<pre><code class="language-plain_text">	1 StreamReader sr = new StreamReader(openFileDialog.OpenFile());      
-	2 string str = sr.ReadToEnd();
-	3 childForm.richTextBox1.Text = str;  
-</code></pre>
-<p>开始我也想到了是字符编码出了问题，于是我在初始化StreamReader时，给它加了字符编码参数，加了好几次，Encoding.Unicode，Encoding.UTF32，Encoding.UTF7，Encoding.UTF8，Encoding.ASCII，这些能加的编码方案我都试过了，结果都不行，还是会乱码。百般无奈之下，我只好在.net爱好者群里问了。然后群里就有好心人给我发了一个链接，点进去看了之后恍然大悟。链接如下所示：<a href="http://www.cnblogs.com/wmw1989/archive/2008/05/19/1202500.html" title="http://www.cnblogs.com/wmw1989/archive/2008/05/19/1202500.html">http://www.cnblogs.com/wmw1989/archive/2008/05/19/1202500.html</a></p>
-<p>原来，中文编码是GB2312，而当前系统的代码页的编码方案采用的是ANSI编码，出现乱码也就不足为奇了。解决方案很简单，就是初始化StreamReader的时候告诉它目前代码页的编码方案。可是由于Encoding类并没有定义ANSI编码方案，所以只能采用Default让系统获取当前操作系统的当前ANSI代码页的编码方案。因此上面的代码换成如下的代码就解决了：</p>
-<pre><code class="language-plain_text">	1 StreamReader sr = new StreamReader(openFileDialog.OpenFile(), Encoding.Default);                
-	2 string str = sr.ReadToEnd();
-	3 childForm.richTextBox1.Text = str;  
-</code></pre>
-<p> </p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553061305.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553061305.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title%E4%BD%BF%E7%94%A8-scp%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0linux%E6%9C%8D%E5%8A%A1%E5%99%A8-date-2017-06-23" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: 使用scp上传文件到Linux服务器<br />
-date: 2017-06-23</h2>
-<p>我的服务器是阿里云的ubuntu 16.04，电脑是Mac os。上传文件到Linux服务器可以在终端中采用如下命令上传：</p>
-<pre><code class="language-plain_text">//filename是你要上传的文件名，username是服务器主机用户名，x.x.x.x是服务器IP地址，directory是要将文件上传到服务器的directory目录下
-scp [filename] [username]@x.x.x.x:[dirctory]
-</code></pre>
-<p>命令scp基于ssh协议，可以将文件拷贝到远程服务器上的指定目录，Mac os自带，使用很方便。当然还可以使用ftp/sftp方式上传。</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
+    <title type="html"><![CDATA[ViewPager 中的 Fragment 有百度地图 MapView 切换卡顿闪屏]]></title>
     <link href="https://jackro.cn/16496553061410.html"/>
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553061410.html</id>
     <content type="html"><![CDATA[
-<h2><a id="title-viewpager%E4%B8%AD%E7%9A%84fragment%E6%9C%89%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEmapview%E5%88%87%E6%8D%A2%E5%8D%A1%E9%A1%BF%E9%97%AA%E5%B1%8F-date-2016-06-15" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: ViewPager中的Fragment有百度地图MapView切换卡顿闪屏<br />
-date: 2016-06-15</h2>
 <p>当Fragment和ViewPager一起使用时，某个Fragment中含有百度地图MapView时，当你从其他Fragment切换到含有百度地图MapView的Fragment时，会有卡顿闪屏的效果。解决方法是把百度地图的MapView替换成TextureMapView，卡顿闪屏问题完美解决。</p>
 
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553061515.html"/>
+    <title type="html"><![CDATA[Activity 中开启轮询服务当Activity异常destroy时]]></title>
+    <link href="https://jackro.cn/16496553060690.html"/>
     <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553061515.html</id>
+    <id>https://jackro.cn/16496553060690.html</id>
     <content type="html"><![CDATA[
-<h2><a id="title-windows-10%E4%B8%8B%E8%AE%A9jar%E6%96%87%E4%BB%B6%E5%8F%8C%E5%87%BB%E5%8F%AF%E4%BB%A5%E8%BF%90%E8%A1%8C%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95-date-2015-10-28" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: windows 10下让jar文件双击可以运行的解决方法<br />
-date: 2015-10-28</h2>
-<p>　　windows xp下让jar文件双击可以运行的解决办法很简单，只要打开我的电脑在工具的文件夹选项中找到文件类型，配置注册一下jar文件的open操作就可以了，这个过程是界面操作，非常的简单易接受。但是到了windows 10，笔者愚笨，找不到文件夹选项的文件类型，无法通过界面操作，因此，只能想办法通过注册表来注册jar文件的open操作类型，如果你知道windows xp下的操作，这个注册表过程的操作其实不难理解的。</p>
-<p>　　操作步骤如下：</p>
-<p>　　1.打开注册表；</p>
-<p>　　2.找到HKEY_CLASSES_ROOT/Applications /javaw.exe，一开始没有找到javaw.exe的话，就在jre或者jdk文件中找到javaw.exe（如我的电脑中为D:\Java\jre1.8.0_60\bin\javaw.exe），运行一下，或者找一个jar文件，选择打开方式，找到javaw.exe，打开一下</p>
-<p>　　3.进入HKEY_CLASSES_ROOT/Applications/javaw.exe/shell/open/command，修改默认的键值为&quot;D:\Java\jre1.8.0_60\bin\javaw.exe&quot; -jar &quot;%1&quot;<br />
-java环境安装在其他地方也类似，修改一下路径就可以了</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553061623.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553061623.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-winform%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8Fimage-oom%E5%BC%82%E5%B8%B8%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95-date-2014-08-18" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Winform应用程序Image OOM异常的处理方法<br />
-date: 2014-08-18</h2>
-<p>在做Winform应用程序处理Image时碰到了这样一个问题。窗体设计如下：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081801.jpg" alt="jackro_blog2014081801" /></p>
-<p>当点击上面窗体中的上一张和下一张时，PictureBox中的图片会跟着切换，但是切换时却抛出了如下图所示的异常：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081802.jpg" alt="jackro_blog2014081802" /></p>
-<p>内存不足！！！<br />
-我一开始的关键代码如下所示：</p>
-<pre><code class="language-plain_text">	private void Form1_Load(object sender, EventArgs e)
-        {
-            pictureBox1.Image = Image.FromFile(@&quot;f:\图片\1.jpg&quot;);
-        }
-
-        string[] path = Directory.GetFiles(@&quot;f:\图片&quot;);
-        
-        int i = 0;
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            i++;
-            if (i == path.Length)
-            {
-                i = 0;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            i--;
-            if (i &lt; 0)
-            {
-                i = path.Length - 1;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-        }
-</code></pre>
-<p>后来，我在博客园里找问题的答案，找到了如下几种解决办法：</p>
-<p><strong>&lt;1&gt;释放内存</strong></p>
-<p>每次在PictureBox中显示完图像时，将其释放掉。释放内存关键代码如下：</p>
-<pre><code class="language-plain_text">	//if (pictureBox1.Image != null)//
-	{//    pictureBox1.Image.Dispose();//}
-	//或者像下面这样回收所有资源// GC.Collect();
-</code></pre>
-<p><strong>&lt;2&gt;双缓冲(类似于GDI+中的双倍缓冲)</strong><br />
-就是创建一个缓冲的“内存库”来存储图像，关键代码如下：</p>
-<pre><code class="language-plain_text">	//Bitmap bmp = new Bitmap(path[i]);  //bmp即相当于一个缓冲的“内存库”
-	//pictureBox1.Image = (Image)bmp;
-</code></pre>
-<p><strong>&lt;3&gt;自己琢磨出来的解决方法</strong><br />
-这种方法也可以释放内存，释放内存通过bmp和Image的Dispose()方法实现。<br />
-上面两种方法我都试了，可是都还是会抛出异常。后来我经过多次的调试，找到了一种解决问题的办法，这种办法我觉得很奇怪，有点匪夷所思。我先把解决问题的代码展示出来供诸君参考吧，希望看到的大猿能帮我解释下其中的道理。<br />
-我只改了我自己写的代码中的“遍历”的范围，修改的关键部分如下所示：</p>
-<pre><code class="language-plain_text">        private void button2_Click(object sender, EventArgs e)
-        {
-            i++;
-            if (i == path.Length - 1)
-            {
-                i = 0;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            i--;
-            if (i &lt; 0)
-            {
-                i = path.Length - 2;
-            }
-            pictureBox1.Image = Image.FromFile(path[i]);
-            GC.Collect();
-        }
-</code></pre>
-<p>这种方法既没有释放内存，也没有做缓冲的“内存库”存图像，可是程序却跑的很正常，实在让人费解其中的道理。希望看到的大猿能给我解释下这其中的道理，感激不尽！</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553061730.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553061730.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-winform%E7%AA%97%E4%BD%93%E4%BC%A0%E5%80%BC%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93-date-2014-08-13" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Winform窗体传值方法总结<br />
-date: 2014-08-13</h2>
-<p>窗体传值是在学习窗体应用程序时碰到的一类比较常见的问题，现将窗体传值方法做了一点总结，方法如下：</p>
-<p><strong>&lt;1&gt;声明全局变量传值：</strong></p>
-<p>在Form1中声明全局变量，如下所示：</p>
-<pre><code class="language-plain_text">	public static string str = &quot;窗体1的值&quot;;
-</code></pre>
-<p>通过Form1的button1_Click事件即可将此全局变量传递给Form2，Form1的全局变量str在Form2中可以直接访问，代码如下所示：</p>
-<pre><code class="language-plain_text">	private void button1_Click(object sender, EventArgs e)
-	{            
-	      Form2 frm2 = new Form2();
-	      frm2.Show();
-	}
-    private void Form2_Load(object sender, EventArgs e)
-	{   
-	      this.label1.Text = Form1.str;               
-	}
-</code></pre>
-<p><strong>&lt;2&gt;通过构造函数传值：</strong></p>
-<p>重载Form2的构造函数，使其能够接受一个来自Form1的参数，重载代码如下所示：</p>
-<pre><code class="language-plain_text">    private string str;
-    public Form2(string s)
-    {
-        InitializeComponent();
-        this.str = s;        
-    }
-</code></pre>
-<p>上面代码中定义的string变量str用来存储从Form1传递进来的参数。<br />
-在Form1的button1_Click事件中实例化Form2并给其传递Form1的一个参数，代码如下所示：</p>
-<pre><code class="language-plain_text">    private void button1_Click(object sender, EventArgs e)
-    {
-        string s = this.textBox1.Text;
-        Form2 frm2 = new Form2(s);
-        frm2.Show();
-    }
-</code></pre>
-<p>在Form2的Form2_Load中即可接受这个参数，接受这个参数值的代码如下所示：</p>
-<pre><code class="language-plain_text">    private void Form2_Load(object sender, EventArgs e)
-    {
-        this.label1.Text = str;                   
-    }
-</code></pre>
-<p>这样，在单击Form1的button1之后，Form2便会蹦出来，Form2的label1便会显示这个从Form1传进来的值。</p>
-<p><strong>&lt;3&gt;在窗体中声明公共属性进行传值：</strong></p>
-<p>在Form2中声明公共属性，代码如下所示：<br />
-private string username;</p>
-<pre><code class="language-plain_text">    public string Username
-    {
-        get { return username; }
-        set { username = value; }
-    }
-    private string password;
-
-    public string Password
-    {
-        get { return password; }
-        set { password = value; }
-    }
-</code></pre>
-<p>这样，在Form1中即可访问这些属性，也就可以将Form2中这些公共属性的值传递给Form1了，并且也可以从Form1中向Form2的这些公共属性传值。代码如下所示：</p>
-<p>（1）Form1向Form2传值：</p>
-<pre><code class="language-plain_text">    private void button1_Click(object sender, EventArgs e)
-    {
-        Form2 frm2 = new Form2();
-        frm2.Username = &quot;Jack&quot;;  //Form1向Form2传值
-        frm2.Password = &quot;J1234&quot;;
-　　　　frm2.Show(); 
-    }
-    private void Form2_Load(object sender, EventArgs e)
-    {
-        textBox1.Text = username;
-        textBox2.Text = password;
-    }
-</code></pre>
-<p>（2）Form2向Form1传值：</p>
-<pre><code class="language-plain_text">    private void textBox1_TextChanged(object sender, EventArgs e)
-    {
-        this.Username = textBox1.Text;
-    }
-
-    private void textBox2_TextChanged(object sender, EventArgs e)
-    {
-        this.Password = textBox1.Text;
-    }
-    private void button1_Click(object sender, EventArgs e)
-    {
-        Form2 frm2 = new Form2();
-        frm2.Username = &quot;Jack&quot;;  //Form1向Form2传值
-        frm2.Password = &quot;J1234&quot;;            
-        comboBox1.Items.Add(frm2.Username);  //Form2向Form1传值
-        comboBox1.Items.Add(frm2.Password);
-        frm2.Show();
-    }   
-</code></pre>
-<p>声明公共属性传值比较灵活，受限较少，因此比较好用。但是或许这会影响数据的安全性哦。</p>
-<p><strong>&lt;4&gt;传递整个窗体进行传值。</strong></p>
-<p>类似于构造函数传值，将窗体作为构造函数的参数即可传递整个窗体了。代码如下所示：</p>
-<pre><code class="language-plain_text">    private void button1_Click(object sender, EventArgs e)
-    {
-        Form2 f2 = new Form2(this);
-        f2.Show();
-    }   
-    Form1 frm1;
-    public Form2(Form1 f1)
-    {
-        InitializeComponent();
-        this.frm1 = f1;            
-    }
-
-    private void Form2_Load(object sender, EventArgs e)
-    {
-        this.textBox1.Text = frm1.ActiveControl.ToString();
-    }
-</code></pre>
-<p>这样能把Form1整个窗体传递给Form2，在Form2里即可操作Form1的数据及其控件了。</p>
-<p><strong>&lt;5&gt;更改系统文件：</strong></p>
-<p>更改Form1.Designer.cs，譬如要使其控件变为公共可访问的，即找到在此文件中声明的控件，将你需要在Form2里访问的控件的访问修饰符修改为public，如下所示：</p>
-<pre><code class="language-plain_text">    private System.Windows.Forms.Button button1;
-    private System.Windows.Forms.ComboBox comboBox1;
-</code></pre>
-<p>将上面的代码里需要更改的控件的访问修饰符更改后保存即可。这种方法我个人感觉不好，有违C#语言的封装性和数据的安全性，个人建议不提倡使用。</p>
-<p><strong>&lt;6&gt;利用委托进行窗体传值：</strong></p>
-<p>这种方法是我在网上看到的，对原代码做了一点点改进，利用定义委托和事件以及构造函数的方法，实现了Form1和Form2互相传值。废话不多说，请看代码：<br />
-Form1部分的代码：</p>
-<pre><code class="language-plain_text">public partial class Form1 : Form
-{        
-     public Form1()
-     {
-         InitializeComponent();
-     }
-
-     private void button1_Click(object sender, EventArgs e)
-     {
-         string str = textBox1.Text;
-         Form2 f2 = new Form2(str);
-         f2.Translate += new TranslateEventHandler(f2_Translate);            
-         f2.ShowDialog();
-     }
-
-     void f2_Translate(string value)
-     {
-         textBox1.Text = value;
-         //throw new NotImplementedException();
-     }               
-}
-</code></pre>
-<p>Form2部分的代码：</p>
-<pre><code class="language-plain_text"> public delegate void TranslateEventHandler(string value);
- public partial class Form2 : Form
- {
-     string str;
-     public Form2(string s)
-     {
-         InitializeComponent();
-         this.str = s;
-     }
- 
-     public event TranslateEventHandler Translate;
-     
-     private void button1_Click(object sender, EventArgs e)
-     {
-         Translate(textBox1.Text);
-         this.Close();
-     }
- 
-     private void Form2_Load(object sender, EventArgs e)
-     {
-         this.textBox1.Text = str;
-     }            
- }
-</code></pre>
-<p>Form设计如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081301.jpg" alt="jackro_blog2014081301" /> <br />
-      <br />
-<img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2014081302.jpg" alt="jackro_blog2014081302" /><br />
- </p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553061843.html"/>
-    <updated>2022-04-11T13:35:06+08:00</updated>
-    <id>https://jackro.cn/16496553061843.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-xmlreader%E5%9C%A8%E6%9C%AA%E7%9F%A5%E5%85%83%E7%B4%A0%E7%9A%84%E5%90%8D%E7%A7%B0%E5%92%8C%E5%B1%9E%E6%80%A7%E7%9A%84%E5%90%8D%E7%A7%B0%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E8%AF%BB%E5%8F%96%E5%B1%9E%E6%80%A7-date-2014-08-10" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: XmlReader在未知元素的名称和属性的名称的情况下读取属性<br />
-date: 2014-08-10</h2>
-<p>经过努力，终于解决了XmlReader在未知元素的名称和属性的名称的情况下读取属性的方法。在没有解决前，我的代码如下：</p>
-<pre><code class="language-plain_text">	using System; 
-	using System.Collections.Generic; 
-	using System.Linq; 
-	using System.Text; 
-	using System.Xml; 
-	
-	namespace ReadAttribute 
-	{ 
-	    class Program
-	     {
-	         static void Main(string[] args)
-	         {
-	             string path = @&quot;e:\testfile\myMail.xml&quot;;
-	             
-	             #region 读取属性的第一种方法
-	             //string date;
-	             //try
-	             //{
-	             //    XmlReader xr = XmlReader.Create(path);
-	             //    xr.ReadToFollowing(&quot;mail&quot;);
-	             //    date = xr.GetAttribute(&quot;date&quot;);
-	             //    Console.Write(&quot;信件的日期为：&quot;);
-	             //    Console.WriteLine(date);
-	             //}
-	             //catch (Exception ex)
-	             //{
-	             //    Console.WriteLine(ex.Message);
-	             //} 
-	             #endregion
-	 
-	             #region 读取属性的第二种方法
-	             try
-	             {
-	                 XmlReader xr = XmlReader.Create(path);
-	                 while (xr.Read())
-	                 {
-	                     if (xr.HasAttributes)
-	                     {
-	                         //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         //for (int i = 0; i &lt; xr.AttributeCount; i++)
-	                         //{                            
-	                         //xr.MoveToAttribute(i);                            
-	                         Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
-	                         //}                                                                  
-	                     }
-	                 }
-	             }
-	             catch (Exception ex)
-	             {
-	                 Console.WriteLine(ex.Message);
-	             } 
-	             #endregion
-	             Console.ReadKey();
-	         }
-	     }
-	 }
-</code></pre>
-<p>解决后，我的代码如下：</p>
-<pre><code class="language-plain_text">	using System; 
-	using System.Collections.Generic; 
-	using System.Linq; 
-	using System.Text; 
-	using System.Xml; 
-	
- 	namespace ReadAttribute 
-	{ 
-	    class Program
-	     {
-	         static void Main(string[] args)
-	         {
-	             string path = @&quot;e:\testfile\myMail.xml&quot;;
-	             
-	             #region 读取属性的第一种方法
-	             //string date;
-	             //try
-	             //{
-	             //    XmlReader xr = XmlReader.Create(path);
-	             //    xr.ReadToFollowing(&quot;mail&quot;);
-	             //    date = xr.GetAttribute(&quot;date&quot;);
-	             //    Console.Write(&quot;信件的日期为：&quot;);
-	             //    Console.WriteLine(date);
-	             //}
-	             //catch (Exception ex)
-	             //{
-	             //    Console.WriteLine(ex.Message);
-	             //} 
-	             #endregion
-	 
-	             #region 读取属性的第二种方法
-	             try
-	             {
-	                 XmlReader xr = XmlReader.Create(path);
-	                 while (xr.Read())
-	                 {
-	                     if (xr.HasAttributes)
-	                     {
-	                         Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         for (int i = 0; i &lt; xr.AttributeCount; i++)
-	                         {                            
-	                         xr.MoveToAttribute(i);                              
-	                         
-	                         //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
-	                         Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
-	                         }                                                                     								}
-	                }
-	             }
-	             catch (Exception ex)
-	             {
-	                 Console.WriteLine(ex.Message);
-	             } 
-	             #endregion
-	             Console.ReadKey();
-	         }
-	     }
-	 }
-</code></pre>
-<p>解决后，上面的代码可以不用知道元素的名称和属性的名称的情况下读取XML文件中的所有属性名及其值。这种方法有点像迭代器遍历数组，只不过这里的元素变成了XML的节点和元素，而且这里可以把XML的属性也可以看成是XML的节点（”可以看成XML元素的子节点“），这样元素看成是节点，属性也看成是节点，都当做节点处理，也就是说这个遍历可以看成是遍历XML的节点。这样也就可以解释上面代码中的 xr.Name、xr.Value了，他们分别可以看成是XML的节点名和节点值（即属性名和属性值）。如此，这样的方法便不难理解了！</p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553058156.html"/>
-    <updated>2022-04-11T13:35:05+08:00</updated>
-    <id>https://jackro.cn/16496553058156.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-android-7-0%E8%A1%8C%E4%B8%BA%E5%8F%98%E6%9B%B4%E4%B9%8B%E5%90%8E%E5%8F%B0%E4%BC%98%E5%8C%96-date-2017-06-13" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android 7.0行为变更之后台优化<br />
-date: 2017-06-13</h2>
-<p>Android 7.0 对系统和API做了一些变更。其中关于隐式广播的移除见官方文档链接：<a href="https://developer.android.com/about/versions/nougat/android-7.0-changes.html#bg-opt">Project Svelte：后台优化</a>，根据官方文档介绍，该变更主要是为了帮助优化内存使用和电量消耗，因为隐式广播会在后台频繁启动已注册侦听这些广播的应用，删除这些广播可以显著提升设备性能和用户体验。</p>
-<p>针对这一变更，官方文档也给出了应用开发者如何改写应用的一些建议，官方文档参考：<a href="https://developer.android.com/preview/features/background-optimization.html">后台优化</a>。</p>
-<p>1）<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a></p>
-<p>面向Android 7.0(API 24)及以上的应用如果在应用的AndroidManifest静态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，将不会收到该广播。但是我们可以使用[Context.registerReceiver()](<a href="https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver">https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver</a>, android.content.IntentFilter))动态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，这将会让我们的应用在运行时收到该广播（这样也可以改善内存使用和电量消耗）。</p>
-<p>Android 7.0(API 24)还为我们提供了<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>（<a href="https://developer.android.com/reference/android/app/job/JobService.html">JobService</a>的回调方法），我们可以使用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html">JobInfo.Builder</a>构建一个在Unmetered Network Connection上的<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>执行这个<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，接下来就可以在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>方法里执行我们自己的逻辑。</p>
-<p>我们还可以使用<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html">ConnectivityManager.NetworkCallback</a>来监听网络变化，比如该接口中的<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html#onAvailable(android.net.Network)">onAvailable()</a>方法。</p>
-<p>2）<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_PICTURE">ACTION_NEW_PICTURE</a>或<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_VIDEO">ACTION_NEW_VIDEO</a></p>
-<p>在Android 7.0(API 24)里，这两个隐式广播被移除了，应用程序不能发送或接受这两个广播来监听系统的照片或者视频的拍摄。但是在Android 8.0(API 26)，这两个广播又被添加回来了，不过也仅仅可以通过动态注册来接收，并且仅仅适用于监听到他们来执行简单的可以立即被执行的任务，执行复杂的繁重的任务仍然需要使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>、<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>，和上面第一点处理方法类似，不同的是，需要调用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html#addTriggerContentUri(android.app.job.JobInfo.TriggerContentUri)">JobInfo.Builder.addTriggerContentUri()</a>构造<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>回调方法里去调用<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentAuthorities()">JobParameters.getTriggeredContentAuthorities()</a>和<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentUris()">JobParameters.getTriggeredContentUris()</a>来获取拍照或摄像时增加的照片或视频的Uri。</p>
-<p>像上面这样优化App可以让App在低内存的设备上改善性能和用户体验（这可以改善Android应用生态环境），移除后台服务（background service）和隐式广播的依赖可以帮助你的App在这样的设备上运行的更好。虽然Android 7.0(API 24)在逐步减少这样的issue，但是我们仍然推荐你通过完全不使用这样的后台进程来优化你的App。<br />
-Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不使用后台进程时是否还能很好的运行。命令如下：</p>
-<pre><code class="language-plain_text">    //模拟隐式广播和后台服务（background service）不可用的条件
-    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND ignore
-    //重新使隐式广播和后台服务（background service）可用
-    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND allow
-</code></pre>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[---]]></title>
-    <link href="https://jackro.cn/16496553058247.html"/>
-    <updated>2022-04-11T13:35:05+08:00</updated>
-    <id>https://jackro.cn/16496553058247.html</id>
-    <content type="html"><![CDATA[
-<h2><a id="title-android%E4%B8%ADactionbar%E7%9A%84setxxxenabled%E6%96%B9%E6%B3%95%E7%9A%84%E7%90%86%E8%A7%A3-date-2015-06-14" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android中ActionBar的setXXXEnabled方法的理解<br />
-date: 2015-06-14</h2>
-<p>setHomeButtonEnabled这个方法在小于4.0版本的默认值是true，但是在4.0及其以上是false，该方法的作用：决定左上角的图标是否可以点击，没有向左的小图标。true则图标可以点击，false则不可以点击。</p>
-<pre><code class="language-plain_text">	actionBar.setDisplayHomeAsUpEnabled(true)    // 给左上角图标的左边加上一个返回的图标 。对应ActionBar.DISPLAY_HOME_AS_UP。
-
-	actionBar.setDisplayShowHomeEnabled(true)   //使左上角图标是否显示，如果设成false，则没有程序图标，仅仅就个标题，否则，显示应用程序图标。
-
-	actionBar.setDisplayShowCustomEnabled(true)  // 使自定义的普通View能在title栏显示，即actionBar.setCustomView能起作用，对应ActionBar.DISPLAY_SHOW_CUSTOM。
-
-	actionBar.setDisplayShowTitleEnabled(true)   //对应ActionBar.DISPLAY_SHOW_TITLE。
-</code></pre>
-<p>其中setHomeButtonEnabled和setDisplayShowHomeEnabled共同起作用，如果setHomeButtonEnabled设成false，即使setDisplayShowHomeEnabled设成true，图标也不能点击。</p>
+<p>当你点击系统的back键，当前Activity开启的轮询服务刚好此时开启运行，即走onStartCommand，这里Activity用Intent传递给该服务的所有参数会为null。Activity此时已经异常destroy了，此时传递给Service的Intent的参数不会传递成功。所以这里如果你在Service的onStartCommand里用到了Intent传递过来的参数，则需要先判空，否则可能出现空指针异常。</p>
 
 ]]></content>
   </entry>

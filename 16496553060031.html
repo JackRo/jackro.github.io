@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  --- - JackRo's Blog
+  Fragment 懒加载失效, 多次加载数据 - JackRo's Blog
   
   </title>
   
@@ -78,6 +78,20 @@
 
         
             <li><a href="Android.html">Android</a></li>
+        
+            <li><a href="iOS.html">iOS</a></li>
+        
+            <li><a href=".NET.html">.NET</a></li>
+        
+            <li><a href="Java.html">Java</a></li>
+        
+            <li><a href="Git.html">Git</a></li>
+        
+            <li><a href="DB.html">DB</a></li>
+        
+            <li><a href="Shell.html">Shell</a></li>
+        
+            <li><a href="PHP.html">PHP</a></li>
          
 
       </ul>
@@ -100,10 +114,10 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>---</h1>
+          <h1>Fragment 懒加载失效, 多次加载数据</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2022/04/11</span>
+          <span class="date">2016/05/29</span>
 
           <span>posted in&nbsp;</span> 
           
@@ -120,13 +134,11 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <h2><a id="title-fragment%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%B1%E6%95%88%EF%BC%8C%E5%A4%9A%E6%AC%A1%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE-date-2016-05-29" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Fragment懒加载失效，多次加载数据<br />
-date: 2016-05-29</h2>
-<p>ViewPager和Fragment一起使用时，为了防止一进入Activity就加载所有Fragment的数据，减轻Activity初始化加载的负担，需要用懒加载的方式去加载Fragment，懒加载的方法如下：</p>
-<p>让Fragment继承BaseFragment，BaseFragment代码如下所示：</p>
+      <p>ViewPager和Fragment一起使用时, 为了防止一进入Activity就加载所有Fragment的数据, 减轻Activity初始化加载的负担, 需要用懒加载的方式去加载Fragment, 懒加载的方法如下:</p>
+<p>让Fragment继承BaseFragment, BaseFragment代码如下所示:</p>
 <pre><code class="language-plain_text">	/**
-	* 应用程序的基类Fragment，实现懒加载
-	* Created by Jack on 2016/5/17 08:31.
+	* 应用程序的基类Fragment, 实现懒加载
+	* Created by Jack on 2016/5/17 08:31.1
 	* Email: zhuochangjing@foxmail.com
 	*/
 	public abstract class BaseFragment extends Fragment {
@@ -181,7 +193,7 @@ date: 2016-05-29</h2>
 	    protected abstract void initView(View view);
 	}
 </code></pre>
-<p>子Fragment代码如下：</p>
+<p>子Fragment代码如下:</p>
 <pre><code class="language-plain_text">	public class LogisticsFragment extends BaseFragment{
 		private boolean isPrepared;
 		
@@ -199,13 +211,13 @@ date: 2016-05-29</h2>
 	    }
 	}
 </code></pre>
-<p>但是现在由于ViewPager和Fragment一起用，由于ViewPager默认只能缓存Fragment左右两边各一个Fragment，也就是说缓存值是1，设置缓存页面的方法如下：</p>
+<p>但是现在由于ViewPager和Fragment一起用, 由于ViewPager默认只能缓存Fragment左右两边各一个Fragment, 也就是说缓存值是1, 设置缓存页面的方法如下:</p>
 <pre><code class="language-plain_text">mViewpager.setOffscreenPageLimit(2);
 </code></pre>
-<p>如果未调用上面的设置缓存页面的方法，默认缓存值就是1，此时如果你的Fragment页在3个及以上时，当你切换Fragment时，就会造成未缓存的Fragment会执行onDestroyView，然而再次切换到这个未缓存的Fragment或者切换到与这个未缓存的Fragment相邻的Fragment时，他就会再次执行onCreateView方法，也就是说再次initView，这样isPrepared又会被置为true，因此导致lazyLoad方法里的判断加载数据的表达式为true，加载数据就会再次执行了。</p>
-<p>这里懒加载并不是说让lazyLoad方法只执行一次，而是通过判断让加载数据只执行一次。</p>
-<p>ViewPager的设置缓存页面的方法具体细节可以翻阅官方文档：<a href="https://developer.android.google.cn/reference/android/support/v4/view/ViewPager.html#setOffscreenPageLimit(int)">setOffscreenPageLimit</a></p>
-<p>参考链接：<a href="http://blog.csdn.net/feixiangdexin123087/article/details/42059975">ViewPager中切换界面Fragment被销毁的问题分析</a></p>
+<p>如果未调用上面的设置缓存页面的方法, 默认缓存值就是1, 此时如果你的Fragment页在3个及以上时, 当你切换Fragment时, 就会造成未缓存的Fragment会执行onDestroyView, 然而再次切换到这个未缓存的Fragment或者切换到与这个未缓存的Fragment相邻的Fragment时, 他就会再次执行onCreateView方法, 也就是说再次initView, 这样isPrepared又会被置为true, 因此导致lazyLoad方法里的判断加载数据的表达式为true, 加载数据就会再次执行了.</p>
+<p>这里懒加载并不是说让lazyLoad方法只执行一次, 而是通过判断让加载数据只执行一次.</p>
+<p>ViewPager的设置缓存页面的方法具体细节可以翻阅官方文档: <a href="https://developer.android.google.cn/reference/android/support/v4/view/ViewPager.html#setOffscreenPageLimit(int)">setOffscreenPageLimit</a></p>
+<p>参考链接: <a href="http://blog.csdn.net/feixiangdexin123087/article/details/42059975">ViewPager中切换界面Fragment被销毁的问题分析</a></p>
 
 
     
@@ -216,13 +228,16 @@ date: 2016-05-29</h2>
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="16496553059941.html" 
-          title="Previous Post: ---">&laquo; ---</a>
+          <a href="16496553060690.html" 
+          title="Previous Post: Activity 中开启轮询服务当Activity异常destroy时">&laquo; Activity 中开启轮询服务当Activity异常destroy时</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="16496553058576.html" 
+          title="Next Post: Android异常解决之WindowManager.BadTokenException">Android异常解决之WindowManager.BadTokenException &raquo;</a>
       
       </p>
         </div>
@@ -277,6 +292,20 @@ date: 2016-05-29</h2>
       	<p class="cat-list">
         
             <a href="Android.html"><strong>Android</strong></a>
+        
+            <a href="iOS.html"><strong>iOS</strong></a>
+        
+            <a href=".NET.html"><strong>.NET</strong></a>
+        
+            <a href="Java.html"><strong>Java</strong></a>
+        
+            <a href="Git.html"><strong>Git</strong></a>
+        
+            <a href="DB.html"><strong>DB</strong></a>
+        
+            <a href="Shell.html"><strong>Shell</strong></a>
+        
+            <a href="PHP.html"><strong>PHP</strong></a>
          
         </p>
 
@@ -293,31 +322,31 @@ date: 2016-05-29</h2>
 	      
 		      
 			      <li class="post">
-			        <a href="16496553060120.html">---</a>
+			        <a href="16496553059675.html">Android 面试展示 iOS debug app 时闪退</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060211.html">---</a>
+			        <a href="16496553060588.html">mysql自定义function问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060303.html">---</a>
+			        <a href="16496553059414.html">Android Studio 中鼠标悬停 Fetching Documentation 很长时间</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060398.html">---</a>
+			        <a href="16496553060491.html">macOS 中 git 提交操作 .DS_Store 文件引发的问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060491.html">---</a>
+			        <a href="16496553060993.html">Safari 浏览器设置 Java 支持</a>
 			      </li>
 		     
 		  

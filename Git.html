@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  Android SDK 大连东软镜像地址及地址列表 - JackRo's Blog
+  Git - JackRo's Blog
   
   </title>
   
@@ -105,86 +105,75 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>Android SDK 大连东软镜像地址及地址列表</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2015/09/07</span>
-
-          <span>posted in&nbsp;</span> 
-          
-              <span class="posted-in"><a href='Android.html'>Android</a></span>
-           
-         
-          <span class="comments">
-            
-
-            
-          </span>
-
-        </div>
-      </div><!-- article -->
-
-      <div class="article-content">
-      <p>Android SDK更新大连东软镜像地址: mirrors.neusoft.edu.cn, 端口: 80<br />
-镜像地址列表URL:</p>
-<pre><code class="language-plain_text">http://mirrors.neusoft.edu.cn/android/repository/addon-6.xml 
-http://mirrors.neusoft.edu.cn/android/repository/addon.xml 
-http://mirrors.neusoft.edu.cn/android/repository/extras/intel/addon.xml 
-http://mirrors.neusoft.edu.cn/android/repository/sys-img/android-tv/sys-img.xml 
-http://mirrors.neusoft.edu.cn/android/repository/sys-img/android-wear/sys-img.xml 
-http://mirrors.neusoft.edu.cn/android/repository/sys-img/android/sys-img.xml 
-http://mirrors.neusoft.edu.cn/android/repository/sys-img/google_apis/sys-img.xml 
-http://mirrors.neusoft.edu.cn/android/repository/sys-img/x86/addon-x86.xml 
-http://mirrors.neusoft.edu.cn/android/repository/addons_list-2.xml 
-http://mirrors.neusoft.edu.cn/android/repository/repository-10.xml
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="16496553060491.html">
+                
+                  <h1>macOS 中 git 提交操作 .DS_Store 文件引发的问题解决</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>在 macOS 中是存在 .DS_Store 文件的，在使用git对项目进行版本控制时，该文件如果不加入 .gitignore 中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p>
+<p>经过一番搜索，我找到了解决方法，我们可以先在.gitignore中加入该文件的忽略规则，如下所示：</p>
+<pre><code class="language-plain_text">.DS_Store
 </code></pre>
+<p>然后删除项目中所有的 .DS_Store，在项目目录下执行如下命令：</p>
+<pre><code class="language-plain_text">find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
+</code></pre>
+<p>然后提交项目即可。</p>
+<p>但是，我发现我的项目是用 WebStorm 打开的，项目目录下自动生成了 .idea 文件，每次提交 .idea 文件也会提交，加入忽略规则也不行，我想到了和上面类似的方法，删除 .idea 目录，然后再提交，即可解决。</p>
+<p>参考链接：</p>
+<p><a href="http://www.jianshu.com/p/fdaa8be7f6c3">如何删除GIT中的.DS_Store</a></p>
+<p><a href="http://www.jianshu.com/p/8c0d262e49a6">Git中全局忽略.DS_Store文件</a></p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/09/22</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Git.html'>Git</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
 
 
-    
-
-      </div>
-
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="16496553061515.html" 
-          title="Previous Post: Windows 10 下让 jar 文件双击可以运行的解决方法">&laquo; Windows 10 下让 jar 文件双击可以运行的解决方法</a>
-      
-        </p>
-        </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="16496553060303.html" 
-          title="Next Post: LinearLayout按下或获取焦点时设置不同颜色或图片">LinearLayout按下或获取焦点时设置不同颜色或图片 &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          
-
-          
-
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
-
-
-
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

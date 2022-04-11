@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  自定义 UIView 不响应 touchesBegan 事件 - JackRo's Blog
+  iOS - JackRo's Blog
   
   </title>
   
@@ -105,36 +105,125 @@
        
 
  <script type="text/javascript">
-  $(function(){
-    $('#menu_item_index').addClass('is_active');
-  });
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
 </script>
 <div class="row">
-  <div class="large-8 medium-8 columns">
-      <div class="markdown-body article-wrap">
-       <div class="article">
-          
-          <h1>自定义 UIView 不响应 touchesBegan 事件</h1>
-     
-        <div class="read-more clearfix">
-          <span class="date">2017/02/23</span>
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="16496553059675.html">
+                
+                  <h1>Android 面试展示 iOS debug app 时闪退</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>今天面试展示 iOS debug app 时不断闪退，无法打开应用，车祸现场相当尴尬。面试结束回到家后打开Xcode重新部署debug app到真机上，报错，无法部署。根据提示，换了下bundle ID，卸载真机上已安装的app，重新部署安装，仍然报错，无法部署。于是去看了下配置文件，发现provisioning profile报错，需要重新登录Apple ID，重新登录后，再次部署，并在真机上设置信任当前Apple ID，问题解决。</p>
+<p>但是问题真的解决了吗？然后我仔细去看了下配置文件，终于找到问题原因，原来debug app的Provisioning profile是有过期时间的。如下图所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2018051401.jpg" alt="jackro_blog2018051401" /></p>
 
-          <span>posted in&nbsp;</span> 
-          
-              <span class="posted-in"><a href='iOS.html'>iOS</a></span>
-           
-         
-          <span class="comments">
-            
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2018/05/14</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='iOS.html'>iOS</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
 
-            
-          </span>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553060120.html">
+                
+                  <h1>模拟器收不到UILocalNotification本地通知</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>通知功能是iOS应用开发经常会碰到的需求，iOS应用的通知分为本地通知和远程通知（即消息推送），Apple develop官网的API Guides对通知的开发有详细的介绍。</p>
+<p>今天我碰到的问题是模拟器收不到本地通知，按照惯例，先上本地通知的代码：</p>
+<pre><code class="language-plain_text">    UILocalNotification *note = [[UILocalNotification alloc] init];
+    note.alertBody = @&quot;Hypnotize&quot;;
+    note.fireDate = date; //这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
+    note.applicationIconBadgeNumber = 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:note];
+</code></pre>
+<p>原本以为这样就可以接收到通知了，结果一运行，始终看不到通知，过了通知的设定时间好久了，也看不到通知。查阅了下通知的用法文档，才知道需要去申请发送通知的授权。修正后的代码如下所示：</p>
+<pre><code class="language-plain_text">//判断是否已经授权用户发送通知
+if ([[UIApplication sharedApplication] currentUserNotificationSettings].types != UIUserNotificationTypeNone) {
+    UILocalNotification *note = [[UILocalNotification alloc] init];
+    note.alertBody = @&quot;Hypnotize&quot;;
+    note.fireDate = date;//这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
+    note.applicationIconBadgeNumber = 1;
+    [[UIApplication sharedApplication] scheduleLocalNotification:note];
+} else{
+    //用户注册通知，注册后才能收到通知，这会给用户一个弹框，提示用户选择是否允许发送通知
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound   categories:nil]];
+}
+</code></pre>
+<p>用户注册通知后，会收到一个回调函数，一般如果未授权，创建通知就在这个回调函数里进行。</p>
+<pre><code class="language-plain_text">//用户注册通知回调函数
+- (void)application:(UIApplication *) application
+    didRegisterUserNotificationSettings:(UIUserNotificationSettings   *)notificationSettings {
+     if (notificationSettings.types != UIUserNotificationTypeNone) {
+         NSLog(@&quot;haha&quot;);
+        UILocalNotification *note = [[UILocalNotification alloc] init];
+        note.alertBody = @&quot;Hypnotize&quot;;
+        note.fireDate = rvc.selectDate;
+        note.applicationIconBadgeNumber = 1;
+        [[UIApplication sharedApplication] scheduleLocalNotification:note];
+    }
+}
+</code></pre>
 
-        </div>
-      </div><!-- article -->
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/02/24</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='iOS.html'>iOS</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
 
-      <div class="article-content">
-      <p>iOS开发中会使用到自定义UIView，下面是我在学习过程中写的一个自定义UIView：</p>
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553059941.html">
+                
+                  <h1>自定义 UIView 不响应 touchesBegan 事件</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>iOS开发中会使用到自定义UIView，下面是我在学习过程中写的一个自定义UIView：</p>
 <pre><code class="language-plain_text">#import &quot;BNRHypnosisView.h&quot;
 
 @interface BNRHypnosisView()
@@ -265,43 +354,192 @@ BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
 [self.window.rootViewController.view addSubview:firstView];
 </code></pre>
 
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/02/23</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='iOS.html'>iOS</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
 
-    
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553059586.html">
+                
+                  <h1>Application windows are expected to have a root view controller at the end of application launch</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>现阶段的iOS应用开发，我们必须在AppDelegate中设置self.window.rootViewController，但是在以前老版本的xcode中可以不设置，iOS应用也可以照常运行。因此如果一些老的项目或者照一些老的iOS教程书籍敲的代码，运行就可能会出现下面的异常：</p>
+<pre><code class="language-plain_text">*** Terminating app due to uncaught exception 'NSInternalInconsistencyException', 
+reason: 'Application windows are expected to have a root view controller at the end of application launch'
+</code></pre>
+<p>并且app只能打开启动屏，无法进入应用，程序在main函数中停止运行，如下图所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022201.png" alt="jackro_blog2017022201" /></p>
+<p>这里我碰到这个问题的demo是这样的，有一个自定义view，代码如下：</p>
+<pre><code class="language-plain_text">//
+//  BNRHypnosisView.h
+//  Hypnosister
+//
+//  Created by JackRo on 2017/2/21.
+//  Copyright © 2017年 JackRo. All rights reserved.
+//
+#import &lt;UIKit/UIKit.h&gt;
 
-      </div>
+@interface BNRHypnosisView : UIView
 
-      <div class="row">
-        <div class="large-6 columns">
-        <p class="text-left" style="padding:15px 0px;">
-      
-          <a href="16496553060120.html" 
-          title="Previous Post: 模拟器收不到UILocalNotification本地通知">&laquo; 模拟器收不到UILocalNotification本地通知</a>
-      
-        </p>
-        </div>
-        <div class="large-6 columns">
-      <p class="text-right" style="padding:15px 0px;">
-      
-          <a  href="16496553059586.html" 
-          title="Next Post: Application windows are expected to have a root view controller at the end of application launch">Application windows are expected to have a root view controller at the end of application launch &raquo;</a>
-      
-      </p>
-        </div>
-      </div>
-      <div class="comments-wrap">
-        <div class="share-comments">
-          
-
-          
-
-          
-        </div>
-      </div>
-    </div><!-- article-wrap -->
-  </div><!-- large 8 -->
+@end
 
 
 
+//
+//  BNRHypnosisView.m
+//  Hypnosister
+//
+//  Created by JackRo on 2017/2/21.
+//  Copyright © 2017年 JackRo. All rights reserved.
+//
+
+#import &quot;BNRHypnosisView.h&quot;
+
+@implementation BNRHypnosisView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+    }
+    return self;
+}
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+- (void)drawRect:(CGRect)rect {
+    CGRect bounds = self.bounds;
+    CGPoint center;
+    center.x = bounds.origin.x + bounds.size.width / 2.0;
+    center.y = bounds.origin.y + bounds.size.height / 2.0;
+
+    float radius = (MIN(bounds.size.width, bounds.size.height) / 2.0);
+
+    UIBezierPath *path = [[UIBezierPath alloc] init];
+
+    [path addArcWithCenter:center radius:radius startAngle:0.0 endAngle:M_PI*2.0 clockwise:YES];
+
+    [path stroke];
+}
+
+@end
+</code></pre>
+<p>AppDelegate中代码如下：</p>
+<pre><code class="language-plain_text">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+
+    CGRect firstFrame = self.window.bounds;
+    BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
+    firstView.backgroundColor = [UIColor redColor];
+    [self.window addSubview:firstView];
+
+
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+</code></pre>
+<p>根据异常信息的意思，应用就是缺少一个rootViewController，所以在AppDelegate中给应用设置rootViewController就可以了，所以解决后的代码如下所示：</p>
+<pre><code class="language-plain_text">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    //-----------------------------------------------------------------------------------------
+    //解决该问题的代码
+    NSArray *windows = [[UIApplication sharedApplication] windows];
+    for(UIWindow *window in windows) {
+        if(window.rootViewController == nil){
+            UIViewController *vc = [[UIViewController alloc]initWithNibName:nil
+                                                                 bundle:nil];
+            window.rootViewController = vc;
+        }
+    }
+    //解决该问题的代码
+    //----------------------------------------------------------------------------------------
+
+    CGRect firstFrame = self.window.bounds;
+    BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
+    firstView.backgroundColor = [UIColor redColor];
+    [self.window addSubview:firstView];
+
+
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    return YES;
+}
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2017/02/22</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='iOS.html'>iOS</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
+
+
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
 
  <div class="large-4 medium-4 columns">
   <div class="hide-for-small">

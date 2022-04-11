@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  --- - JackRo's Blog
+  macOS 中 git 提交操作 .DS_Store 文件引发的问题解决 - JackRo's Blog
   
   </title>
   
@@ -78,6 +78,20 @@
 
         
             <li><a href="Android.html">Android</a></li>
+        
+            <li><a href="iOS.html">iOS</a></li>
+        
+            <li><a href=".NET.html">.NET</a></li>
+        
+            <li><a href="Java.html">Java</a></li>
+        
+            <li><a href="Git.html">Git</a></li>
+        
+            <li><a href="DB.html">DB</a></li>
+        
+            <li><a href="Shell.html">Shell</a></li>
+        
+            <li><a href="PHP.html">PHP</a></li>
          
 
       </ul>
@@ -100,14 +114,14 @@
       <div class="markdown-body article-wrap">
        <div class="article">
           
-          <h1>---</h1>
+          <h1>macOS 中 git 提交操作 .DS_Store 文件引发的问题解决</h1>
      
         <div class="read-more clearfix">
-          <span class="date">2022/04/11</span>
+          <span class="date">2017/09/22</span>
 
           <span>posted in&nbsp;</span> 
           
-              <span class="posted-in"><a href='Android.html'>Android</a></span>
+              <span class="posted-in"><a href='Git.html'>Git</a></span>
            
          
           <span class="comments">
@@ -120,17 +134,15 @@
       </div><!-- article -->
 
       <div class="article-content">
-      <h2><a id="title-mac-os%E4%B8%ADgit%E6%8F%90%E4%BA%A4%E6%93%8D%E4%BD%9C-ds-store%E6%96%87%E4%BB%B6%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-date-2017-09-22" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Mac os中git提交操作.DS_Store文件引发的问题解决<br />
-date: 2017-09-22</h2>
-<p>在Mac os中是存在.DS_Store文件的，在使用git对项目进行版本控制时，该文件如果不加入.gitignore中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p>
+      <p>在 macOS 中是存在 .DS_Store 文件的，在使用git对项目进行版本控制时，该文件如果不加入 .gitignore 中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p>
 <p>经过一番搜索，我找到了解决方法，我们可以先在.gitignore中加入该文件的忽略规则，如下所示：</p>
 <pre><code class="language-plain_text">.DS_Store
 </code></pre>
-<p>然后删除项目中所有的.DS_Store，在项目目录下执行如下命令：</p>
+<p>然后删除项目中所有的 .DS_Store，在项目目录下执行如下命令：</p>
 <pre><code class="language-plain_text">find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
 </code></pre>
 <p>然后提交项目即可。</p>
-<p>但是，我发现我的项目是用webstorm打开的，项目目录下自动生成了.idea文件，每次提交.idea文件也会提交，加入忽略规则也不行，我想到了和上面类似的方法，删除.idea目录，然后再提交，即可解决。</p>
+<p>但是，我发现我的项目是用 WebStorm 打开的，项目目录下自动生成了 .idea 文件，每次提交 .idea 文件也会提交，加入忽略规则也不行，我想到了和上面类似的方法，删除 .idea 目录，然后再提交，即可解决。</p>
 <p>参考链接：</p>
 <p><a href="http://www.jianshu.com/p/fdaa8be7f6c3">如何删除GIT中的.DS_Store</a></p>
 <p><a href="http://www.jianshu.com/p/8c0d262e49a6">Git中全局忽略.DS_Store文件</a></p>
@@ -144,16 +156,16 @@ date: 2017-09-22</h2>
         <div class="large-6 columns">
         <p class="text-left" style="padding:15px 0px;">
       
-          <a href="16496553060398.html" 
-          title="Previous Post: ---">&laquo; ---</a>
+          <a href="16496553059414.html" 
+          title="Previous Post: Android Studio 中鼠标悬停 Fetching Documentation 很长时间">&laquo; Android Studio 中鼠标悬停 Fetching Documentation 很长时间</a>
       
         </p>
         </div>
         <div class="large-6 columns">
       <p class="text-right" style="padding:15px 0px;">
       
-          <a  href="16496553060588.html" 
-          title="Next Post: ---">--- &raquo;</a>
+          <a  href="16496553060993.html" 
+          title="Next Post: Safari 浏览器设置 Java 支持">Safari 浏览器设置 Java 支持 &raquo;</a>
       
       </p>
         </div>
@@ -208,6 +220,20 @@ date: 2017-09-22</h2>
       	<p class="cat-list">
         
             <a href="Android.html"><strong>Android</strong></a>
+        
+            <a href="iOS.html"><strong>iOS</strong></a>
+        
+            <a href=".NET.html"><strong>.NET</strong></a>
+        
+            <a href="Java.html"><strong>Java</strong></a>
+        
+            <a href="Git.html"><strong>Git</strong></a>
+        
+            <a href="DB.html"><strong>DB</strong></a>
+        
+            <a href="Shell.html"><strong>Shell</strong></a>
+        
+            <a href="PHP.html"><strong>PHP</strong></a>
          
         </p>
 
@@ -224,31 +250,31 @@ date: 2017-09-22</h2>
 	      
 		      
 			      <li class="post">
-			        <a href="16496553060120.html">---</a>
+			        <a href="16496553059675.html">Android 面试展示 iOS debug app 时闪退</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060211.html">---</a>
+			        <a href="16496553060588.html">mysql自定义function问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060303.html">---</a>
+			        <a href="16496553059414.html">Android Studio 中鼠标悬停 Fetching Documentation 很长时间</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060398.html">---</a>
+			        <a href="16496553060491.html">macOS 中 git 提交操作 .DS_Store 文件引发的问题解决</a>
 			      </li>
 		     
 		  
 		      
 			      <li class="post">
-			        <a href="16496553060491.html">---</a>
+			        <a href="16496553060993.html">Safari 浏览器设置 Java 支持</a>
 			      </li>
 		     
 		  
