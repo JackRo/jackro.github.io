@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  JackRo's Blog
+  dotNET - JackRo's Blog
   
   </title>
   
@@ -113,89 +113,6 @@
 	<div class="large-8 medium-8 columns">
 		<div class="markdown-body home-categories">
 		
-			<div class="article">
-                <a class="clearlink" href="16496553058409.html">
-                
-                  <h1>Android做检测版本更新安装完以后直接退出，没有出现安装成功的界面</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>在检测版本更新时，当下载完以后，安装的时候，系统显示正在安装，然后就没有，回到了主页，没有显示安装成功的界面，让用户不知所措。安装程序的代码如下：</p>
-<pre><code class="language-plain_text">	Intent intent = new Intent(Intent.ACTION_VIEW);  
-	intent.setDataAndType(Uri.parse(&quot;file://xxxx.apk&quot;), &quot;application/vnd.android.package-archive&quot;);  
-	context.startActivity(intent);  
-</code></pre>
-<p>这在android4.0以前的系统中没有什么问题，但是在android4.0及其以后的系统中就不显示安装成功的界面，应该加一行代码：</p>
-<pre><code class="language-plain_text">	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-</code></pre>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2015/06/10</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="16496553058836.html">
-                
-                  <h1>Android 处理图片报 OOM 的问题解决</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<p>当使用android的Drawable时，一开始我是用下面的方法实现的：</p>
-<pre><code class="language-plain_text">Drawable.createFromStream(is, srcName);
-</code></pre>
-<p>但是经过调试每次程序都会crash掉，报OOM错误，错误都会打到上面这行代码，搞了老半天，发现 BitmapFactory.decodeStream比Drawable.createFromStream 好用，后者更占内存。下面是解决后的代码：</p>
-<pre><code class="language-plain_text"> BitmapFactory.Options options = new BitmapFactory.Options();
- options.inPreferredConfig = Config.RGB_565;                
- options.inSampleSize = 2;
- Bitmap bitmap = BitmapFactory.decodeStream(url.openStream(), null, options);                    
- drawable = new BitmapDrawable(bitmap);
-</code></pre>
-<p>当然options.inSampleSize = 2是设置图片显示的尺寸，这个图片尺寸是随意设置的，可以根据手机屏幕的大小来计算图片需要显示的尺寸。</p>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2015/06/08</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
 			<div class="article">
                 <a class="clearlink" href="16496553061623.html">
                 
@@ -551,18 +468,169 @@ Form1部分的代码：</p>
                 </div>
               </div><!-- article -->
         
+			<div class="article">
+                <a class="clearlink" href="16496553061843.html">
+                
+                  <h1>XmlReader 在未知元素的名称和属性的名称的情况下读取属性</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<p>经过努力，终于解决了XmlReader在未知元素的名称和属性的名称的情况下读取属性的方法。在没有解决前，我的代码如下：</p>
+<pre><code class="language-plain_text">	using System; 
+	using System.Collections.Generic; 
+	using System.Linq; 
+	using System.Text; 
+	using System.Xml; 
+	
+	namespace ReadAttribute 
+	{ 
+	    class Program
+	     {
+	         static void Main(string[] args)
+	         {
+	             string path = @&quot;e:\testfile\myMail.xml&quot;;
+	             
+	             #region 读取属性的第一种方法
+	             //string date;
+	             //try
+	             //{
+	             //    XmlReader xr = XmlReader.Create(path);
+	             //    xr.ReadToFollowing(&quot;mail&quot;);
+	             //    date = xr.GetAttribute(&quot;date&quot;);
+	             //    Console.Write(&quot;信件的日期为：&quot;);
+	             //    Console.WriteLine(date);
+	             //}
+	             //catch (Exception ex)
+	             //{
+	             //    Console.WriteLine(ex.Message);
+	             //} 
+	             #endregion
+	 
+	             #region 读取属性的第二种方法
+	             try
+	             {
+	                 XmlReader xr = XmlReader.Create(path);
+	                 while (xr.Read())
+	                 {
+	                     if (xr.HasAttributes)
+	                     {
+	                         //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
+	                         //for (int i = 0; i &lt; xr.AttributeCount; i++)
+	                         //{                            
+	                         //xr.MoveToAttribute(i);                            
+	                         Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
+	                         Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
+	                         //}                                                                  
+	                     }
+	                 }
+	             }
+	             catch (Exception ex)
+	             {
+	                 Console.WriteLine(ex.Message);
+	             } 
+	             #endregion
+	             Console.ReadKey();
+	         }
+	     }
+	 }
+</code></pre>
+<p>解决后，我的代码如下：</p>
+<pre><code class="language-plain_text">	using System; 
+	using System.Collections.Generic; 
+	using System.Linq; 
+	using System.Text; 
+	using System.Xml; 
+	
+ 	namespace ReadAttribute 
+	{ 
+	    class Program
+	     {
+	         static void Main(string[] args)
+	         {
+	             string path = @&quot;e:\testfile\myMail.xml&quot;;
+	             
+	             #region 读取属性的第一种方法
+	             //string date;
+	             //try
+	             //{
+	             //    XmlReader xr = XmlReader.Create(path);
+	             //    xr.ReadToFollowing(&quot;mail&quot;);
+	             //    date = xr.GetAttribute(&quot;date&quot;);
+	             //    Console.Write(&quot;信件的日期为：&quot;);
+	             //    Console.WriteLine(date);
+	             //}
+	             //catch (Exception ex)
+	             //{
+	             //    Console.WriteLine(ex.Message);
+	             //} 
+	             #endregion
+	 
+	             #region 读取属性的第二种方法
+	             try
+	             {
+	                 XmlReader xr = XmlReader.Create(path);
+	                 while (xr.Read())
+	                 {
+	                     if (xr.HasAttributes)
+	                     {
+	                         Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
+	                         for (int i = 0; i &lt; xr.AttributeCount; i++)
+	                         {                            
+	                         xr.MoveToAttribute(i);                              
+	                         
+	                         //Console.WriteLine(&quot;&lt;&quot; + xr.Name + &quot;&gt;的属性：&quot;);
+	                         Console.WriteLine(&quot;{0}={1}&quot;, xr.Name, xr.Value);
+	                         }                                                                     								}
+	                }
+	             }
+	             catch (Exception ex)
+	             {
+	                 Console.WriteLine(ex.Message);
+	             } 
+	             #endregion
+	             Console.ReadKey();
+	         }
+	     }
+	 }
+</code></pre>
+<p>解决后，上面的代码可以不用知道元素的名称和属性的名称的情况下读取XML文件中的所有属性名及其值。这种方法有点像迭代器遍历数组，只不过这里的元素变成了XML的节点和元素，而且这里可以把XML的属性也可以看成是XML的节点（”可以看成XML元素的子节点“），这样元素看成是节点，属性也看成是节点，都当做节点处理，也就是说这个遍历可以看成是遍历XML的节点。这样也就可以解释上面代码中的 xr.Name、xr.Value了，他们分别可以看成是XML的节点名和节点值（即属性名和属性值）。如此，这样的方法便不难理解了！</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2014/08/10</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='dotNET.html'>dotNET</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
               
 
 
 			<div class="row">
 			  <div class="large-6 columns">
 			  <p class="text-left" style="padding-top:25px;">
-			   <a href="all_6.html">&laquo; Prev Page</a>  
+			   
 			  </p>
 			  </div>
 			  <div class="large-6 columns">
 			<p class="text-right" style="padding-top:25px;">
-			 <a href="all_8.html">&raquo; Next Page</a> 
+			
 			</p>
 			  </div>
 			</div>
