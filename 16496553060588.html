@@ -219,35 +219,32 @@ RETURNS type
 <pre><code class="language-plain_text">ybxtm, dept_id, box_size //ybxtm对应箱子条码, dept_id对应上面数据的中心, box_size对应箱子规格(3.5L, 8L, 15L, 20L)
 </code></pre>
 <p>然后，实现function实现及调用：</p>
-<pre><code class="language-plain_text">DELIMITER 
-</code></pre>
-\[ /*定义分隔符，用于在Linux环境下防止function定义的内部分号造成的中途输出*/
-    CREATE FUNCTION addData(deptId INT, boxSize DOUBLE, ybxtm VARCHAR(20), amount INT)
-      RETURNS INT DETERMINISTIC /*该参数需要指定，不指定Linux环境下执行时会提示你需要指定function的characteristic*/
-      BEGIN
-        DECLARE i INT DEFAULT 1;
-        DECLARE result INT DEFAULT 1;
-        DECLARE sampleBoxNum VARCHAR(20) DEFAULT '';
-        myloop: LOOP
-          SET sampleBoxNum = ybxtm;
-          IF i &gt; amount
-          THEN LEAVE myloop;
-          END IF;
-          IF i &lt; 10
-          THEN SET sampleBoxNum = concat(sampleBoxNum, concat('0', i));
-          ELSE
-            SET sampleBoxNum = concat(sampleBoxNum, i);
-          END IF;
-          INSERT INTO lx_ybx (ybxtm, dept_id, box_size) VALUES (sampleBoxNum, deptId, boxSize);
-          SET result = result + 1;
-          SET i = i + 1;
-        END LOOP myloop;
-        RETURN result - 1;
-      END 
-\]
-<p>/<em>结束时需要挂上分隔符，告诉Linux终端，function定义结束</em>/</p>
-<pre><code class="language-plain_text">/*调用function*/  
-SELECT addData(29, 20, 'X025714', 78);
+<pre><code class="language-sql">        DELIMITER $$ /*定义分隔符，用于在Linux环境下防止function定义的内部分号造成的中途输出*/
+        CREATE FUNCTION addData(deptId INT, boxSize DOUBLE, ybxtm VARCHAR(20), amount INT)
+          RETURNS INT DETERMINISTIC /*该参数需要指定，不指定Linux环境下执行时会提示你需要指定function的characteristic*/
+          BEGIN
+            DECLARE i INT DEFAULT 1;
+            DECLARE result INT DEFAULT 1;
+            DECLARE sampleBoxNum VARCHAR(20) DEFAULT '';
+            myloop: LOOP
+              SET sampleBoxNum = ybxtm;
+              IF i &gt; amount
+              THEN LEAVE myloop;
+              END IF;
+              IF i &lt; 10
+              THEN SET sampleBoxNum = concat(sampleBoxNum, concat('0', i));
+              ELSE
+                SET sampleBoxNum = concat(sampleBoxNum, i);
+              END IF;
+              INSERT INTO lx_ybx (ybxtm, dept_id, box_size) VALUES (sampleBoxNum, deptId, boxSize);
+              SET result = result + 1;
+              SET i = i + 1;
+            END LOOP myloop;
+            RETURN result - 1;
+          END $$ /*结束时需要挂上分隔符，告诉Linux终端，function定义结束*/
+         
+        /*调用function*/  
+        SELECT addData(29, 20, 'X025714', 78);
 </code></pre>
 
 
