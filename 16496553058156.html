@@ -1,0 +1,334 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  --- - JackRo's Blog
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="JackRo's Blog" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site:jackro.cn ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; JackRo's Blog</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="Android.html">Android</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+  $(function(){
+    $('#menu_item_index').addClass('is_active');
+  });
+</script>
+<div class="row">
+  <div class="large-8 medium-8 columns">
+      <div class="markdown-body article-wrap">
+       <div class="article">
+          
+          <h1>---</h1>
+     
+        <div class="read-more clearfix">
+          <span class="date">2022/04/11</span>
+
+          <span>posted in&nbsp;</span> 
+          
+              <span class="posted-in"><a href='Android.html'>Android</a></span>
+           
+         
+          <span class="comments">
+            
+
+            
+          </span>
+
+        </div>
+      </div><!-- article -->
+
+      <div class="article-content">
+      <h2><a id="title-android-7-0%E8%A1%8C%E4%B8%BA%E5%8F%98%E6%9B%B4%E4%B9%8B%E5%90%8E%E5%8F%B0%E4%BC%98%E5%8C%96-date-2017-06-13" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android 7.0行为变更之后台优化<br />
+date: 2017-06-13</h2>
+<p>Android 7.0 对系统和API做了一些变更。其中关于隐式广播的移除见官方文档链接：<a href="https://developer.android.com/about/versions/nougat/android-7.0-changes.html#bg-opt">Project Svelte：后台优化</a>，根据官方文档介绍，该变更主要是为了帮助优化内存使用和电量消耗，因为隐式广播会在后台频繁启动已注册侦听这些广播的应用，删除这些广播可以显著提升设备性能和用户体验。</p>
+<p>针对这一变更，官方文档也给出了应用开发者如何改写应用的一些建议，官方文档参考：<a href="https://developer.android.com/preview/features/background-optimization.html">后台优化</a>。</p>
+<p>1）<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a></p>
+<p>面向Android 7.0(API 24)及以上的应用如果在应用的AndroidManifest静态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，将不会收到该广播。但是我们可以使用[Context.registerReceiver()](<a href="https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver">https://developer.android.com/reference/android/content/Context.html#registerReceiver(android.content.BroadcastReceiver</a>, android.content.IntentFilter))动态注册<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION">CONNECTIVITY_ACTION</a>，这将会让我们的应用在运行时收到该广播（这样也可以改善内存使用和电量消耗）。</p>
+<p>Android 7.0(API 24)还为我们提供了<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>（<a href="https://developer.android.com/reference/android/app/job/JobService.html">JobService</a>的回调方法），我们可以使用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html">JobInfo.Builder</a>构建一个在Unmetered Network Connection上的<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>执行这个<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，接下来就可以在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>方法里执行我们自己的逻辑。</p>
+<p>我们还可以使用<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html">ConnectivityManager.NetworkCallback</a>来监听网络变化，比如该接口中的<a href="https://developer.android.com/reference/android/net/ConnectivityManager.NetworkCallback.html#onAvailable(android.net.Network)">onAvailable()</a>方法。</p>
+<p>2）<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_PICTURE">ACTION_NEW_PICTURE</a>或<a href="https://developer.android.com/reference/android/hardware/Camera.html#ACTION_NEW_VIDEO">ACTION_NEW_VIDEO</a></p>
+<p>在Android 7.0(API 24)里，这两个隐式广播被移除了，应用程序不能发送或接受这两个广播来监听系统的照片或者视频的拍摄。但是在Android 8.0(API 26)，这两个广播又被添加回来了，不过也仅仅可以通过动态注册来接收，并且仅仅适用于监听到他们来执行简单的可以立即被执行的任务，执行复杂的繁重的任务仍然需要使用<a href="https://developer.android.com/reference/android/app/job/JobScheduler.html">JobScheduler</a>、<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>和<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>，和上面第一点处理方法类似，不同的是，需要调用<a href="https://developer.android.com/reference/android/app/job/JobInfo.Builder.html#addTriggerContentUri(android.app.job.JobInfo.TriggerContentUri)">JobInfo.Builder.addTriggerContentUri()</a>构造<a href="https://developer.android.com/reference/android/app/job/JobInfo.html">JobInfo</a>对象，然后在<a href="https://developer.android.com/reference/android/app/job/JobService.html#onStartJob(android.app.job.JobParameters)">onStartJob()</a>回调方法里去调用<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentAuthorities()">JobParameters.getTriggeredContentAuthorities()</a>和<a href="https://developer.android.com/reference/android/app/job/JobParameters.html#getTriggeredContentUris()">JobParameters.getTriggeredContentUris()</a>来获取拍照或摄像时增加的照片或视频的Uri。</p>
+<p>像上面这样优化App可以让App在低内存的设备上改善性能和用户体验（这可以改善Android应用生态环境），移除后台服务（background service）和隐式广播的依赖可以帮助你的App在这样的设备上运行的更好。虽然Android 7.0(API 24)在逐步减少这样的issue，但是我们仍然推荐你通过完全不使用这样的后台进程来优化你的App。<br />
+Android 7.0(API 24)还引入了新的adb命令来帮助你测试你的App在不使用后台进程时是否还能很好的运行。命令如下：</p>
+<pre><code class="language-plain_text">    //模拟隐式广播和后台服务（background service）不可用的条件
+    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND ignore
+    //重新使隐式广播和后台服务（background service）可用
+    $ adb shell cmd appops set &lt;package_name&gt; RUN_IN_BACKGROUND allow
+</code></pre>
+
+
+    
+
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+        <p class="text-left" style="padding:15px 0px;">
+      
+          <a href="16496553061843.html" 
+          title="Previous Post: ---">&laquo; ---</a>
+      
+        </p>
+        </div>
+        <div class="large-6 columns">
+      <p class="text-right" style="padding:15px 0px;">
+      
+          <a  href="16496553058247.html" 
+          title="Next Post: ---">--- &raquo;</a>
+      
+      </p>
+        </div>
+      </div>
+      <div class="comments-wrap">
+        <div class="share-comments">
+          
+
+          
+
+          
+        </div>
+      </div>
+    </div><!-- article-wrap -->
+  </div><!-- large 8 -->
+
+
+
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <h1>JackRo's Blog</h1>
+                <div class="site-des"></div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+
+
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="Android.html"><strong>Android</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="16496553060120.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060211.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060303.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060398.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060491.html">---</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
+
+  </body>
+</html>

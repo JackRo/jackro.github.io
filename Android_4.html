@@ -1,0 +1,699 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  Android - JackRo's Blog
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="JackRo's Blog" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site:jackro.cn ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; JackRo's Blog</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="Android.html">Android</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
+</script>
+<div class="row">
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="16496553058327.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title-android%E9%A1%B9%E7%9B%AEcmake%E6%9E%84%E5%BB%BA%E8%84%9A%E6%9C%AC%E6%94%BE%E7%BD%AE%E5%9C%A8%E9%A1%B9%E7%9B%AE%E6%A0%B9%E7%9B%AE%E5%BD%95%E4%B8%8B%E5%AF%BC%E8%87%B4build%E5%A4%B1%E8%B4%A5%E7%9A%84%E9%97%AE%E9%A2%98-date-2017-09-20" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android项目CMake构建脚本放置在项目根目录下导致build失败的问题<br />
+date: 2017-09-20</h2>
+<p>在现有Android项目中做JNI配置时，碰到了CMake构建脚本放置在项目中的位置的问题。当放置在项目的根目录下，app的build.gradle文件中配置（该配置是通过右键项目的app模块选择 Link C++ Project with Gradle后自动生成的）如下：</p>
+<pre><code class="language-plain_text"> externalNativeBuild {
+    cmake {
+        path '../CMakeLists.txt'
+    }
+}
+</code></pre>
+<p>此时对项目进行build操作时，build会失败。</p>
+<p>当尝试把CMake构建脚本放置在项目的app目录下，build就可以成功，此时app的build.gradle文件中配置如下：</p>
+<pre><code class="language-plain_text"> externalNativeBuild {
+    cmake {
+        path 'CMakeLists.txt'
+    }
+}
+</code></pre>
+<p>解决该问题参考了官方文档，参考链接如下：<br />
+<a href="https://developer.android.com/studio/projects/add-native-code.html">https://developer.android.com/studio/projects/add-native-code.html</a></p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553058409.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title-android%E5%81%9A%E6%A3%80%E6%B5%8B%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0%E5%AE%89%E8%A3%85%E5%AE%8C%E4%BB%A5%E5%90%8E%E7%9B%B4%E6%8E%A5%E9%80%80%E5%87%BA%EF%BC%8C%E6%B2%A1%E6%9C%89%E5%87%BA%E7%8E%B0%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F%E7%9A%84%E7%95%8C%E9%9D%A2-date-2015-06-10" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android做检测版本更新安装完以后直接退出，没有出现安装成功的界面<br />
+date: 2015-06-10</h2>
+<p>在检测版本更新时，当下载完以后，安装的时候，系统显示正在安装，然后就没有，回到了主页，没有显示安装成功的界面，让用户不知所措。安装程序的代码如下：</p>
+<pre><code class="language-plain_text">	Intent intent = new Intent(Intent.ACTION_VIEW);  
+	intent.setDataAndType(Uri.parse(&quot;file://xxxx.apk&quot;), &quot;application/vnd.android.package-archive&quot;);  
+	context.startActivity(intent);  
+</code></pre>
+<p>这在android4.0以前的系统中没有什么问题，但是在android4.0及其以后的系统中就不显示安装成功的界面，应该加一行代码：</p>
+<pre><code class="language-plain_text">	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553058494.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title-android%E5%AE%9E%E7%8E%B0edittext%E5%93%8D%E5%BA%94drawableright%E7%82%B9%E5%87%BB%E4%BA%8B%E4%BB%B6-date-2016-10-10" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android实现EditText响应drawableRight点击事件<br />
+date: 2016-10-10</h2>
+<p>这里自定义了一个RightPicClickEditText，继承AppCompatEditText，并且在其三个构造函数中调用父组件的相应构造函数，是为了适配5.0以下应用MD风格，代码如下：</p>
+<pre><code class="language-plain_text">public RightPicClickEditText(Context context) {
+    super(context);
+    init();
+}
+
+public RightPicClickEditText(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    init();
+}
+
+public RightPicClickEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    init();
+}
+</code></pre>
+<p>我们或许还需要定义一个右侧图标变量的引用，你可以对这个右侧图标干些自定义的事，代码如下：</p>
+<pre><code class="language-plain_text">/**
+ * EditText右侧的图标
+ */
+protected Drawable mRightDrawable;
+
+private void init() {
+    mRightDrawable = getCompoundDrawables()[2];
+
+    if (mRightDrawable == null) {
+//这里当没有设置右侧图标时你可以给它设置个默认的右侧图标，当然根据你的项目需求来
+        return;
+    }
+
+//这里当设置了右侧图标时，我们对图标做了一些自定义设置，你也可以做其他设置
+    mRightDrawable.setBounds(0, 0, mRightDrawable.getIntrinsicWidth(), mRightDrawable.getIntrinsicHeight());
+}
+</code></pre>
+<p>最关键的来了，我们需要重写自定义EditText的触摸事件onTouchEvent，这里我们通过判断触摸的坐标位置是否在右侧图标范围内来模拟右侧图标的点击事件。如果在这个范围内，则证明点击了右侧图标，为了方便外部调用处理，我们定义了一个接口在这里回调，一旦点击了右侧图标，则触发接口回调。代码如下：</p>
+<pre><code class="language-plain_text">public void setRightPicOnclickListener(RightPicOnclickListener rightPicOnclickListener) {
+    this.rightPicOnclickListener = rightPicOnclickListener;
+}
+
+public interface RightPicOnclickListener {
+    void rightPicClick();
+}
+
+private RightPicOnclickListener rightPicOnclickListener;
+
+@Override
+public boolean onTouchEvent(MotionEvent event) {
+    if (event.getAction() == MotionEvent.ACTION_UP) {
+        if (mRightDrawable != null) {
+            boolean touchable = event.getX() &gt; (getWidth() - getTotalPaddingRight())
+                    &amp;&amp; (event.getX() &lt; ((getWidth() - getPaddingRight())));
+            if (touchable) {
+
+                //设置点击EditText右侧图标EditText失去焦点，
+                // 防止点击EditText右侧图标EditText获得焦点，软键盘弹出
+                setFocusableInTouchMode(false);
+                setFocusable(false);
+
+                //点击EditText右侧图标事件接口回调
+                if (onRightPicClickListener != null) {
+                    onRightPicClickListener.rightPicClick(this);
+                }
+            } else {
+                //设置点击EditText输入区域，EditText请求焦点，软键盘弹出，EditText可编辑
+                //setFocusableInTouchMode(true);
+                //setFocusable(true);
+                //设置点击EditText输入区域，EditText不请求焦点，软键盘不弹出，EditText不可编辑
+                setFocusableInTouchMode(false);
+                setFocusable(false);
+            }
+        }
+    }
+    return super.onTouchEvent(event);
+}
+</code></pre>
+<p>外部应用就简单了，示例代码如下：</p>
+<pre><code class="language-plain_text">&lt;cn.jackro.rightpicclickedittext.RightPicClickEditText
+    android:id=&quot;@+id/right_click_et&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_gravity=&quot;center&quot;
+    android:drawableRight=&quot;@android:drawable/ic_menu_search&quot;
+    android:hint=&quot;@string/click_hint&quot;
+    android:inputType=&quot;text&quot;
+    android:maxLines=&quot;1&quot;
+    tools:ignore=&quot;RtlHardcoded&quot;/&gt;
+
+public class MainActivity extends AppCompatActivity implements RightPicClickEditText.OnRightPicClickListener {
+
+    @BindView(R.id.right_click_et)
+    RightPicClickEditText mRightClickEt;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        mRightClickEt.setOnRightPicClickListener(this);
+    }
+
+    @Override
+    public void rightPicClick(EditText editText) {
+        Toast.makeText(this, &quot;点击了搜索按钮&quot;, Toast.LENGTH_SHORT).show();
+    }
+}
+</code></pre>
+<p>实现这样一个功能，我们除了像上面这样干之外，还可以直接使用布局包裹一个EditText和一个ImageView，然后给ImageView设置点击事件即可，这种方法稍微简单点。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553058576.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title-android%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%E4%B9%8Bwindowmanager-badtokenexception-date-2016-05-28" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android异常解决之WindowManager.BadTokenException<br />
+date: 2016-05-28</h2>
+<p>该异常具体信息如下：</p>
+<pre><code class="language-plain_text">android.view.WindowManager$BadTokenException: Unable to add window -- token android.os.BinderProxy@7f817 is not valid; is your activity running?
+</code></pre>
+<p>该异常产生的原因是由于当前Activity已经不在运行状态中，即已经onDestroy了，如果你要在这个Activity中弹Dialog，就会报这个错，因为弹Dialog需要当前Activity的Context。</p>
+<p>参考链接：<a href="http://blog.csdn.net/janronehoo/article/details/16827415">http://blog.csdn.net/janronehoo/article/details/16827415</a></p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553058651.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title-android%E5%AE%9E%E7%8E%B0floatingactionbutton%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%A7%E5%B0%8F-date-2016-11-20" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android实现FloatingActionButton自定义大小<br />
+date: 2016-11-20</h2>
+<p>最近在项目中使用了<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> ，但是为了让UI看起来留白不是那么多，需要对<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> 进行自定义大小。</p>
+<p>根据官方文档的说明，<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> 仅仅支持设置app:fabSize=&quot;normal&quot;来改变fab的大小，并且这个fabSize的大小提供了三个可选项（normal，mini和auto）来设置，可以在布局里设置也可以在代码里调用setSize方法进行设置。</p>
+<p>这里一开始是想到通过在布局里改变layout_width和layout_height来改变控件的大小的，但是设置之后（两者均设置为100dp，fabSize设置为normal），效果如下所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112001.png" alt="jackro_blog2016112001" /></p>
+<p>并且当设置了fab的固定宽高再来改变它的fabSize属性（改为mini或auto）时，效果会是fab的图标被撑的很大，甚至边缘都看不到了，显然这样通过固定fab的宽高属性来改变其大小是行不通的。</p>
+<p>翻阅FloatingActionButton的源码，其第三个构造函数如下</p>
+<pre><code class="language-java">
+    public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        ThemeUtils.checkAppCompatTheme(context);
+
+        TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.FloatingActionButton, defStyleAttr,
+                R.style.Widget_Design_FloatingActionButton);
+        mBackgroundTint = a.getColorStateList(R.styleable.FloatingActionButton_backgroundTint);
+        mBackgroundTintMode = ViewUtils.parseTintMode(a.getInt(
+                R.styleable.FloatingActionButton_backgroundTintMode, -1), null);
+        mRippleColor = a.getColor(R.styleable.FloatingActionButton_rippleColor, 0);
+        mSize = a.getInt(R.styleable.FloatingActionButton_fabSize, SIZE_AUTO);
+        mBorderWidth = a.getDimensionPixelSize(R.styleable.FloatingActionButton_borderWidth, 0);
+        final float elevation = a.getDimension(R.styleable.FloatingActionButton_elevation, 0f);
+        final float pressedTranslationZ = a.getDimension(
+                R.styleable.FloatingActionButton_pressedTranslationZ, 0f);
+        mCompatPadding = a.getBoolean(R.styleable.FloatingActionButton_useCompatPadding, false);
+        a.recycle();
+
+        mImageHelper = new AppCompatImageHelper(this);
+        mImageHelper.loadFromAttributes(attrs, defStyleAttr);
+
+        mMaxImageSize = (int) getResources().getDimension(R.dimen.design_fab_image_size);
+
+        getImpl().setBackgroundDrawable(mBackgroundTint, mBackgroundTintMode,
+                mRippleColor, mBorderWidth);
+        getImpl().setElevation(elevation);
+        getImpl().setPressedTranslationZ(pressedTranslationZ);
+    }
+</code></pre>
+<p>都是读取属性来设置一些自定义属性，看到最后三行，发现getImpl方法的调用，它的返回值是FloatingActionButtonImpl，原来fab都是通过FloatingActionButtonImpl来实现其自定义属性的，找到getImpl这个方法，源码如下：</p>
+<pre><code class="language-java">    private FloatingActionButtonImpl getImpl() {
+        if (mImpl == null) {
+            mImpl = createImpl();
+        }
+        return mImpl;
+    }
+
+    private FloatingActionButtonImpl createImpl() {
+        final int sdk = Build.VERSION.SDK_INT;
+        if (sdk &gt;= 21) {
+            return new FloatingActionButtonLollipop(this, new ShadowDelegateImpl(),
+                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);
+        } else if (sdk &gt;= 14) {
+            return new FloatingActionButtonIcs(this, new ShadowDelegateImpl(),
+                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);
+        } else {
+            return new FloatingActionButtonGingerbread(this, new ShadowDelegateImpl(),
+                    ViewUtils.DEFAULT_ANIMATOR_CREATOR);
+        }
+    }
+</code></pre>
+<p>上面创建FloatingActionButtonImpl每种情况都传递了ShadowDelegateImpl的一个实例，说明这个类对创建FloatingActionButtonImpl很重要，往下看这个类的源码，如下所示：</p>
+<pre><code class="language-java">    private class ShadowDelegateImpl implements ShadowViewDelegate {
+        ShadowDelegateImpl() {
+        }
+
+        @Override
+        public float getRadius() {
+            return getSizeDimension() / 2f;
+        }
+
+        @Override
+        public void setShadowPadding(int left, int top, int right, int bottom) {
+            mShadowPadding.set(left, top, right, bottom);
+            setPadding(left + mImagePadding, top + mImagePadding,
+                    right + mImagePadding, bottom + mImagePadding);
+        }
+
+        @Override
+        public void setBackgroundDrawable(Drawable background) {
+            FloatingActionButton.super.setBackgroundDrawable(background);
+        }
+
+        @Override
+        public boolean isCompatPaddingEnabled() {
+            return mCompatPadding;
+        }
+    }
+</code></pre>
+<p>这个类里有一个getRadius方法，字面意思理解就是获取半径的，终于柳暗花明，原来fab的大小（即半径）是这个方法来获取的，可以看到它调用了getSizeDimension，下面看这个getSizeDimension方法，源码如下：</p>
+<pre><code class="language-java">    int getSizeDimension() {
+        return getSizeDimension(mSize);
+    }
+
+    private int getSizeDimension(@Size final int size) {
+        final Resources res = getResources();
+        switch (size) {
+            case SIZE_AUTO:
+                // If we're set to auto, grab the size from resources and refresh
+                final int width = ConfigurationHelper.getScreenWidthDp(res);
+                final int height = ConfigurationHelper.getScreenHeightDp(res);
+                return Math.max(width, height) &lt; AUTO_MINI_LARGEST_SCREEN_WIDTH
+                        ? getSizeDimension(SIZE_MINI)
+                        : getSizeDimension(SIZE_NORMAL);
+            case SIZE_MINI:
+                return res.getDimensionPixelSize(R.dimen.design_fab_size_mini);
+            case SIZE_NORMAL:
+            default:
+                return res.getDimensionPixelSize(R.dimen.design_fab_size_normal);
+        }
+    }
+</code></pre>
+<p>原来这里google做的控件也是通过获取资源文件dimens.xml来获取dimen值的（废话，当然是了）。终于看到这里，我才恍然大悟，我可以通过自定义这个design_fab_size_normal来实现覆盖默认的dimen值呀（因为我的布局里是设置fabSize为normal的），自定义代码如下所示：</p>
+<pre><code class="language-xml">&lt;dimen name=&quot;design_fab_size_normal&quot; tools:ignore=&quot;PrivateResource&quot;&gt;80dp&lt;/dimen&gt;
+</code></pre>
+<p>这样即完美搞定我的fab自定义大小的需求。上张效果图，如下所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112002.jpg" alt="jackro_blog2016112002" /></p>
+<p>和之前那个设置fab的固定宽高的效果比好多了。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
+
+
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   <a href="Android_3.html">&laquo; Prev Page</a>  
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			 <a href="Android_5.html">&raquo; Next Page</a> 
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <h1>JackRo's Blog</h1>
+                <div class="site-des"></div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+
+
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="Android.html"><strong>Android</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="16496553060120.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060211.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060303.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060398.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060491.html">---</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
+
+  </body>
+</html>

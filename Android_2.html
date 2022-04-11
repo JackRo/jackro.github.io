@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
     
-  JackRo's Blog
+  Android - JackRo's Blog
   
   </title>
   
@@ -100,50 +100,28 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
-                <a class="clearlink" href="16496553060120.html">
+                <a class="clearlink" href="16496553061097.html">
                 
                   <h1>---</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%94%B6%E4%B8%8D%E5%88%B0-uilocalnotification%E6%9C%AC%E5%9C%B0%E9%80%9A%E7%9F%A5-date-2017-02-24" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: 模拟器收不到UILocalNotification本地通知<br />
-date: 2017-02-24</h2>
-<p>通知功能是iOS应用开发经常会碰到的需求，iOS应用的通知分为本地通知和远程通知（即消息推送），Apple develop官网的API Guides对通知的开发有详细的介绍。</p>
-<p>今天我碰到的问题是模拟器收不到本地通知，按照惯例，先上本地通知的代码：</p>
-<pre><code class="language-plain_text">    UILocalNotification *note = [[UILocalNotification alloc] init];
-    note.alertBody = @&quot;Hypnotize&quot;;
-    note.fireDate = date; //这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
-    note.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:note];
+                        	<h2><a id="title-sqlite%E6%B8%85%E7%A9%BA%E8%A1%A8%E6%95%B0%E6%8D%AE%E5%B9%B6%E5%B0%86%E8%87%AA%E5%A2%9E%E9%87%8F%E5%BD%92%E9%9B%B6-date-2017-06-16" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: SQLite清空表数据并将自增量归零<br />
+date: 2017-06-16</h2>
+<p>在普通的SQL中，实现如题所示的需求是通过truncate [tablename]来实现，但是在SQLite中，是没有truncate关键字的，所以SQLite不支持该语句。但是SQLite可以通过如下方式来实现：</p>
+<p>1）先清空表数据：</p>
+<pre><code class="language-plain_text">    delete from [tablename];
 </code></pre>
-<p>原本以为这样就可以接收到通知了，结果一运行，始终看不到通知，过了通知的设定时间好久了，也看不到通知。查阅了下通知的用法文档，才知道需要去申请发送通知的授权。修正后的代码如下所示：</p>
-<pre><code class="language-plain_text">//判断是否已经授权用户发送通知
-if ([[UIApplication sharedApplication] currentUserNotificationSettings].types != UIUserNotificationTypeNone) {
-    UILocalNotification *note = [[UILocalNotification alloc] init];
-    note.alertBody = @&quot;Hypnotize&quot;;
-    note.fireDate = date;//这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
-    note.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:note];
-} else{
-    //用户注册通知，注册后才能收到通知，这会给用户一个弹框，提示用户选择是否允许发送通知
-    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound   categories:nil]];
-}
+<p>2）当数据库中包含自增列时，会自动建立一个名为 sqlite_sequence 的表。这个表包含两个列：name和seq。name记录自增列所在的表（即tablename），seq记录当前序号（下一条记录的编号就是当前序号加1）。你可以通过如下方式将自增量归零：</p>
+<pre><code class="language-plain_text">    //1. 将表名为tablename的自增量置0
+    update sqlite_sequence set seq = 0 where name = 'tablename'
+    //2. 将表名为tablename的记录删除
+    delete from sqlite_sequence where name = 'tablename'
+    //3. 将sqlite_sequence表清空数据
+    delete from sqlite_sequence
 </code></pre>
-<p>用户注册通知后，会收到一个回调函数，一般如果未授权，创建通知就在这个回调函数里进行。</p>
-<pre><code class="language-plain_text">//用户注册通知回调函数
-- (void)application:(UIApplication *) application
-    didRegisterUserNotificationSettings:(UIUserNotificationSettings   *)notificationSettings {
-     if (notificationSettings.types != UIUserNotificationTypeNone) {
-         NSLog(@&quot;haha&quot;);
-        UILocalNotification *note = [[UILocalNotification alloc] init];
-        note.alertBody = @&quot;Hypnotize&quot;;
-        note.fireDate = rvc.selectDate;
-        note.applicationIconBadgeNumber = 1;
-        [[UIApplication sharedApplication] scheduleLocalNotification:note];
-    }
-}
-</code></pre>
+<p>虽然在普通的DBMS中，用delete不如用truncate快，但是SQLite对delete做了优化，这个优化也可以使它运行的很快。</p>
 
                         
                       </div>
@@ -169,37 +147,27 @@ if ([[UIApplication sharedApplication] currentUserNotificationSettings].types !=
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553060211.html">
+                <a class="clearlink" href="16496553061200.html">
                 
                   <h1>---</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-java%E4%B8%AD%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E7%9B%B8%E5%90%8C%E5%AD%97%E7%AC%A6%E4%B8%B2-date-2017-09-11" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Java中判断一个字符串数组是否包含相同字符串<br />
-date: 2017-09-11</h2>
-<p>如题。该问题很简单，使用一个嵌套循环即可解决，代码如下所示：</p>
-<pre><code class="language-plain_text">/**
- * judge that a String Array whether or not contained equal String
- * 
- * @param strings
- *            a string Array
- * @return return true, contained; return false, not contained
- */
-public static boolean judgeStrArrayContainsSameStr(String[] strings) {
-	int len = strings.length;
-	for (int i = 0; i &lt; len; i++) {
-		String temp = strings[i];
-		for (int j = i + 1; j &lt; len; j++) {
-			String string = strings[j];
-			if (string.equals(temp)) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
+                        	<h2><a id="title-streamreader%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E6%97%B6%E5%87%BA%E7%8E%B0%E4%B9%B1%E7%A0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-date-2014-08-12" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: StreamReader读取文件时出现乱码的解决方案<br />
+date: 2014-08-12</h2>
+<p>今天在做一个打开文件对话框OpenFileDialog时，需要对打开的文件进行读取，显示在在窗体中的RichTextBox中。但是在显示文件时，却发现显示的中文字符串出现乱码。代码的关键部分如下所示：</p>
+<pre><code class="language-plain_text">	1 StreamReader sr = new StreamReader(openFileDialog.OpenFile());      
+	2 string str = sr.ReadToEnd();
+	3 childForm.richTextBox1.Text = str;  
 </code></pre>
+<p>开始我也想到了是字符编码出了问题，于是我在初始化StreamReader时，给它加了字符编码参数，加了好几次，Encoding.Unicode，Encoding.UTF32，Encoding.UTF7，Encoding.UTF8，Encoding.ASCII，这些能加的编码方案我都试过了，结果都不行，还是会乱码。百般无奈之下，我只好在.net爱好者群里问了。然后群里就有好心人给我发了一个链接，点进去看了之后恍然大悟。链接如下所示：<a href="http://www.cnblogs.com/wmw1989/archive/2008/05/19/1202500.html" title="http://www.cnblogs.com/wmw1989/archive/2008/05/19/1202500.html">http://www.cnblogs.com/wmw1989/archive/2008/05/19/1202500.html</a></p>
+<p>原来，中文编码是GB2312，而当前系统的代码页的编码方案采用的是ANSI编码，出现乱码也就不足为奇了。解决方案很简单，就是初始化StreamReader的时候告诉它目前代码页的编码方案。可是由于Encoding类并没有定义ANSI编码方案，所以只能采用Default让系统获取当前操作系统的当前ANSI代码页的编码方案。因此上面的代码换成如下的代码就解决了：</p>
+<pre><code class="language-plain_text">	1 StreamReader sr = new StreamReader(openFileDialog.OpenFile(), Encoding.Default);                
+	2 string str = sr.ReadToEnd();
+	3 childForm.richTextBox1.Text = str;  
+</code></pre>
+<p> </p>
 
                         
                       </div>
@@ -225,25 +193,20 @@ public static boolean judgeStrArrayContainsSameStr(String[] strings) {
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553060303.html">
+                <a class="clearlink" href="16496553061305.html">
                 
                   <h1>---</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-linearlayout%E6%8C%89%E4%B8%8B%E6%88%96%E8%8E%B7%E5%8F%96%E7%84%A6%E7%82%B9%E6%97%B6%E8%AE%BE%E7%BD%AE%E4%B8%8D%E5%90%8C%E9%A2%9C%E8%89%B2%E6%88%96%E5%9B%BE%E7%89%87-date-2015-06-29" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: LinearLayout按下或获取焦点时设置不同颜色或图片<br />
-date: 2015-06-29</h2>
-<p>在Android项目中有这样一个需求，画了几个LinearLayout布局做成ListView的样式，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2015062901.png" alt="jackro_blog2015062901" /></p>
-<p>当点击每个LinearLayout项时想改变其背景颜色，准备了如下背景图片XML文件：</p>
-<pre><code class="language-plain_text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
-    &lt;item android:drawable=&quot;@color/gray_background&quot; android:state_pressed=&quot;true&quot; /&gt;
-    &lt;item android:drawable=&quot;@color/white_background&quot; /&gt;
-&lt;/selector&gt;
+                        	<h2><a id="title%E4%BD%BF%E7%94%A8-scp%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0linux%E6%9C%8D%E5%8A%A1%E5%99%A8-date-2017-06-23" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: 使用scp上传文件到Linux服务器<br />
+date: 2017-06-23</h2>
+<p>我的服务器是阿里云的ubuntu 16.04，电脑是Mac os。上传文件到Linux服务器可以在终端中采用如下命令上传：</p>
+<pre><code class="language-plain_text">//filename是你要上传的文件名，username是服务器主机用户名，x.x.x.x是服务器IP地址，directory是要将文件上传到服务器的directory目录下
+scp [filename] [username]@x.x.x.x:[dirctory]
 </code></pre>
-<p>但是当我每次运行点击每一项LinearLayout时，其背景颜色毫无变化。后来发现在每个LinearLayout项加入属性android:clickable=&quot;true&quot;点击LinearLayout才会出现背景颜色的变化。</p>
+<p>命令scp基于ssh协议，可以将文件拷贝到远程服务器上的指定目录，Mac os自带，使用很方便。当然还可以使用ftp/sftp方式上传。</p>
 
                         
                       </div>
@@ -269,20 +232,16 @@ date: 2015-06-29</h2>
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553060398.html">
+                <a class="clearlink" href="16496553061410.html">
                 
                   <h1>---</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-mac-android%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%89%A7%E8%A1%8C-gradlew-clean%E6%8F%90%E7%A4%BA-permission-denied-date-2017-04-10" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Mac Android项目目录下执行./gradlew clean 提示Permission denied<br />
-date: 2017-04-10</h2>
-<p>Mac环境下Android Studio创建的android项目，在项目目录下执行./gradlew clean，提示Permission denied，看到这个提示，自然想到的是sudo执行，然而sudo执行并不能解决问题，反而会提示command not found。万般无奈，只能百度，发现执行以下命令即可解决问题。</p>
-<pre><code class="language-plain_text">//为gradlew文件添加可执行属性
-chmod +x gradlew
-</code></pre>
-<p>chmod命令是修改文件访问权限的命令，文件访问权限包括只读、只写、可执行三种，其实最开始的提示Permission denied（权限拒绝）已经告诉了我们是android项目目录下可执行文件gradlew的访问权限的问题。因此需要为该文件添加可执行权限，所以执行以上命令即可解决该问题。</p>
+                        	<h2><a id="title-viewpager%E4%B8%AD%E7%9A%84fragment%E6%9C%89%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BEmapview%E5%88%87%E6%8D%A2%E5%8D%A1%E9%A1%BF%E9%97%AA%E5%B1%8F-date-2016-06-15" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: ViewPager中的Fragment有百度地图MapView切换卡顿闪屏<br />
+date: 2016-06-15</h2>
+<p>当Fragment和ViewPager一起使用时，某个Fragment中含有百度地图MapView时，当你从其他Fragment切换到含有百度地图MapView的Fragment时，会有卡顿闪屏的效果。解决方法是把百度地图的MapView替换成TextureMapView，卡顿闪屏问题完美解决。</p>
 
                         
                       </div>
@@ -308,27 +267,21 @@ chmod +x gradlew
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553060491.html">
+                <a class="clearlink" href="16496553061515.html">
                 
                   <h1>---</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-mac-os%E4%B8%ADgit%E6%8F%90%E4%BA%A4%E6%93%8D%E4%BD%9C-ds-store%E6%96%87%E4%BB%B6%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-date-2017-09-22" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Mac os中git提交操作.DS_Store文件引发的问题解决<br />
-date: 2017-09-22</h2>
-<p>在Mac os中是存在.DS_Store文件的，在使用git对项目进行版本控制时，该文件如果不加入.gitignore中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p>
-<p>经过一番搜索，我找到了解决方法，我们可以先在.gitignore中加入该文件的忽略规则，如下所示：</p>
-<pre><code class="language-plain_text">.DS_Store
-</code></pre>
-<p>然后删除项目中所有的.DS_Store，在项目目录下执行如下命令：</p>
-<pre><code class="language-plain_text">find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
-</code></pre>
-<p>然后提交项目即可。</p>
-<p>但是，我发现我的项目是用webstorm打开的，项目目录下自动生成了.idea文件，每次提交.idea文件也会提交，加入忽略规则也不行，我想到了和上面类似的方法，删除.idea目录，然后再提交，即可解决。</p>
-<p>参考链接：</p>
-<p><a href="http://www.jianshu.com/p/fdaa8be7f6c3">如何删除GIT中的.DS_Store</a></p>
-<p><a href="http://www.jianshu.com/p/8c0d262e49a6">Git中全局忽略.DS_Store文件</a></p>
+                        	<h2><a id="title-windows-10%E4%B8%8B%E8%AE%A9jar%E6%96%87%E4%BB%B6%E5%8F%8C%E5%87%BB%E5%8F%AF%E4%BB%A5%E8%BF%90%E8%A1%8C%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95-date-2015-10-28" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: windows 10下让jar文件双击可以运行的解决方法<br />
+date: 2015-10-28</h2>
+<p>　　windows xp下让jar文件双击可以运行的解决办法很简单，只要打开我的电脑在工具的文件夹选项中找到文件类型，配置注册一下jar文件的open操作就可以了，这个过程是界面操作，非常的简单易接受。但是到了windows 10，笔者愚笨，找不到文件夹选项的文件类型，无法通过界面操作，因此，只能想办法通过注册表来注册jar文件的open操作类型，如果你知道windows xp下的操作，这个注册表过程的操作其实不难理解的。</p>
+<p>　　操作步骤如下：</p>
+<p>　　1.打开注册表；</p>
+<p>　　2.找到HKEY_CLASSES_ROOT/Applications /javaw.exe，一开始没有找到javaw.exe的话，就在jre或者jdk文件中找到javaw.exe（如我的电脑中为D:\Java\jre1.8.0_60\bin\javaw.exe），运行一下，或者找一个jar文件，选择打开方式，找到javaw.exe，打开一下</p>
+<p>　　3.进入HKEY_CLASSES_ROOT/Applications/javaw.exe/shell/open/command，修改默认的键值为&quot;D:\Java\jre1.8.0_60\bin\javaw.exe&quot; -jar &quot;%1&quot;<br />
+java环境安装在其他地方也类似，修改一下路径就可以了</p>
 
                         
                       </div>
@@ -359,12 +312,12 @@ date: 2017-09-22</h2>
 			<div class="row">
 			  <div class="large-6 columns">
 			  <p class="text-left" style="padding-top:25px;">
-			   
+			   <a href="Android_1.html">&laquo; Prev Page</a>  
 			  </p>
 			  </div>
 			  <div class="large-6 columns">
 			<p class="text-right" style="padding-top:25px;">
-			 <a href="all_1.html">&raquo; Next Page</a> 
+			 <a href="Android_3.html">&raquo; Next Page</a> 
 			</p>
 			  </div>
 			</div>

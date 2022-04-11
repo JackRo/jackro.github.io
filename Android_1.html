@@ -1,0 +1,868 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  Android - JackRo's Blog
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="JackRo's Blog" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site:jackro.cn ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; JackRo's Blog</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="Android.html">Android</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
+</script>
+<div class="row">
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="16496553060588.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title-mysql%E8%87%AA%E5%AE%9A%E4%B9%89function%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-date-2018-04-03" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: mysql自定义function问题解决<br />
+date: 2018-04-03</h2>
+<p>最近公司生产环境的系统有个需求，需要往mysql数据库的一张表里批量添加数据，业务部门给的数据大致如下：</p>
+<table>
+<thead>
+<tr>
+<th>中心</th>
+<th>3.5L箱子(条码)</th>
+<th>8L箱子(条码)</th>
+<th>15L箱子(条码)</th>
+<th>20L箱子(条码)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>浙江物流一区</td>
+<td>6个(X04571301-X04571306)</td>
+<td>8个(X03571301-X03571308)</td>
+<td>4个(X02571301-X02571304)</td>
+<td>12个(X01571301-X01571312)</td>
+</tr>
+<tr>
+<td>浙江物流二区</td>
+<td>24个(X04571401-X04571424)</td>
+<td>42个(X03571401-X03571442)</td>
+<td>78个(X02571401-X02571478)</td>
+<td>36个(X01571401-X01571436)</td>
+</tr>
+</tbody>
+</table>
+<p>这样的数据，首先想到的是在我的macOS上连上服务器数据库，然后把数据一条一条insert进去。但是我insert了几十条后，我发现业务部门给的数据累计有700多条。我当然不愿意就这样老老实实的一条一条insert了，因为实在是太耗费时间了。</p>
+<p>根据以往的经验，最先想到的是，把表导入到navicat里，然后生成批量sql插入脚本，再传到服务器上去执行。但是，业务部门给的Excel并不是标准的一条一条的数据展示的，而是像上面那样给定箱子条码范围和数量。这样，我还得先给它生成一个标准的Excel，也比较麻烦。</p>
+<p>然后我想到用写程序的方式，写循环，连接数据库插入数据。但是本地环境去连接生产环境的数据库是需要走流程申请权限的，可能流程要走个一两天，业务部门又急着要这个数据，这种方法又要摒弃掉了，只能使用下面一种方案了。</p>
+<h2><a id="mysql%E8%87%AA%E5%AE%9A%E4%B9%89function%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>mysql自定义function实现批量添加数据</h2>
+<h3><a id="mysql%E5%AE%9A%E4%B9%89function%E8%AF%AD%E6%B3%95%E5%A6%82%E4%B8%8B%EF%BC%9A" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>mysql定义function语法如下：</h3>
+<pre><code class="language-plain_text">CREATE FUNCTION func_name ( [func_parameter] ) //括号是必须的，参数是可选的  
+RETURNS type  
+[ characteristic ...] routine_body 
+</code></pre>
+<ul>
+<li>CREATE FUNCTION 用来创建函数的关键字</li>
+<li>func_name 表示函数的名称</li>
+<li>func_parameters为函数的参数列表，参数列表的形式为：[IN|OUT|INOUT] param_name type
+<ol>
+<li>IN：表示输入参数</li>
+<li>OUT：表示输出参数</li>
+<li>INOUT：表示既可以输入也可以输出</li>
+<li>param_name：表示参数的名称</li>
+<li>type：表示参数的类型，该类型可以是MySQL数据库中的任意类型</li>
+</ol>
+</li>
+<li>RETURNS type：语句表示函数返回数据的类型</li>
+<li>characteristic: 指定函数的特性，取值与存储过程的定义相同，可以有以下几种取值方式
+<ol>
+<li>LANGUAGE SQL: 说明routine_body部分由SQL语句组成，当前系统支持的语言为SQL, SQL是LANGUAGE特性的唯一值</li>
+<li>[NOT] DETERMINISTIC: 指明存储过程执行的结果是否正确。DETERMINISTIC表示结果是确定的。每次执行存储过程时，相同的输入会得到相同的输出；<br />
+而NOT DETERMINISTIC表示结果是不确定的，相同的输入可能得到不同的输出。如果没有指定任意一个值，默认为NOT DETERMINISTIC</li>
+<li>{CONTAINS SQL | NO SQL | READS SQL DATA | MODIFIES SQL DATA}: 指明子程序使用SQL语句限制
+<ol>
+<li>CONTAINS SQL表明子程序包含SQL语句，但是不包含读写数据的语句</li>
+<li>NO SQL表明子程序不包含SQL语句</li>
+<li>READS SQL DATA说明子程序包含读写数据的语句</li>
+<li>MODIFIES SQL DATA表明子程序包含写数据的语句</li>
+<li>默认情况下，系统会指定为CONTAINS SQL</li>
+</ol>
+</li>
+<li>SQL SECURITY { DEFINER|INVOKER}: 指明谁有权限来执行。DEFINER表示只有定义存储过程者才能执行；INVOKER表示拥有权限的调用者可以执行。<br />
+默认情况下，系统指定为DEFINER</li>
+<li>COMMENT 'string': 注释信息，可以用来描述存储过程或者函数</li>
+</ol>
+</li>
+<li>routine_body是SQL代码内容，可以用BEGIN...END来表示SQL代码的开始与结束</li>
+</ul>
+<h3><a id="%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE%E7%9A%84function%E8%BF%87%E7%A8%8B%E5%A6%82%E4%B8%8B%EF%BC%9A" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>实现批量添加数据的function过程如下：</h3>
+<p>首先，我把服务器数据库这张表的表结构拷到了本地，便于本地调试所写function是否正确。该表结构与所需要插入的数据相关的字段有三个:</p>
+<pre><code class="language-plain_text">ybxtm, dept_id, box_size //ybxtm对应箱子条码, dept_id对应上面数据的中心, box_size对应箱子规格(3.5L, 8L, 15L, 20L)
+</code></pre>
+<p>然后，实现function实现及调用：</p>
+<pre><code class="language-plain_text">DELIMITER 
+</code></pre>
+\[ /*定义分隔符，用于在Linux环境下防止function定义的内部分号造成的中途输出*/
+    CREATE FUNCTION addData(deptId INT, boxSize DOUBLE, ybxtm VARCHAR(20), amount INT)
+      RETURNS INT DETERMINISTIC /*该参数需要指定，不指定Linux环境下执行时会提示你需要指定function的characteristic*/
+      BEGIN
+        DECLARE i INT DEFAULT 1;
+        DECLARE result INT DEFAULT 1;
+        DECLARE sampleBoxNum VARCHAR(20) DEFAULT '';
+        myloop: LOOP
+          SET sampleBoxNum = ybxtm;
+          IF i &gt; amount
+          THEN LEAVE myloop;
+          END IF;
+          IF i &lt; 10
+          THEN SET sampleBoxNum = concat(sampleBoxNum, concat('0', i));
+          ELSE
+            SET sampleBoxNum = concat(sampleBoxNum, i);
+          END IF;
+          INSERT INTO lx_ybx (ybxtm, dept_id, box_size) VALUES (sampleBoxNum, deptId, boxSize);
+          SET result = result + 1;
+          SET i = i + 1;
+        END LOOP myloop;
+        RETURN result - 1;
+      END 
+\]
+<p>/<em>结束时需要挂上分隔符，告诉Linux终端，function定义结束</em>/</p>
+<pre><code class="language-plain_text">/*调用function*/  
+SELECT addData(29, 20, 'X025714', 78);
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553060690.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title-activity%E4%B8%AD%E5%BC%80%E5%90%AF%E8%BD%AE%E8%AF%A2%E6%9C%8D%E5%8A%A1%E5%BD%93activity%E5%BC%82%E5%B8%B8destroy%E6%97%B6-date-2016-05-30" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Activity中开启轮询服务当Activity异常destroy时<br />
+date: 2016-05-30</h2>
+<p>当你点击系统的back键，当前Activity开启的轮询服务刚好此时开启运行，即走onStartCommand，这里Activity用Intent传递给该服务的所有参数会为null。Activity此时已经异常destroy了，此时传递给Service的Intent的参数不会传递成功。所以这里如果你在Service的onStartCommand里用到了Intent传递过来的参数，则需要先判空，否则可能出现空指针异常。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553060790.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title-adb-shell%E4%B8%AD%E6%8F%90%E7%A4%BApermission-denied-date-2017-06-15" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: adb shell中提示Permission denied<br />
+date: 2017-06-15</h2>
+<p>在Android开发中，如果需要查看本地数据库，可以在adb shell中查看（当然前提条件是真机root或者使用模拟器），输入下面的命令可以查看：</p>
+<pre><code class="language-plain_text">Last login: Thu Jun 15 10:02:21 on ttys000
+JackRodeMacBook-Pro:~ jack$ adb shell
+generic_x86_64:/ $ cd /data/data/cn.jackro.databasedemo/databases/
+/system/bin/sh: cd: /data/data/cn.jackro.databasedemo/databases:     Permission denied
+2|generic_x86_64:/ $ 
+</code></pre>
+<p>但是当执行cd命令切换到应用的数据库目录时，却提示Permission denied（权限拒绝），经查，可以执行su命令切换到超级用户来提高权限，访问该文件。命令如下所示：</p>
+<pre><code class="language-plain_text">Last login: Thu Jun 15 10:09:58 on ttys000
+JackRodeMacBook-Pro:~ jack$ adb shell
+generic_x86_64:/ $ cd /data/data/cn.jackro.databasedemo/databases
+/system/bin/sh: cd: /data/data/cn.jackro.databasedemo/databases: Permission denied
+2|generic_x86_64:/ $ su
+generic_x86_64:/ # cd /data/data/cn.jackro.databasedemo/databases
+generic_x86_64:/data/data/cn.jackro.databasedemo/databases # ls
+BookStore.db BookStore.db-journal 
+generic_x86_64:/data/data/cn.jackro.databasedemo/databases #
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553060889.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title%E8%A7%A3%E5%86%B3-camera-is-being-used-after-camera-release-was-called-date-2016-07-01" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: 解决Camera is being used after Camera.release() was called<br />
+date: 2016-07-01</h2>
+<pre><code class="language-plain_text">java.lang.RuntimeException: Camera is being used after Camera.release() was called
+</code></pre>
+<p>在相机开发中，打开相机后点返回，偶尔会出现如上所示的异常，解决代码如下：</p>
+<pre><code class="language-plain_text">@BindView(R.id.sv_preview)
+SurfaceView mSvPreview;
+
+private BaseCameraManager cameraManager;
+
+@Override
+protected void onResume() {
+    super.onResume();
+
+    int hasCameraPermission = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
+    if (hasCameraPermission != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA},
+                MY_PERMISSIONS_REQUEST_CAMERA);
+    }
+
+    //region 这里调用初始化照相机并设置SurfaceHolder的回调以解决按下home键或者按下最近应用菜单键再返回扫码界面时相机不显示的问题
+
+    cameraManager = new CameraManager(getApplication());
+
+    setSurfaceViewVisible(true);
+
+    cameraManager.setOnResultListener(this);
+
+    mSvPreview.getHolder().addCallback(this);
+    //endregion
+}
+
+@Override
+public void surfaceDestroyed(SurfaceHolder holder) {        
+
+    setEmptyViewVisible(true);    
+    //解决java.lang.RuntimeException: Camera is being used after Camera.release() was called异常    
+    holder.removeCallback(this);    
+
+    cameraManager.releaseCamera();
+}
+</code></pre>
+<p>BaseCameraManager源码如下：</p>
+<pre><code class="language-plain_text">/**
+ * CameraManager的基类
+ * Created by Jack on 2016/7/1 12:55
+ * Email: zhuochangjing@foxmail.com
+ */
+public abstract class BaseCameraManager {
+    private Point qrBoxSize;
+
+    boolean hook = false;
+    int rotate;
+    int count = 0;
+    boolean isRelease = true;
+    ExecutorService executor;
+    int displayOrientation;
+    private MultiFormatReader reader;
+    OnResultListener onResultListener;
+    protected Context context;
+
+    BaseCameraManager(Context context) {
+        this.context = context;
+        executor = Executors.newSingleThreadExecutor();
+        reader = new MultiFormatReader();
+        qrBoxSize = new Point();
+        qrBoxSize.x = (int) context.getResources().getDimension(R.dimen.width_qr_box_view);
+        qrBoxSize.y = (int) context.getResources().getDimension(R.dimen.height_qr_box_view);
+    }
+
+    QRResult getCodeValue(byte[] data, Point previewSize) {
+        Bitmap bitmap = null;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream(data.length);
+        YuvImage image = new YuvImage(data, ImageFormat.NV21, previewSize.x, previewSize.y, null);
+        int left = previewSize.x - qrBoxSize.x &gt;&gt; 1;
+        int right = previewSize.x + qrBoxSize.x &gt;&gt; 1;
+        int top = previewSize.y - qrBoxSize.y &gt;&gt; 1;
+        int bottom = previewSize.y + qrBoxSize.y &gt;&gt; 1;
+        Rect rect = new Rect(left, top, right, bottom);
+        if (image.compressToJpeg(rect, 100, stream)) {
+            byte[] bytes = stream.toByteArray();
+            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        }
+        try {
+            stream.close();
+        } catch (IOException e) {
+            Log.e(&quot;onPreviewFrame&quot;, e.toString());
+        }
+
+        if (displayOrientation &gt; 0) {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(displayOrientation);
+            assert bitmap != null;
+            Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+            bitmap.recycle();
+            bitmap = newBitmap;
+        }
+
+        assert bitmap != null;
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int[] pixels = new int[width * height];
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+        Result result = QRUtils.decode(new RGBLuminanceSource(width, height, pixels), reader);
+        if (result != null) {
+            return new QRResult(bitmap, result);
+        } else {
+            bitmap.recycle();
+            return null;
+        }
+    }
+
+    public void setHook(boolean hook) {
+        this.hook = hook;
+    }
+
+    public void setOnResultListener(OnResultListener onResultListener) {
+        this.onResultListener = onResultListener;
+    }
+
+    public void shutdownExecutor() {
+        executor.shutdown();
+    }
+
+    public ExecutorService getExecutor() {
+        return executor;
+    }
+
+    public void setRotate(int rotate) {
+        this.rotate = rotate;
+    }
+
+    public abstract void connectCamera(SurfaceHolder surfaceHolder);
+
+    public abstract void setCameraParameter();
+
+    public abstract void startCapture();
+
+    public abstract void releaseCamera();
+
+    public interface OnResultListener {
+        void onResult(QRResult qrResult);
+    }
+}
+</code></pre>
+<p>CameraManager源码如下：</p>
+<pre><code class="language-plain_text">/**
+ * This class is for android targets below android 5.0 and it uses old camera api
+ * Created by Jack on 2016/7/1 12:55
+ * Email: zhuochangjing@foxmail.com
+ */
+@SuppressWarnings(&quot;deprecation&quot;)
+public class CameraManager extends BaseCameraManager implements Camera.AutoFocusCallback, Camera.PreviewCallback {
+
+    private Camera camera;
+
+    public CameraManager(Context context) {
+        super(context);
+    }
+
+    @Override
+    public void onAutoFocus(boolean success, Camera camera) {
+        if (hook || isRelease) return;
+        camera.setOneShotPreviewCallback(this);
+    }
+
+    @Override
+    public void connectCamera(SurfaceHolder surfaceHolder) {
+        if (!isRelease) return;
+        try {
+            camera = Camera.open();
+            isRelease = false;
+            camera.setPreviewDisplay(surfaceHolder);
+            setCameraParameter();
+            camera.startPreview();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void releaseCamera() {
+        if (isRelease) return;
+        isRelease = true;
+        camera.setPreviewCallback(null);
+        camera.cancelAutoFocus();
+        camera.stopPreview();
+        try {
+            camera.setPreviewDisplay(null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        camera.release();
+        camera = null;
+    }
+
+    @Override
+    public void startCapture() {
+        if (hook || isRelease || executor.isShutdown()) return;
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                camera.autoFocus(CameraManager.this);
+            }
+        });
+    }
+
+    @Override
+    public void setCameraParameter() {
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        Camera.getCameraInfo(0, cameraInfo);
+        int degrees = 0;
+        switch (rotate) {
+            case Surface.ROTATION_0: {
+                degrees = 0;
+                break;
+            }
+            case Surface.ROTATION_90: {
+                degrees = 90;
+                break;
+            }
+            case Surface.ROTATION_180: {
+                degrees = 180;
+                break;
+            }
+            case Surface.ROTATION_270: {
+                degrees = 270;
+                break;
+            }
+        }
+
+        if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            displayOrientation = (cameraInfo.orientation + degrees) % 360;
+            displayOrientation = (360 - displayOrientation) % 360;
+        } else {
+            displayOrientation = (cameraInfo.orientation - degrees + 360) % 360;
+        }
+
+        /** Warning : may throw exception with parameters not supported */
+        Camera.Parameters parameters = camera.getParameters();
+        List&lt;Camera.Size&gt; previewSizes = parameters.getSupportedPreviewSizes();
+        Camera.Size bestSize = previewSizes.get(0);
+        for (int i = 1; i &lt; previewSizes.size(); i++) {
+            if (previewSizes.get(i).width * previewSizes.get(i).height &gt; bestSize.width * bestSize.height) {
+                bestSize = previewSizes.get(i);
+            }
+        }
+        parameters.setPreviewSize(bestSize.width, bestSize.height);
+
+        List&lt;Camera.Size&gt; pictureSizes = parameters.getSupportedPictureSizes();
+        bestSize = pictureSizes.get(0);
+        for (int i = 1; i &lt; pictureSizes.size(); i++) {
+            if (pictureSizes.get(i).width * pictureSizes.get(i).height &gt; bestSize.width * bestSize.height) {
+                bestSize = pictureSizes.get(i);
+            }
+        }
+        parameters.setPictureSize(bestSize.width, bestSize.height);
+        camera.setParameters(parameters);
+        camera.setDisplayOrientation(displayOrientation);
+    }
+
+    @Override
+    public void onPreviewFrame(final byte[] data, final Camera camera) {
+        if (hook || executor.isShutdown()) return;
+        Observable
+                .just(camera.getParameters().getPreviewSize())
+                .subscribeOn(Schedulers.from(executor))
+                .map(new Func1&lt;Camera.Size, QRResult&gt;() {
+                    @Override
+                    public QRResult call(Camera.Size size) {
+                        return getCodeValue(data, new Point(size.width, size.height));
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1&lt;QRResult&gt;() {
+                    @Override
+                    public void call(QRResult qrResult) {
+                        if (qrResult == null) {
+                            count++;
+                            startCapture();
+                            return;
+                        }
+                        QRUtils.vibrate(context);
+                        if (onResultListener != null) {
+                            onResultListener.onResult(qrResult);
+                        }
+                        count = 0;
+                    }
+                }, new Action1&lt;Throwable&gt;() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(&quot;CameraManager&quot;, &quot;getCodeValue() failed .&quot;);
+                    }
+                });
+    }
+}
+</code></pre>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553060993.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title-safari%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AEjava%E6%94%AF%E6%8C%81-date-2017-09-21" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Safari浏览器设置Java支持<br />
+date: 2017-09-21</h2>
+<p>今天碰到一个公司的项目连接服务器的页面在浏览器中打开需要安装JDK并打开浏览器Java支持的问题。经过一番搜索发现，Java官网的帮助中心中介绍推荐使用IE（windows）和Safari（Mac os）（参见链接：<a href="https://www.java.com/zh_CN/download/faq/chrome.xml">https://www.java.com/zh_CN/download/faq/chrome.xml</a>），由于自己家里电脑是Mac os（Mac OS 10.12.6），所以使用Safari（自己电脑当前版本是11.0）来打开浏览器Java支持。</p>
+<p>在Safari中如何打开浏览器Java支持呢？经过一番搜索，发现可以在Safari的偏好设置中的网站选项去打开Java支持，针对某个网站去打开即可，如下图所示：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017092101.jpg" alt="jackro_blog2017092101" /></p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
+
+
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   <a href="Android.html">&laquo; Prev Page</a>  
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			 <a href="Android_2.html">&raquo; Next Page</a> 
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <h1>JackRo's Blog</h1>
+                <div class="site-des"></div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+
+
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="Android.html"><strong>Android</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="16496553060120.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060211.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060303.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060398.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060491.html">---</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
+
+  </body>
+</html>

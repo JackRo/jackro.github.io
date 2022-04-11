@@ -1,0 +1,393 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+    
+  JackRo's Blog
+  
+  </title>
+  
+  
+  <link href="atom.xml" rel="alternate" title="JackRo's Blog" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/foundation.min.css" />
+    <link rel="stylesheet" href="asset/css/docs.css" />
+    <script src="asset/js/vendor/modernizr.js"></script>
+    <script src="asset/js/vendor/jquery.js"></script>
+  <script src="asset/highlightjs/highlight.pack.js"></script>
+  <link href="asset/highlightjs/styles/github.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+  function before_search(){
+    var searchVal = 'site:jackro.cn ' + document.getElementById('search_input').value;
+    document.getElementById('search_q').value = searchVal;
+    return true;
+  }
+</script>
+  </head>
+  <body class="antialiased hide-extras">
+    
+    <div class="marketing off-canvas-wrap" data-offcanvas>
+      <div class="inner-wrap">
+
+
+<nav class="top-bar docs-bar hide-for-small" data-topbar>
+
+
+  <section class="top-bar-section">
+  <div class="row">
+      <div style="position: relative;width:100%;"><div style="position: absolute; width:100%;">
+        <ul id="main-menu" class="left">
+        
+        <li id=""><a target="self" href="index.html">Home</a></li>
+        
+        <li id=""><a target="_self" href="archives.html">Archives</a></li>
+        
+        </ul>
+
+        <ul class="right" id="search-wrap">
+          <li>
+<form target="_blank" onsubmit="return before_search();" action="https://google.com/search" method="get">
+    <input type="hidden" id="search_q" name="q" value="" />
+    <input tabindex="1" type="search" id="search_input"  placeholder="Search"/>
+</form>
+</li>
+          </ul>
+      </div></div>
+  </div>
+  </section>
+
+</nav>
+
+        <nav class="tab-bar show-for-small">
+  <a href="javascript:void(0)" class="left-off-canvas-toggle menu-icon">
+    <span> &nbsp; JackRo's Blog</span>
+  </a>
+</nav>
+
+<aside class="left-off-canvas-menu">
+      <ul class="off-canvas-list">
+        
+        <li><a target="self" href="index.html">Home</a></li>
+        
+        <li><a target="_self" href="archives.html">Archives</a></li>
+        
+
+    <li><label>Categories</label></li>
+
+        
+            <li><a href="Android.html">Android</a></li>
+         
+
+      </ul>
+    </aside>
+
+<a class="exit-off-canvas" href="#"></a>
+
+
+        <section id="main-content" role="main" class="scroll-container">
+        
+       
+
+ <script type="text/javascript">
+	$(function(){
+		$('#menu_item_index').addClass('is_active');
+	});
+</script>
+<div class="row">
+	<div class="large-8 medium-8 columns">
+		<div class="markdown-body home-categories">
+		
+			<div class="article">
+                <a class="clearlink" href="16496553060031.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title-fragment%E6%87%92%E5%8A%A0%E8%BD%BD%E5%A4%B1%E6%95%88%EF%BC%8C%E5%A4%9A%E6%AC%A1%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE-date-2016-05-29" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Fragment懒加载失效，多次加载数据<br />
+date: 2016-05-29</h2>
+<p>ViewPager和Fragment一起使用时，为了防止一进入Activity就加载所有Fragment的数据，减轻Activity初始化加载的负担，需要用懒加载的方式去加载Fragment，懒加载的方法如下：</p>
+<p>让Fragment继承BaseFragment，BaseFragment代码如下所示：</p>
+<pre><code class="language-plain_text">	/**
+	* 应用程序的基类Fragment，实现懒加载
+	* Created by Jack on 2016/5/17 08:31.
+	* Email: zhuochangjing@foxmail.com
+	*/
+	public abstract class BaseFragment extends Fragment {
+	    protected boolean isVisible;
+	
+	    protected Dialog mDialog;
+	
+	    /**
+	     * 在这里实现Fragment数据的懒加载
+	     *
+	     * @param isVisibleToUser Fragment UI对用户是否可见
+	     */
+	    @Override
+	    public void setUserVisibleHint(boolean isVisibleToUser) {
+	        super.setUserVisibleHint(isVisibleToUser);
+	        if (getUserVisibleHint()) {
+	            isVisible = true;
+	            onVisible();
+	        } else {
+	            isVisible = false;
+	            onInvisible();
+	        }
+	    }
+	
+	    @Nullable
+	    @Override
+	    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
+	            savedInstanceState) {
+	        View view = inflater.inflate(getContentView(), container, false);
+	        initView(view);
+	        mDialog = DialogUtil.createLoadingDialog(getActivity(), &quot;正在加载数据中......&quot;);
+	        return view;
+	    }
+	
+	    @Override
+	    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+	        super.onActivityCreated(savedInstanceState);
+	        lazyLoad();
+	    }
+	
+	    protected void onVisible() {
+	        lazyLoad();
+	    }
+	
+	    protected void onInvisible() {
+	    }
+	
+	    protected abstract void lazyLoad();
+	
+	    protected abstract int getContentView();
+	
+	    protected abstract void initView(View view);
+	}
+</code></pre>
+<p>子Fragment代码如下：</p>
+<pre><code class="language-plain_text">	public class LogisticsFragment extends BaseFragment{
+		private boolean isPrepared;
+		
+		@Override
+		protected void lazyLoad() {
+    		if (isPrepared &amp;&amp; isVisible) {
+				//做加载数据的网络操作
+        		isPrepared = false;
+    		}
+		}
+	    @Override
+	    protected void initView(View view) {
+			//做初始化View的操作
+	        isPrepared = true;
+	    }
+	}
+</code></pre>
+<p>但是现在由于ViewPager和Fragment一起用，由于ViewPager默认只能缓存Fragment左右两边各一个Fragment，也就是说缓存值是1，设置缓存页面的方法如下：</p>
+<pre><code class="language-plain_text">mViewpager.setOffscreenPageLimit(2);
+</code></pre>
+<p>如果未调用上面的设置缓存页面的方法，默认缓存值就是1，此时如果你的Fragment页在3个及以上时，当你切换Fragment时，就会造成未缓存的Fragment会执行onDestroyView，然而再次切换到这个未缓存的Fragment或者切换到与这个未缓存的Fragment相邻的Fragment时，他就会再次执行onCreateView方法，也就是说再次initView，这样isPrepared又会被置为true，因此导致lazyLoad方法里的判断加载数据的表达式为true，加载数据就会再次执行了。</p>
+<p>这里懒加载并不是说让lazyLoad方法只执行一次，而是通过判断让加载数据只执行一次。</p>
+<p>ViewPager的设置缓存页面的方法具体细节可以翻阅官方文档：<a href="https://developer.android.google.cn/reference/android/support/v4/view/ViewPager.html#setOffscreenPageLimit(int)">setOffscreenPageLimit</a></p>
+<p>参考链接：<a href="http://blog.csdn.net/feixiangdexin123087/article/details/42059975">ViewPager中切换界面Fragment被销毁的问题分析</a></p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+              
+
+
+			<div class="row">
+			  <div class="large-6 columns">
+			  <p class="text-left" style="padding-top:25px;">
+			   <a href="all_7.html">&laquo; Prev Page</a>  
+			  </p>
+			  </div>
+			  <div class="large-6 columns">
+			<p class="text-right" style="padding-top:25px;">
+			
+			</p>
+			  </div>
+			</div>
+		</div>
+	</div><!-- large 8 -->
+
+ <div class="large-4 medium-4 columns">
+  <div class="hide-for-small">
+    <div id="sidebar" class="sidebar">
+          <div id="site-info" class="site-info">
+            
+                <h1>JackRo's Blog</h1>
+                <div class="site-des"></div>
+                <div class="social">
+
+
+
+
+
+
+
+
+
+
+
+  <a target="_blank" class="rss" href="atom.xml" title="RSS">RSS</a>
+                
+              	 </div>
+          	</div>
+
+             
+
+              <div id="site-categories" class="side-item ">
+                <div class="side-header">
+                  <h2>Categories</h2>
+                </div>
+                <div class="side-content">
+
+      	<p class="cat-list">
+        
+            <a href="Android.html"><strong>Android</strong></a>
+         
+        </p>
+
+
+                </div>
+              </div>
+
+              <div id="site-categories" class="side-item">
+                <div class="side-header">
+                  <h2>Recent Posts</h2>
+                </div>
+                <div class="side-content">
+                <ul class="posts-list">
+	      
+		      
+			      <li class="post">
+			        <a href="16496553060120.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060211.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060303.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060398.html">---</a>
+			      </li>
+		     
+		  
+		      
+			      <li class="post">
+			        <a href="16496553060491.html">---</a>
+			      </li>
+		     
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		  
+		      
+		   
+		  		</ul>
+                </div>
+              </div>
+        </div><!-- sidebar -->
+      </div><!-- hide for small -->
+</div><!-- large 4 -->
+
+</div><!-- row -->
+
+ <div class="page-bottom clearfix">
+  <div class="row">
+   <p class="copyright">Copyright &copy; 2015
+Powered by <a target="_blank" href="http://www.mweb.im">MWeb</a>,&nbsp; 
+Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
+  </div>
+</div>
+
+        </section>
+      </div>
+    </div>
+
+  
+    
+
+    <script src="asset/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+      function fixSidebarHeight(){
+        var w1 = $('.markdown-body').height();
+          var w2 = $('#sidebar').height();
+          if (w1 > w2) { $('#sidebar').height(w1); };
+      }
+      $(function(){
+        fixSidebarHeight();
+      })
+      $(window).load(function(){
+          fixSidebarHeight();
+      });
+     
+    </script>
+
+    
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
+
+  </body>
+</html>

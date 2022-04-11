@@ -100,50 +100,59 @@
 		<div class="markdown-body home-categories">
 		
 			<div class="article">
-                <a class="clearlink" href="16496553060120.html">
+                <a class="clearlink" href="16496553058730.html">
                 
                   <h1>---</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title%E6%A8%A1%E6%8B%9F%E5%99%A8%E6%94%B6%E4%B8%8D%E5%88%B0-uilocalnotification%E6%9C%AC%E5%9C%B0%E9%80%9A%E7%9F%A5-date-2017-02-24" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: 模拟器收不到UILocalNotification本地通知<br />
-date: 2017-02-24</h2>
-<p>通知功能是iOS应用开发经常会碰到的需求，iOS应用的通知分为本地通知和远程通知（即消息推送），Apple develop官网的API Guides对通知的开发有详细的介绍。</p>
-<p>今天我碰到的问题是模拟器收不到本地通知，按照惯例，先上本地通知的代码：</p>
-<pre><code class="language-plain_text">    UILocalNotification *note = [[UILocalNotification alloc] init];
-    note.alertBody = @&quot;Hypnotize&quot;;
-    note.fireDate = date; //这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
-    note.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:note];
-</code></pre>
-<p>原本以为这样就可以接收到通知了，结果一运行，始终看不到通知，过了通知的设定时间好久了，也看不到通知。查阅了下通知的用法文档，才知道需要去申请发送通知的授权。修正后的代码如下所示：</p>
-<pre><code class="language-plain_text">//判断是否已经授权用户发送通知
-if ([[UIApplication sharedApplication] currentUserNotificationSettings].types != UIUserNotificationTypeNone) {
-    UILocalNotification *note = [[UILocalNotification alloc] init];
-    note.alertBody = @&quot;Hypnotize&quot;;
-    note.fireDate = date;//这里date 变量是一个NSDate对象，从页面上的UIDatePicker对象上获取的
-    note.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] scheduleLocalNotification:note];
-} else{
-    //用户注册通知，注册后才能收到通知，这会给用户一个弹框，提示用户选择是否允许发送通知
-    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound   categories:nil]];
-}
-</code></pre>
-<p>用户注册通知后，会收到一个回调函数，一般如果未授权，创建通知就在这个回调函数里进行。</p>
-<pre><code class="language-plain_text">//用户注册通知回调函数
-- (void)application:(UIApplication *) application
-    didRegisterUserNotificationSettings:(UIUserNotificationSettings   *)notificationSettings {
-     if (notificationSettings.types != UIUserNotificationTypeNone) {
-         NSLog(@&quot;haha&quot;);
-        UILocalNotification *note = [[UILocalNotification alloc] init];
-        note.alertBody = @&quot;Hypnotize&quot;;
-        note.fireDate = rvc.selectDate;
-        note.applicationIconBadgeNumber = 1;
-        [[UIApplication sharedApplication] scheduleLocalNotification:note];
+                        	<h2><a id="title-android%E7%BB%99gridview%E8%AE%BE%E7%BD%AE%E5%8D%95%E5%85%83%E6%A0%BC%E5%88%86%E5%89%B2%E7%BA%BF-date-2015-06-12" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android给GridView设置单元格分割线<br />
+date: 2015-06-12</h2>
+<p>给GridView设置单元格分割线有两种方法，一种是设置背景图片设置分割线，另外一种是自定义GridView重绘视图设置分割线。重绘方法代码如下：</p>
+<pre><code class="language-plain_text">public class LineGridView extends GridView{
+    public LineGridView(Context context) {
+        super(context);
+        // TODO Auto-generated constructor stub
+    }
+    public LineGridView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+    public LineGridView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+    @Override
+    protected void dispatchDraw(Canvas canvas){
+        super.dispatchDraw(canvas);
+        View localView1 = getChildAt(0);
+        int column = getWidth() / localView1.getWidth();
+        int childCount = getChildCount();
+        Paint localPaint;
+        localPaint = new Paint();
+        localPaint.setStyle(Paint.Style.STROKE);
+        localPaint.setColor(getContext().getResources().getColor(R.color.grid_line));
+        for(int i = 0;i &lt; childCount;i++){
+            View cellView = getChildAt(i);
+            if((i + 1) % column == 0){
+                canvas.drawLine(cellView.getLeft(), cellView.getBottom(), cellView.getRight(), cellView.getBottom(), localPaint);
+            }else if((i + 1) &gt; (childCount - (childCount % column))){
+                canvas.drawLine(cellView.getRight(), cellView.getTop(), cellView.getRight(), cellView.getBottom(), localPaint);
+            }else{
+                canvas.drawLine(cellView.getRight(), cellView.getTop(), cellView.getRight(), cellView.getBottom(), localPaint);
+                canvas.drawLine(cellView.getLeft(), cellView.getBottom(), cellView.getRight(), cellView.getBottom(), localPaint);
+            }
+        }
+        if(childCount % column != 0){
+            for(int j = 0 ;j &lt; (column-childCount % column) ; j++){
+                View lastView = getChildAt(childCount - 1);
+                canvas.drawLine(lastView.getRight() + lastView.getWidth() * j, lastView.getTop(), lastView.getRight() + lastView.getWidth()* j, lastView.getBottom(), localPaint);
+            }
+        }
     }
 }
 </code></pre>
+<p>在<code>dispatchDraw</code>方法中，我们对每一个子view的边界按照一定的方式绘上了边框，一般一个格子只需绘制其中两条边，需要注意的是最边上的格子需要特殊处理。<code>super.dispatchDraw(canvas);</code>一定要调用，不然格子中的内容（子view）就得不到绘制的机会。<br />
+仔细看代码你会发现这个实现方式是很好的，但是代码并不完美，因为每条线的绘制我们都是以第一个子view 的宽高为基准的，如果某个格子的高度和第一个格子不一致，那么可能出现错位。如果你能确保每个格子大小均匀，直接拿来用，否则还需要些修改。这里是重写的<code>dispatchDraw</code>，其实我我们重写onDraw方法也可以得到相同的结果。要完全弄明白的话，就得看看FrameWork中GridView的源码了。</p>
 
                         
                       </div>
@@ -169,36 +178,72 @@ if ([[UIApplication sharedApplication] currentUserNotificationSettings].types !=
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553060211.html">
+                <a class="clearlink" href="16496553058836.html">
                 
                   <h1>---</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-java%E4%B8%AD%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%95%B0%E7%BB%84%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E7%9B%B8%E5%90%8C%E5%AD%97%E7%AC%A6%E4%B8%B2-date-2017-09-11" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Java中判断一个字符串数组是否包含相同字符串<br />
-date: 2017-09-11</h2>
-<p>如题。该问题很简单，使用一个嵌套循环即可解决，代码如下所示：</p>
-<pre><code class="language-plain_text">/**
- * judge that a String Array whether or not contained equal String
- * 
- * @param strings
- *            a string Array
- * @return return true, contained; return false, not contained
- */
-public static boolean judgeStrArrayContainsSameStr(String[] strings) {
-	int len = strings.length;
-	for (int i = 0; i &lt; len; i++) {
-		String temp = strings[i];
-		for (int j = i + 1; j &lt; len; j++) {
-			String string = strings[j];
-			if (string.equals(temp)) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
+                        	<h2><a id="title-android%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87%E6%8A%A5oom%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-date-2015-06-08" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android处理图片报OOM的问题解决<br />
+date: 2015-06-08</h2>
+<p>当使用android的Drawable时，一开始我是用下面的方法实现的：</p>
+<pre><code class="language-plain_text">Drawable.createFromStream(is, srcName);
+</code></pre>
+<p>但是经过调试每次程序都会crash掉，报OOM错误，错误都会打到上面这行代码，搞了老半天，发现BitmapFactory.decodeStream比Drawable.createFromStream好用，后者更占内存。下面是解决后的代码：</p>
+<pre><code class="language-plain_text"> BitmapFactory.Options options = new BitmapFactory.Options();
+ options.inPreferredConfig = Config.RGB_565;                
+ options.inSampleSize = 2;
+ Bitmap bitmap = BitmapFactory.decodeStream(url.openStream(), null, options);                    
+ drawable = new BitmapDrawable(bitmap);
+</code></pre>
+<p>当然options.inSampleSize = 2是设置图片显示的尺寸，这个图片尺寸是随意设置的，可以根据手机屏幕的大小来计算图片需要显示的尺寸。</p>
+
+                        
+                      </div>
+                  </div>
+                </a>
+                <div class="read-more clearfix">
+                  <div class="more-left left">
+                  
+                    <span class="date">2022/04/11</span>
+                    <span>posted in&nbsp;</span> 
+          				  
+          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
+          				   
+                  </div>
+                  <div class="more-right right">
+                  <span class="comments">
+                      
+
+                       
+                  </span>
+                  </div>
+                </div>
+              </div><!-- article -->
+        
+			<div class="article">
+                <a class="clearlink" href="16496553058915.html">
+                
+                  <h1>---</h1>
+                  <div class="a-content">
+                      
+                      <div class="a-content-text">
+                        
+                        	<h2><a id="title-android%E5%88%A4%E6%96%AD%E6%9F%90%E4%B8%AAapk%E6%98%AF%E5%90%A6%E5%B7%B2%E5%AE%89%E8%A3%85-date-2016-05-06" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android判断某个APK是否已安装<br />
+date: 2016-05-06</h2>
+<p>关键代码如下：</p>
+<pre><code class="language-plain_text">    private boolean isAppInstalled(String uri) {
+        PackageManager pm = getPackageManager();
+        boolean installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            installed = true;
+        } catch(PackageManager.NameNotFoundException e) {
+            installed = false;
+        }
+        return installed;
+    }
 </code></pre>
 
                         
@@ -225,25 +270,28 @@ public static boolean judgeStrArrayContainsSameStr(String[] strings) {
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553060303.html">
+                <a class="clearlink" href="16496553058997.html">
                 
                   <h1>---</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-linearlayout%E6%8C%89%E4%B8%8B%E6%88%96%E8%8E%B7%E5%8F%96%E7%84%A6%E7%82%B9%E6%97%B6%E8%AE%BE%E7%BD%AE%E4%B8%8D%E5%90%8C%E9%A2%9C%E8%89%B2%E6%88%96%E5%9B%BE%E7%89%87-date-2015-06-29" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: LinearLayout按下或获取焦点时设置不同颜色或图片<br />
-date: 2015-06-29</h2>
-<p>在Android项目中有这样一个需求，画了几个LinearLayout布局做成ListView的样式，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2015062901.png" alt="jackro_blog2015062901" /></p>
-<p>当点击每个LinearLayout项时想改变其背景颜色，准备了如下背景图片XML文件：</p>
-<pre><code class="language-plain_text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
-    &lt;item android:drawable=&quot;@color/gray_background&quot; android:state_pressed=&quot;true&quot; /&gt;
-    &lt;item android:drawable=&quot;@color/white_background&quot; /&gt;
-&lt;/selector&gt;
+                        	<h2><a id="title-android-sdk%E5%A4%A7%E8%BF%9E%E4%B8%9C%E8%BD%AF%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80%E5%8F%8A%E5%9C%B0%E5%9D%80%E5%88%97%E8%A1%A8-date-2015-09-07" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android SDK大连东软镜像地址及地址列表<br />
+date: 2015-09-07</h2>
+<p>Android SDK更新大连东软镜像地址：mirrors.neusoft.edu.cn，端口：80<br />
+镜像地址列表URL：</p>
+<pre><code class="language-plain_text">http://mirrors.neusoft.edu.cn/android/repository/addon-6.xml 
+http://mirrors.neusoft.edu.cn/android/repository/addon.xml 
+http://mirrors.neusoft.edu.cn/android/repository/extras/intel/addon.xml 
+http://mirrors.neusoft.edu.cn/android/repository/sys-img/android-tv/sys-img.xml 
+http://mirrors.neusoft.edu.cn/android/repository/sys-img/android-wear/sys-img.xml 
+http://mirrors.neusoft.edu.cn/android/repository/sys-img/android/sys-img.xml 
+http://mirrors.neusoft.edu.cn/android/repository/sys-img/google_apis/sys-img.xml 
+http://mirrors.neusoft.edu.cn/android/repository/sys-img/x86/addon-x86.xml 
+http://mirrors.neusoft.edu.cn/android/repository/addons_list-2.xml 
+http://mirrors.neusoft.edu.cn/android/repository/repository-10.xml
 </code></pre>
-<p>但是当我每次运行点击每一项LinearLayout时，其背景颜色毫无变化。后来发现在每个LinearLayout项加入属性android:clickable=&quot;true&quot;点击LinearLayout才会出现背景颜色的变化。</p>
 
                         
                       </div>
@@ -269,66 +317,19 @@ date: 2015-06-29</h2>
               </div><!-- article -->
         
 			<div class="article">
-                <a class="clearlink" href="16496553060398.html">
+                <a class="clearlink" href="16496553059079.html">
                 
                   <h1>---</h1>
                   <div class="a-content">
                       
                       <div class="a-content-text">
                         
-                        	<h2><a id="title-mac-android%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%89%A7%E8%A1%8C-gradlew-clean%E6%8F%90%E7%A4%BA-permission-denied-date-2017-04-10" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Mac Android项目目录下执行./gradlew clean 提示Permission denied<br />
-date: 2017-04-10</h2>
-<p>Mac环境下Android Studio创建的android项目，在项目目录下执行./gradlew clean，提示Permission denied，看到这个提示，自然想到的是sudo执行，然而sudo执行并不能解决问题，反而会提示command not found。万般无奈，只能百度，发现执行以下命令即可解决问题。</p>
-<pre><code class="language-plain_text">//为gradlew文件添加可执行属性
-chmod +x gradlew
-</code></pre>
-<p>chmod命令是修改文件访问权限的命令，文件访问权限包括只读、只写、可执行三种，其实最开始的提示Permission denied（权限拒绝）已经告诉了我们是android项目目录下可执行文件gradlew的访问权限的问题。因此需要为该文件添加可执行权限，所以执行以上命令即可解决该问题。</p>
-
-                        
-                      </div>
-                  </div>
-                </a>
-                <div class="read-more clearfix">
-                  <div class="more-left left">
-                  
-                    <span class="date">2022/04/11</span>
-                    <span>posted in&nbsp;</span> 
-          				  
-          					    <span class="posted-in"><a href='Android.html'>Android</a></span>
-          				   
-                  </div>
-                  <div class="more-right right">
-                  <span class="comments">
-                      
-
-                       
-                  </span>
-                  </div>
-                </div>
-              </div><!-- article -->
-        
-			<div class="article">
-                <a class="clearlink" href="16496553060491.html">
-                
-                  <h1>---</h1>
-                  <div class="a-content">
-                      
-                      <div class="a-content-text">
-                        
-                        	<h2><a id="title-mac-os%E4%B8%ADgit%E6%8F%90%E4%BA%A4%E6%93%8D%E4%BD%9C-ds-store%E6%96%87%E4%BB%B6%E5%BC%95%E5%8F%91%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-date-2017-09-22" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Mac os中git提交操作.DS_Store文件引发的问题解决<br />
-date: 2017-09-22</h2>
-<p>在Mac os中是存在.DS_Store文件的，在使用git对项目进行版本控制时，该文件如果不加入.gitignore中，每次修改文件提交时，该文件都会在提交列表中。明明没动它，每次修改却还是要提交它，这非常让人懊恼。</p>
-<p>经过一番搜索，我找到了解决方法，我们可以先在.gitignore中加入该文件的忽略规则，如下所示：</p>
-<pre><code class="language-plain_text">.DS_Store
-</code></pre>
-<p>然后删除项目中所有的.DS_Store，在项目目录下执行如下命令：</p>
-<pre><code class="language-plain_text">find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
-</code></pre>
-<p>然后提交项目即可。</p>
-<p>但是，我发现我的项目是用webstorm打开的，项目目录下自动生成了.idea文件，每次提交.idea文件也会提交，加入忽略规则也不行，我想到了和上面类似的方法，删除.idea目录，然后再提交，即可解决。</p>
-<p>参考链接：</p>
-<p><a href="http://www.jianshu.com/p/fdaa8be7f6c3">如何删除GIT中的.DS_Store</a></p>
-<p><a href="http://www.jianshu.com/p/8c0d262e49a6">Git中全局忽略.DS_Store文件</a></p>
+                        	<h2><a id="title-android-sdk%E4%B8%8B%E8%BD%BD%E6%8A%80%E5%B7%A7-date-2016-04-09" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>title: Android SDK下载技巧<br />
+date: 2016-04-09</h2>
+<p>当你使用你的Android Studio更新你的SDK时，比如说你要更新sdk tools，sdk platform，extras里的support library，由于天朝网络原因，Android Studio在更新时会比较慢。为了避开天朝网络的问题，你可以这么干：</p>
+<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016040901.png" alt="jackro_blog2016040901" /></p>
+<p>如上图红色框框中的部分，就是你要下载的包的地址，你可以用这个地址打开迅雷等下载器去下载需要更新的包，下载好后只需要解压到对应的sdk目录中即可。</p>
+<p>本文参考了<a href="http://www.jianshu.com/p/20b0781300ef">http://www.jianshu.com/p/20b0781300ef</a>，如果你是用sdk目录里的SDK Manager更新sdk的，可以参考上面的链接给出的做法来更新sdk。</p>
 
                         
                       </div>
@@ -359,12 +360,12 @@ date: 2017-09-22</h2>
 			<div class="row">
 			  <div class="large-6 columns">
 			  <p class="text-left" style="padding-top:25px;">
-			   
+			   <a href="all_4.html">&laquo; Prev Page</a>  
 			  </p>
 			  </div>
 			  <div class="large-6 columns">
 			<p class="text-right" style="padding-top:25px;">
-			 <a href="all_1.html">&raquo; Next Page</a> 
+			 <a href="all_6.html">&raquo; Next Page</a> 
 			</p>
 			  </div>
 			</div>
