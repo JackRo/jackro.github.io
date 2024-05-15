@@ -4,7 +4,7 @@
   <title><![CDATA[MayGodBlessYou]]></title>
   <link href="https://jackro.cn/atom.xml" rel="self"/>
   <link href="https://jackro.cn/"/>
-  <updated>2023-08-11T22:03:26+08:00</updated>
+  <updated>2024-05-15T14:18:28+08:00</updated>
   <id>https://jackro.cn/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -22,7 +22,7 @@
 <span id="more"></span><!-- more -->
 <p>根据提示，换了下bundle ID，卸载真机上已安装的app，重新部署安装，仍然报错，无法部署。于是去看了下配置文件，发现provisioning profile报错，需要重新登录Apple ID，重新登录后，再次部署，并在真机上设置信任当前Apple ID，问题解决。</p>
 <p>但是问题真的解决了吗？然后我仔细去看了下配置文件，终于找到问题原因，原来debug app的Provisioning profile是有过期时间的。如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2018051401.jpg" alt="jackro_blog2018051401" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2018051401.jpg" alt="jackro_blog2018051401" /></p>
 
 ]]></content>
   </entry>
@@ -216,11 +216,12 @@ RETURNS type
     <updated>2022-04-11T13:35:06+08:00</updated>
     <id>https://jackro.cn/16496553060993.html</id>
     <content type="html"><![CDATA[
-<p>今天碰到一个公司的项目连接服务器的页面在浏览器中打开需要安装JDK并打开浏览器Java支持的问题。</p>
+<p><a href="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o">https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o</a><br />
+今天碰到一个公司的项目连接服务器的页面在浏览器中打开需要安装JDK并打开浏览器Java支持的问题。</p>
 <span id="more"></span><!-- more -->
 <p>经过一番搜索发现，Java官网的帮助中心中介绍推荐使用IE（windows）和Safari（Mac os）（参见链接：<a href="https://www.java.com/zh_CN/download/faq/chrome.xml">https://www.java.com/zh_CN/download/faq/chrome.xml</a>），由于自己家里电脑是Mac os（Mac OS 10.12.6），所以使用Safari（自己电脑当前版本是11.0）来打开浏览器Java支持。</p>
 <p>在Safari中如何打开浏览器Java支持呢？经过一番搜索，发现可以在Safari的偏好设置中的网站选项去打开Java支持，针对某个网站去打开即可，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017092101.jpg" alt="jackro_blog2017092101" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2017092101.jpg" alt="jackro_blog2017092101" /></p>
 
 ]]></content>
   </entry>
@@ -557,9 +558,9 @@ if ([[UIApplication sharedApplication] currentUserNotificationSettings].types !=
 }
 </code></pre>
 <p>看似很完美的代码，但是一运行，无法响应touchesBegan事件，开始以为是没有开启用户交互，加上开启用户交互self.userInteractionEnabled = YES，仍然没用，后来有人说是这个自定义UIView视图被遮挡，导致无法响应触摸事件，给了我开启视图调试器调试看看的建议，果然，开启视图调试器看到这个自定义UIView确实被遮挡了，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022301.jpeg" alt="jackro_blog2017022301" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2017022301.jpeg" alt="jackro_blog2017022301" /></p>
 <p>该怎么解决呢？有人说是[self.window makeKeyAndVisible]出了问题，他会把window的rootViewController放到最前面，但我想这肯定是没读懂官方文档对makeKeyAndVisible方法的解释，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022303.png" alt="jackro_blog2017022303" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2017022303.png" alt="jackro_blog2017022303" /></p>
 <p>它是UIWindow对象的一个实例方法，是把当前window置于其他window的前面，也就是说是把整个包含了我的自定义UIView的window对象置于最前面，所以，即使注释掉这行代码，仍然无法解决我的自定义UIView被遮挡的问题。</p>
 <p>那么问题出在哪里呢？对，问题就出在AppDelegate的下面这段代码中：</p>
 <pre><code class="language-plain_text">NSArray *windows = [[UIApplication sharedApplication] windows];
@@ -571,7 +572,7 @@ for(UIWindow *window in windows) {
     }
 }
 </code></pre>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022302.jpeg" alt="jackro_blog2017022302" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2017022302.jpeg" alt="jackro_blog2017022302" /></p>
 <p>根据上图所示官方文档对rootViewController的说明，可以知道设置了window.rootViewController会给window设定一个content view。根据视图调试器显示出来的内容，这个content view应该也就是一个UIView。所以当这个自定义的UIView添加到self.window上，代码如下所示：</p>
 <pre><code class="language-plain_text">CGRect firstFrame = self.window.bounds;
 BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
@@ -602,7 +603,7 @@ BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
 reason: 'Application windows are expected to have a root view controller at the end of application launch'
 </code></pre>
 <p>并且app只能打开启动屏，无法进入应用，程序在main函数中停止运行，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022201.png" alt="jackro_blog2017022201" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2017022201.png" alt="jackro_blog2017022201" /></p>
 <p>这里我碰到这个问题的demo是这样的，有一个自定义view，代码如下：</p>
 <pre><code class="language-plain_text">//
 //  BNRHypnosisView.h
@@ -725,7 +726,7 @@ reason: 'Application windows are expected to have a root view controller at the 
 <span id="more"></span><!-- more -->
 <p>根据官方文档的说明，<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> 仅仅支持设置app:fabSize=&quot;normal&quot;来改变fab的大小，并且这个fabSize的大小提供了三个可选项（normal，mini和auto）来设置，可以在布局里设置也可以在代码里调用setSize方法进行设置。</p>
 <p>这里一开始是想到通过在布局里改变layout_width和layout_height来改变控件的大小的，但是设置之后（两者均设置为100dp，fabSize设置为normal），效果如下所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112001.png" alt="jackro_blog2016112001" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2016112001.png" alt="jackro_blog2016112001" /></p>
 <p>并且当设置了fab的固定宽高再来改变它的fabSize属性（改为mini或auto）时，效果会是fab的图标被撑的很大，甚至边缘都看不到了，显然这样通过固定fab的宽高属性来改变其大小是行不通的。</p>
 <p>翻阅FloatingActionButton的源码，其第三个构造函数如下</p>
 <pre><code class="language-java">
@@ -837,7 +838,7 @@ reason: 'Application windows are expected to have a root view controller at the 
 <pre><code class="language-xml">&lt;dimen name=&quot;design_fab_size_normal&quot; tools:ignore=&quot;PrivateResource&quot;&gt;80dp&lt;/dimen&gt;
 </code></pre>
 <p>这样即完美搞定我的fab自定义大小的需求。上张效果图，如下所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112002.jpg" alt="jackro_blog2016112002" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2016112002.jpg" alt="jackro_blog2016112002" /></p>
 <p>和之前那个设置fab的固定宽高的效果比好多了。</p>
 
 ]]></content>

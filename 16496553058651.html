@@ -148,7 +148,7 @@
 <span id="more"></span><!-- more -->
 <p>根据官方文档的说明，<a href="https://developer.android.com/reference/android/support/design/widget/FloatingActionButton.html">FloatingActionButton</a> 仅仅支持设置app:fabSize=&quot;normal&quot;来改变fab的大小，并且这个fabSize的大小提供了三个可选项（normal，mini和auto）来设置，可以在布局里设置也可以在代码里调用setSize方法进行设置。</p>
 <p>这里一开始是想到通过在布局里改变layout_width和layout_height来改变控件的大小的，但是设置之后（两者均设置为100dp，fabSize设置为normal），效果如下所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112001.png" alt="jackro_blog2016112001" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2016112001.png" alt="jackro_blog2016112001" /></p>
 <p>并且当设置了fab的固定宽高再来改变它的fabSize属性（改为mini或auto）时，效果会是fab的图标被撑的很大，甚至边缘都看不到了，显然这样通过固定fab的宽高属性来改变其大小是行不通的。</p>
 <p>翻阅FloatingActionButton的源码，其第三个构造函数如下</p>
 <pre><code class="language-java">
@@ -260,7 +260,7 @@
 <pre><code class="language-xml">&lt;dimen name=&quot;design_fab_size_normal&quot; tools:ignore=&quot;PrivateResource&quot;&gt;80dp&lt;/dimen&gt;
 </code></pre>
 <p>这样即完美搞定我的fab自定义大小的需求。上张效果图，如下所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2016112002.jpg" alt="jackro_blog2016112002" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2016112002.jpg" alt="jackro_blog2016112002" /></p>
 <p>和之前那个设置fab的固定宽高的效果比好多了。</p>
 
 
@@ -468,7 +468,7 @@ Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
     </script>
 
     
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
 
 
   </body>

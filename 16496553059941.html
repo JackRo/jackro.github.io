@@ -247,9 +247,9 @@
 }
 </code></pre>
 <p>看似很完美的代码，但是一运行，无法响应touchesBegan事件，开始以为是没有开启用户交互，加上开启用户交互self.userInteractionEnabled = YES，仍然没用，后来有人说是这个自定义UIView视图被遮挡，导致无法响应触摸事件，给了我开启视图调试器调试看看的建议，果然，开启视图调试器看到这个自定义UIView确实被遮挡了，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022301.jpeg" alt="jackro_blog2017022301" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2017022301.jpeg" alt="jackro_blog2017022301" /></p>
 <p>该怎么解决呢？有人说是[self.window makeKeyAndVisible]出了问题，他会把window的rootViewController放到最前面，但我想这肯定是没读懂官方文档对makeKeyAndVisible方法的解释，如下图所示：</p>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022303.png" alt="jackro_blog2017022303" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2017022303.png" alt="jackro_blog2017022303" /></p>
 <p>它是UIWindow对象的一个实例方法，是把当前window置于其他window的前面，也就是说是把整个包含了我的自定义UIView的window对象置于最前面，所以，即使注释掉这行代码，仍然无法解决我的自定义UIView被遮挡的问题。</p>
 <p>那么问题出在哪里呢？对，问题就出在AppDelegate的下面这段代码中：</p>
 <pre><code class="language-plain_text">NSArray *windows = [[UIApplication sharedApplication] windows];
@@ -261,7 +261,7 @@ for(UIWindow *window in windows) {
     }
 }
 </code></pre>
-<p><img src="https://jackro-blog-1257460298.cos.ap-shanghai.myqcloud.com/jackro_blog2017022302.jpeg" alt="jackro_blog2017022302" /></p>
+<p><img src="https://objectstorage.ap-tokyo-1.oraclecloud.com/n/nrql75upzuqs/b/bucket-liberty-blog-20240513/o/jackro_blog2017022302.jpeg" alt="jackro_blog2017022302" /></p>
 <p>根据上图所示官方文档对rootViewController的说明，可以知道设置了window.rootViewController会给window设定一个content view。根据视图调试器显示出来的内容，这个content view应该也就是一个UIView。所以当这个自定义的UIView添加到self.window上，代码如下所示：</p>
 <pre><code class="language-plain_text">CGRect firstFrame = self.window.bounds;
 BNRHypnosisView *firstView = [[BNRHypnosisView alloc] initWithFrame:firstFrame];
@@ -481,7 +481,7 @@ Theme used <a target="_blank" href="http://github.com">GitHub CSS</a>.</p>
     </script>
 
     
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
 
 
   </body>
